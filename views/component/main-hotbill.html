@@ -1,0 +1,136 @@
+<template id="main-hotbill-tmpl-A1">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		.module_a{padding:10px;margin-top:5px;border-radius:5px;background-color:#fff;box-shadow:0 3px 10px rgba(0,0,0,0.28)}
+		/*.module_a:first-child{margin:0}*/
+		.module_fare_a h2 a{color:#333;padding-right:9px;background:url(../img/arr_rgt_red.png) no-repeat right 5px;background-size:6px auto;font-size:15px}
+		.module_fare_a .desc_fare{overflow:hidden;margin-top:10px}
+		.module_fare_a .desc_fare .tx_date{float:left;font-size:13px;padding-top:2px}
+		.module_fare_a .desc_fare .tx_fare{float:right;color:#e9012d}
+		.module_fare_a .desc_fare .tx_fare i{font-weight:bold;font-size:16px;font-family:Brush Script STD}
+		.module_fare_a .graph_fare{margin-top:5px;overflow:hidden}
+		.module_fare_a .graph_fare>span{float:left;width:33.3%;text-align:center}
+		.module_fare_a .graph_fare .fare1 .graph{display:inline-block;width:100%;height:12px;background-color:#ff6969;border-radius:7px 0 0 7px}
+		.module_fare_a .graph_fare .fare2 .graph{display:inline-block;width:100%;height:12px;background-color:#fcb01f}
+		.module_fare_a .graph_fare .fare3 .graph{display:inline-block;width:100%;height:12px;background-color:#fc087e;border-radius:0 7px 7px 0}
+		.module_fare_a .graph_fare p{font-size:12px}
+		.module_fare_a .graph_fare i{display:block;color:#333;font-weight:bold}
+	</style>
+<!-- main_a.html 실시간 요금 모듈 -->
+	<section class="module_a module_fare_a" style="min-height: 100px;">
+		<h2><a href="#">실시간 요금</a></h2>
+		<div class="desc_fare">
+			<span class="tx_date"></span>
+			<span class="tx_fare"><i></i>원</span>
+		</div>
+		<div class="graph_fare">
+			<span class="fare1"><span class="graph"></span><p>통신서비스 요금 <i></i></p></span>
+			<span class="fare2"><span class="graph"></span><p>부가사용금액 <i></i></p></span>
+			<span class="fare3"><span class="graph"></span><p>단말기 할부금 <i></i></p></span>				
+		</div>			
+	</section>
+<!-- // main_a.html 실시간 요금 모듈 -->
+</template>
+
+<template id="main-hotbill-tmpl-B">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		.module_b{padding:13px 0;font-size:16px;color:#333;border-top:1px dashed #d7d7d7}
+		.module_fare_a h2 a{color:#333;padding-right:9px;background:url(../img/arr_rgt_red.png) no-repeat right 5px;background-size:6px auto;font-size:15px}
+		.module_fare_a .desc_fare{overflow:hidden;margin-top:10px}
+		.module_fare_a .desc_fare .tx_date{float:left;font-size:13px;padding-top:2px}
+		.module_fare_a .desc_fare .tx_fare{float:right;color:#e9012d}
+		.module_fare_a .desc_fare .tx_fare i{font-weight:bold;font-size:16px;font-family:Brush Script STD}
+		.module_fare_a .graph_fare{margin-top:5px;overflow:hidden}
+		.module_fare_a .graph_fare>span{float:left;width:33.3%;text-align:center}
+		.module_fare_a .graph_fare .fare1 .graph{display:inline-block;width:100%;height:12px;background-color:#ff6969;border-radius:7px 0 0 7px}
+		.module_fare_a .graph_fare .fare2 .graph{display:inline-block;width:100%;height:12px;background-color:#fcb01f}
+		.module_fare_a .graph_fare .fare3 .graph{display:inline-block;width:100%;height:12px;background-color:#fc087e;border-radius:0 7px 7px 0}
+		.module_fare_a .graph_fare p{font-size:12px}
+		.module_fare_a .graph_fare i{display:block;color:#333;font-weight:bold}
+	</style>
+<!-- main_b.html 실시간 요금 모듈 -->
+	<section class="module_b module_fare_a">
+		<h2><a href="#">실시간 요금조회</a></h2>
+		<div class="desc_fare">
+			<span class="tx_date"></span>
+			<span class="tx_fare"><i></i>원</span>
+		</div>
+		<div class="graph_fare">
+			<span class="fare1"><span class="graph"></span><p>통신서비스 요금 <i></i></p></span>
+			<span class="fare2"><span class="graph"></span><p>부가사용금액 <i></i></p></span>
+			<span class="fare3"><span class="graph"></span><p>단말기 할부금 <i></i></p></span>				
+		</div>			
+	</section>
+<!-- // main_b.html 실시간 요금 모듈 -->
+</template>
+
+<template id = 'main-hotbill-tmpl-autoscaling'>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		.module_a{padding:10px;margin-top:5px;border-radius:5px;background-color:#fff;box-shadow:0 3px 10px rgba(0,0,0,0.28)}
+		/*.module_a:first-child{margin:0}*/
+		.module_prod_a h2{color:#333;font-size:15px}
+		.module_prod_a .lst_prod{margin-top:10px;text-align:center}
+		.module_prod_a li{position:relative;display:inline-block;width:23.5%;vertical-align:top;padding-top:50px;font-size:12px;color:#333}
+		.module_prod_a li span{display:inline-block;position:absolute;left:50%;top:26px;width:18px;height:18px;margin-left:11px;background-color:#ff7608;color:#fff;border-radius:999em;line-height:18px} 
+		.module_prod_a li a{display:inline-block;position:absolute;left:50%;top:26px;width:18px;height:18px;margin-left:11px;background-color:#999;color:#fff;border-radius:999em;line-height:18px;font-size:13px} 
+		.module_prod_a li i{color:#666;font-size:11px;display:block}
+		.module_prod_a li.lst1{background:url(../img/ico_prod1.png) no-repeat center 0;background-size:45px auto}
+		.module_prod_a li.lst2{background:url(../img/ico_prod2.png) no-repeat center 0;background-size:45px auto}
+		.module_prod_a li.lst3{background:url(../img/ico_prod3.png) no-repeat center 0;background-size:45px auto}
+		.module_prod_a li.lst4{background:url(../img/ico_prod4.png) no-repeat center 0;background-size:45px auto}
+	</style>
+	<section class="module_a module_prod_a" style="min-height: 100px;">
+			<h2>사용중인 상품</h2>
+			<ul class="lst_prod">
+			<li class="lst1">모바일<span>1</span></li>
+			<li class="lst2">인터넷/집전화/IPTV<span>1</span></li>
+			<li class="lst3">휴대용<br>와이파이<i>(포켓파이, 와이프로)</i><a href="#">+</a></li>
+			<li class="lst4">PPS<a href="#">+</a></li>
+			</ul>
+	</section>
+</template>
+
+<script>
+class mainHotbill extends HTMLElement
+{		
+	constructor()
+	{
+		super();
+		
+		this.value = '';
+		this.data = null;
+		
+		var self = this;
+		var root = this.attachShadow({mode:'open'});
+		var html = document.querySelector('#main-hotbill-tmpl').innerHTML;
+		root.innerHTML = html;
+	
+		this.receiveData(function(data)
+		{
+			//hotbill down
+			if (data.rtnCd!='0000'){
+				// console.log('hotbill down');
+				self.shadowRoot.innerHTML = document.querySelector('#main-hotbill-tmpl-autoscaling').innerHTML;
+			}else{
+				self.shadowRoot.querySelector('.tx_date').append('이용기간 : '+data.hotbill.termHotBill);
+				self.shadowRoot.querySelector('.tx_fare i').append(data.hotbill.totalBill);
+				self.shadowRoot.querySelector('.fare1 i').append(data.hotbill.telBillAmt+'원');
+				self.shadowRoot.querySelector('.fare2 i').append(data.hotbill.addBillAmt+'원');
+				self.shadowRoot.querySelector('.fare3 i').append(data.hotbill.equipBillAmt+'원');
+			}
+		});
+	}
+
+	receiveData(callback)
+	{
+		$.get('/bff/hotbill_ajax', '', function(result){
+			console.log('result: '+JSON.stringify(result));
+			callback(JSON.parse(result));
+		});
+	}	
+}
+
+customElements.define('main-hotbill', mainHotbill);
+</script>

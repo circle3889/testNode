@@ -1,0 +1,129 @@
+<link rel="import" href="util/lazy-img.html"/>
+<template id="main-mbs-tmpl-a1">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		.module_a{padding:10px;margin-top:5px;border-radius:5px;background-color:#fff;box-shadow:0 3px 10px rgba(0,0,0,0.28)}
+		/*.module_a:first-child{margin:0}*/
+		.module_card_a{position:relative;overflow:hidden}
+		.module_card_a h2{padding-left:35px;background:url(../img/ico_card_a.png) no-repeat 0 3px;background-size:26px auto}
+		.module_card_a h2 a{color:#333;font-size:15px;padding-right:9px;background:url(../img/arr_rgt_red.png) no-repeat right 5px;background-size:6px auto}
+		.module_card_a .barcode_wrap{padding-right:110px}
+		.module_card_a .barcode{position:relative;margin-top:10px}
+		/*.module_card_a .barcode img{width:100%}*/
+		.module_card_a .card_desc{position:absolute;top:32px;right:0;text-align:center;padding-right:10px}
+		.module_card_a .card_desc .tx_h{font-size:12px;font-weight:bold}
+		.module_card_a .card_desc .tx_point{padding:5px 0;color:#e9012d}
+		.module_card_a .card_desc .tx_point em{font-size:16px;font-weight:bold}
+		.module_card_a .card_desc .lst_card_info{font-size:12px;line-height:17px}
+		.module_card_a .card_desc .lst_card_info i{color:#333}
+	</style>
+
+<!-- main_a.html 멤버십 카드 모듈 -->
+	<section class="module_a module_card_a" style="min-height: 100px;">
+		<h2><a href="#">T멤버십 카드_</a></h2>
+		<div class="barcode_wrap">
+			<div class="barcode"><lazy-img src="img/img_barcode_a.png" style="width:100%" alt=""></div>
+		</div>
+		<div class="card_desc">
+			<p class="tx_h">잔여 할인한도</p>
+			<p class="tx_point"><em>19,000</em>점</p>
+			<ul class="lst_card_info">
+				<li>등급 <i>SILVER</i></li>
+				<li>카드 <i>leaders</i></li>
+			</ul>
+		</div>
+	</section>
+<!-- // main_a.html 멤버십 카드 모듈 -->
+</template>
+
+<template id="main-mbs-tmpl-b">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		.module_b{padding:13px 0;font-size:16px;color:#333;border-top:1px dashed #d7d7d7}
+		/*.module_b:first-child{border:0;padding-top:0}*/
+		.module_card_b{position:relative;overflow:hidden}
+		.module_card_b h2{padding:0 0 5px 35px;background:url(../img/ico_card_a.png) no-repeat 0 3px;background-size:26px auto;color:#333;font-size:16px}
+		.module_card_b .barcode_wrap{padding-left:110px}
+		.module_card_b .barcode{position:relative;margin-top:10px}
+		/*.module_card_b .barcode img{width:100%}*/
+		.module_card_b .card_desc{position:absolute;top:43px;left:0;text-align:center;padding-right:10px}
+		.module_card_b .card_desc .tx_h{font-size:12px;font-weight:bold}
+		.module_card_b .card_desc .tx_point{padding:5px 0;color:#e9012d}
+		.module_card_b .card_desc .tx_point em{font-size:16px;font-weight:bold}
+		.module_card_b .card_desc .lst_card_info{font-size:12px;line-height:17px}
+		.module_card_b .card_desc .lst_card_info i{color:#333;font-weight:bold;padding-left:10px}
+	</style>
+
+	<!-- main_b.html 멤버십 카드 모듈 -->
+	<section class="module_b module_card_b" style="min-height: 100px;">
+		<h2>T멤버십 카드</h2>
+		<div class="barcode_wrap">
+			<div class="barcode"><lazy-img src="img/img_barcode_a.png" style="width:100%" alt=""></div>
+		</div>
+		<div class="card_desc">
+			<p class="tx_h">잔여 할인한도</p>
+			<p class="tx_point"><em>70,825</em>점</p>
+			<ul class="lst_card_info">
+				<li>등급 <i>VIP</i></li>
+				<li>카드 <i>TTL</i></li>
+			</ul>
+		</div>
+	</section>
+	<!-- // main_b.html 멤버십 카드 모듈 -->
+</template>
+
+<template id="main-mbs-tmpl-oksusu">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        .module_b{padding:13px 0;font-size:16px;color:#333;border-top:1px dashed #d7d7d7}
+       	.module_recomm_b{position:relative}
+    	.module_recomm_b .btn_prev{position:absolute;top:46%;left:0;width:8px;height:20px;background:url(../img/btn_prev.png) no-repeat 0 0;background-size:100%;text-indent:-999em}
+	    .module_recomm_b .btn_next{position:absolute;top:46%;right:0;width:8px;height:20px;background:url(../img/btn_next.png) no-repeat 0 0;background-size:100%;text-indent:-999em}
+	    .module_recomm_b .lst_recomm{overflow:hidden;margin:15px 20px 0;text-align:center;white-space:nowrap}
+	    .module_recomm_b .lst_recomm li{width:28%;margin:0 2%;display:inline-block;font-size:12px;color:#666}
+	    .module_recomm_b .lst_recomm li img{width:100%}
+	    .module_recomm_b .lst_recomm li p{padding-top:5px}
+    </style>
+	<!-- main_b.html 실시간 배포 모듈 -->
+    <section class="module_b module_recomm_b">
+	    <h2>Oksusu &amp; Melon 추천</h2>
+		<button type="button" class="btn_prev">이전</button>
+		<ul class="lst_recomm">
+			<li>
+				<img src="img/img_recom_b1.jpg" alt="라라랜드">
+				<p>라라랜드</p>
+			</li>
+			<li>
+				<img src="img/img_recom_b2.jpg" alt="썰전">
+				<p>썰전</p>
+			</li>
+			<li>
+				<img src="img/img_recom_b3.jpg" alt="밤편지(아이유)">
+				<p>밤편지(아이유)</p>
+			</li>
+		</ul>
+	    <button type="button" class="btn_next">다음</button>
+	</section>
+	<!-- main_b.html 실시간 배포 모듈 -->
+</template>
+
+<script>
+class mainMbs extends HTMLElement
+{		
+	constructor()
+	{
+		super();
+		
+		this.value = '';
+		this.data = null;
+		
+		// var self = this;
+		var root = this.attachShadow({mode:'open'});
+ 		var html = document.querySelector('#main-mbs-tmpl').innerHTML;
+// 		 var html = document.querySelector('#main-mbs-tmpl-oksusu').innerHTML;
+		root.innerHTML = html;	
+	}
+}
+
+customElements.define('main-mbs', mainMbs);
+</script>

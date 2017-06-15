@@ -1,0 +1,334 @@
+<template id="main-freebill-tmpl-A1">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style>
+	.module_a{padding:10px;margin-top:5px;border-radius:5px;background-color:#fff;box-shadow:0 3px 10px rgba(0,0,0,0.28)}
+	.module_a:first-child{margin:0}
+	.module_data_a{text-align:center}
+	.module_data_a .graph_data{overflow:hidden;position:relative;display:inline-block;width:76px;height:135px;background:url(../img/img_phone_a.png) no-repeat 0 0;background-size:100%;text-align:center;vertical-align:top}
+	.module_data_a .graph_data h2{margin-top:30px;font-size:12px;color:#333}
+	.module_data_a .tx_data{display:block;margin-top:25px;color:#fff;font-weight:bold;font-size:28px;font-family:Brush Script STD}
+	.module_data_a .desc_data{display:inline-block;min-width:180px;text-align:left;margin-left:20px;vertical-align:top}
+	.module_data_a .desc_data .tx_plan{font-size:20px;color:#333}
+	.module_data_a .desc_data .tx_expire{font-size:16px}
+	.module_data_a .desc_data .lst_remain{margin-top:10px;font-size:13px}
+	.module_data_a .desc_data .lst_remain li{overflow:hidden;line-height:19px}
+	.module_data_a .desc_data .lst_remain .t{float:left;width:50%}
+	.module_data_a .desc_data .lst_remain .d{float:left;width:50%;text-align:right;color:#333}
+	.module_data_a .desc_data .lst_remain .d i{color:#e9012d}
+	.module_data_a .desc_data .lst_remain .d i.refill{color:#fc9e0b}
+	.module_data_a .desc_data .lst_remain a{padding-right:9px;background:url(../img/arr_rgt_red.png) no-repeat right 4px;background-size:6px auto}
+</style>
+<section class="module_a module_data_a" style="min-height: 120px;">
+	<div class="graph_data">
+		<h2>잔여데이터</h2>
+		<span class="tx_data dataPercent"></span>
+	</div>
+	<div class="desc_data">
+		<p class="tx_plan prodNm"></p>
+		<p class="tx_expire"><span class="remainDay"></span></p>
+		<ul class="lst_remain">
+			<li class="remain_v">
+				<span class="t remain_v_t"></span>
+				<span class="d">
+					<i class="remain_v_d"></i>
+				</span>
+			</li>
+			<li class="remain_s" style="padding-top: 3px;">
+				<span class="t remain_s_t"></span>
+				<span class="d">
+					<i class="remain_s_d"></i>
+				</span>
+			</li>
+			<li class="remain_d" style="padding-top: 3px;">
+				<span class="t remain_d_t"></span>
+				<span class="d">
+					<i class="remain_d_d"></i>
+				</span>
+			</li>
+		</ul>
+	</div>
+</section>
+</template>
+
+<template id="main-freebill-tmpl-B">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style>
+	.module_b{padding:13px 0;font-size:16px;color:#333;border-top:1px dashed #d7d7d7}
+	.module_b:first-child{border:0;padding-top:0}
+	.module_data_b .tx_plan{font-size:20px;color:#333}
+	.module_data_b .tx_expire{color:#e9012d}
+	.module_data_b .graph_data{float:right;width:151px;height:69px;background:url(../img/img_data_b.png) no-repeat 0 0;background-size:100%;text-align:center !important}
+	.module_data_b .graph_data .tx_data{display:block;padding-top:18px;font-weight:bold;color:#666}
+	.module_data_b .graph_data .tx_data i{font-size:32px;color:#333}
+	.module_data_b .graph_data .tx_data2{display:block;padding-top:2px;color:#666}
+	.module_data_b .graph_data .tx_data2 i{color:#e9012d}
+	.module_data_b .lst_remain li{overflow:hidden;line-height:19px}
+	.module_data_b .lst_remain .t{float:left;width:50%}
+	.module_data_b .lst_remain .d{float:left;width:50%;text-align:right;color:#333}
+	.module_data_b .lst_remain .data_remain{padding-bottom:15px;}
+	.module_data_b .lst_remain .data_remain .t{width:auto;margin-top:50px}
+</style>
+<section class="module_b module_data_b" style="min-height: 120px;">
+	<p class="tx_plan prodNm"></p>
+	<p class="tx_expire"><span class="remainDay"></span></p>
+	<ul class="lst_remain">
+		<li class="data_remain">
+			<span class="t remain_d_t">데이터 사용량</span>
+			<div class="graph_data">
+				<span class="tx_data">
+					<i class="dataPercent"></i>%
+				</span>
+				<span class="tx_data2">
+					<i class="remain_d_d"></i>
+				</span>
+			</div>
+		</li>
+		<li>
+			<span class="t remain_v_t"></span>
+			<span class="d">
+				<i class="remain_v_d"></i>
+			</span>
+		</li>
+		<li>
+			<span class="t remain_s_t"></span>
+			<span class="d remain_s_d"><i></i></span>
+		</li>
+	</ul>
+</section>
+</template>
+
+<template id="main-freebill-tmpl-C">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style>
+	#module_wrap.module_wrap_c{border-radius:0;box-shadow:none;color:#434159;background-color:initial;padding:0}
+	.module_data_c{padding:9px 6px;background-color:#fff;}
+	.module_data_c .user_info{float:left;width:95px;height:98px;background-color:#434159;border-radius:7px;color:#fff;font-size:0.8em;text-align:center}
+	.module_data_c .user_info .tx_name{padding:25px 0 10px}
+	.module_data_c .wrap_remain{padding-left:105px;background:url(../img/img_barcode_c.png) no-repeat right 10px;background-size:36px auto}
+	.module_data_c .tx_plan{font-size:0.88em;font-weight:bold}
+	.module_data_c .tx_expire{font-size:0.88em}
+	.module_data_c .lst_remain{padding-top:5px}
+	.module_data_c .lst_remain li{overflow:hidden;line-height:18px;font-size:0.8em}
+	.module_data_c .lst_remain .t{float:left;width:50%}
+	.module_data_c .lst_remain .d{float:left;width:50%;text-align:right;color:#333}
+	.module_data_c .lst_remain .d i{color:#333;font-weight:bold;font-size:1.1em}
+	.module_data_c .lst_remain .d em{color:#e9012d;font-size:1.1em;font-weight:bold}
+	.module_info_c .section_info{overflow:hidden;margin-top:2px;padding:17px 14px;background-color:#fff;}
+</style>
+<section class="module_data_c" style="min-height: 100px;">
+	<div class="user_info">
+		<p class="tx_name" id="userNm"></p>
+		<p class="tx_cell" id="svcNum"></p>
+	</div>
+	<div class="wrap_remain">
+		<p class="tx_plan prodNm"></p>
+		<p class="tx_expire"><span class="remainDay"></span></p>
+		<ul class="lst_remain">
+			<li>
+				<span class="t remain_d_t"></span>
+				<span class="d">
+					<em class="remain_d_d"></em>
+				</span>
+			</li>
+			<li>
+				<span class="t remain_v_t"></span>
+				<span class="d">
+					<em class="remain_v_d"></em>
+				</span>
+			</li>
+			<li>
+				<span class="t remain_s_t"></span>
+				<span class="d">
+					<em class="remain_s_d"></em>
+				</span>
+			</li>
+		</ul>
+	</div>
+</section>
+</template>
+<script>
+class mainFreebill extends HTMLElement
+{	
+	constructor()
+	{
+		super();
+		
+ 		this.userNm;
+ 		this.svcNum;
+
+		//A1 segment 로 접속시 body class 변경 
+		if (document.querySelector('#main-freebill-tmpl-A1')==null){
+			document.querySelector('body').setAttribute('class', 'module_wrap_a');
+		}
+
+		var self = this;
+		var html = document.querySelector('#main-freebill-tmpl').innerHTML;
+		var root = self.attachShadow({mode:'open'});
+
+		root.innerHTML = html;
+
+		self.userNm = root.querySelector('#userNm');
+		self.svcNum = root.querySelector('#svcNum');
+		
+		this.freebillAjax(function(data)
+		{
+			self.data = data;
+			
+			var ajaxHtml = "";
+
+			if (data.returnCode == "error") {
+
+				ajaxHtml = "조회 중 에러가 발생하였습니다.";
+				
+				root.querySelector('#replace-direct1').innerHTML = ajaxHtml;
+				
+			} else {
+				
+				//console.log(data.resultInfo);
+				
+				var now = new Date();
+				var remainDay;
+				var freebillList = data.freeBillList;
+				var prodNm = data.resultInfo.prodNm;
+				var prodId = data.resultInfo.prodId;
+				
+				var V_Check = false;
+				var S_Check = false;
+				var D_Check = false;
+				
+				remainDay = (new Date(now.getYear(), now.getMonth()+1, 0).getDate()) - (new Date().getDate());
+				
+				root.querySelector('.prodNm').innerHTML = prodNm;
+				root.querySelector('.remainDay').innerHTML = remainDay + "일 남았습니다.";
+			
+				for (var i = 0; i < freebillList.length; i++) {
+					var freeBillNm = freebillList[i].freeBillNm;
+					var freeBillCd = freebillList[i].freeBillCd;
+					var percent    = freebillList[i].percent;
+					var use        = freebillList[i].use;
+					var remain     = freebillList[i].remain;
+					
+					if("V" == freeBillCd){ //음성/영상
+						
+						console.log("======== 음성 ========");
+					
+						V_Check = true;
+
+						var remainHourSplit = remain.split("시간");
+						var remainMinuteSplit;
+						var remainHour;
+						var remainMinute;
+						if(remainHourSplit.length > 1){
+							remainHour = remainHourSplit[0] * 60;
+							remainMinuteSplit = remainHourSplit[1].split("분");
+							if(remainMinuteSplit.length > 1){
+								remainMinute = remainMinuteSplit[0];
+							}
+						}
+						
+						remain = (parseInt(remainHour) + parseInt(remainMinute)) + "분";
+
+						root.querySelector('.remain_v_t').innerHTML = freeBillNm;
+						root.querySelector('.remain_v_d').innerHTML = remain;
+						
+					}else if("S" == freeBillCd){ //SMS/MMS						
+						console.log("======== 문자 ========");
+					
+						S_Check = true;
+						
+						if(freeBillNm.match(/원/g)){
+							remain = remain+"원";
+						}else if(freeBillNm.match(/건/g)){
+							remain = remain+"건";
+						}
+
+						root.querySelector('.remain_s_t').innerHTML = freeBillNm;
+						root.querySelector('.remain_s_d').innerHTML = remain;
+						
+					}else if("D" == freeBillCd){  //데이터통화
+						console.log("======== 데이터 ========");
+					
+						D_Check = true;
+						
+						$("#d_call_h4").html(freeBillNm);
+						
+						if( remain == ''){
+							remain = '0';
+						}
+						
+						var size = parseFloat(remain.replace(/,/gi, ""));
+						var tempSize = parseFloat(size);
+						var sizeK = 0;
+						var unit = "";
+						
+						if(tempSize < 1024){
+							unit = "KB";
+							sizeK = Math.floor(tempSize);
+							
+						}else{
+			                 if ((1024 <= tempSize ) && ( tempSize < (1024 * 1024))){
+			                     sizeK = Math.floor(tempSize /1024);
+			        	         unit = "MB";
+			                 } else if ( (1024*1024 <= tempSize ) && ( tempSize < (1024 * 1024 * 1024))){
+			                 	  sizeK = tempSize /1024/1024;
+			                 	  unit = "GB";
+			        	          if (sizeK >= 1000) {
+			                         sizeK = Math.floor(sizeK);
+			                      } else if ( (100 <= sizeK) && (sizeK < 1000)){
+			                         sizeK = sizeK.toFixed(1);
+			                      } else if ( (1 <= sizeK) && (sizeK < 100)){
+			                         sizeK = sizeK.toFixed(2);
+			                      }
+			                 }
+		    	         }
+						
+						root.querySelector('.remain_d_t').innerHTML = freeBillNm;
+						root.querySelector('.remain_d_d').innerHTML = sizeK + unit;
+						if(root.querySelector('.dataPercent')) root.querySelector('.dataPercent').innerHTML = percent;
+						
+					}
+				}				
+				
+				if( !V_Check ){
+					root.querySelector('#remain_v').innerHTML = "음성 잔여기본통화 정보가 없습니다.";
+				}
+				if( !S_Check ){
+					root.querySelector('#remain_s').innerHTML = "문자 잔여 정보가 없습니다.";
+				}
+				if(!D_Check){
+					root.querySelector('#remain_d').innerHTML = "데이터 잔여 정보가 없습니다.";
+				}		   
+				   
+			}
+		});
+	}
+	
+	freebillAjax(callback)
+	{
+		
+		var xmlhttp = new XMLHttpRequest();
+	    xmlhttp.onreadystatechange = function()
+	    {
+	        if (xmlhttp.readyState == XMLHttpRequest.DONE )
+	        {
+	        	var data = JSON.parse(xmlhttp.responseText);
+	        	
+	        	callback(data);
+	        }
+	    };
+
+	    xmlhttp.open('GET', "/bff/freebill_main_ajax", true);
+	    xmlhttp.send();
+	}
+	
+	setUserNm(val){
+		this.userNm.innerHTML = val;
+	}
+	
+	setSvcNum(val){
+		this.svcNum.innerHTML = val;
+	}
+}
+
+customElements.define('main-freebill', mainFreebill);
+</script>

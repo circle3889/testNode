@@ -1,0 +1,33 @@
+<template id="main-banner-tmpl">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+		.banner_a{margin-top:5px}
+		.banner_a img{width:100%}
+    </style>
+
+	<div class="banner_a" style="min-height: 80px;">
+		<a href="#"><img src="img/banner_a.png" alt="T마스터 iOS & 태블릿 버전 런칭 EVENT / T마스터 친구에게 공유하고 아이패드, 갤럭시탭 받으러 GO!"></a>
+	</div>
+</template>
+
+<script>
+class mainBanner extends HTMLElement
+{		
+	constructor()
+	{
+		super();
+		
+		// this.value = '';
+		// this.data = null;
+		//var self = this;
+
+		var root = this.attachShadow({mode:'open'});
+		var html = document.querySelector('#main-banner-tmpl').innerHTML;
+		
+		root.innerHTML = html;
+	}
+	
+}
+
+customElements.define('main-banner', mainBanner);
+</script>

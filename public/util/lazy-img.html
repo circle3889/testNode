@@ -1,0 +1,92 @@
+<script>
+class lazyImg extends HTMLElement{
+	constructor(){
+		console.log('lazyImg start');
+		super();
+		const shadow = this.attachShadow({mode:'open'});
+		
+		const style = document.createElement('style');
+		style.appendChild(
+			document.createTextNode(':host {display:block;}')
+		);
+		shadow.appendChild(style);
+		
+		const img = document.createElement('img');
+		this.img = img;
+		shadow.appendChild(img);
+		
+		this.handleScroll = this.handleScroll.bind(this);
+	}
+	
+	//element.appendChild(lazyImg); Dom �� �߰� ��
+	connectedCallback(){
+		setTimeout(()=>{
+			this.handleScroll();
+		}, 0)
+		this.startHandleScroll();
+	}
+	
+	// element.removechild()
+	disconnectedCallback(){
+		this.stopHandleScroll();
+	}
+	
+	handleScroll(){
+		if(this.isInViewport()){
+			this.img.src = this.getAttribute('src');
+			this.img.class = this.getAttribute('class');
+			console.log('this.img.class: '+ this.img.class);
+			this.img.style = this.getAttribute('style');
+			this.img.alt = this.getAttribute('alt');
+			//<img style="width:100%;">
+			this.stopHandleScroll();
+		}
+	}
+	
+	startHandleScroll(){
+		window.addEventListener('scroll', this.handleScroll);
+	}
+	
+	stopHandleScroll(){
+		window.removeEventListener('scroll', this.handleScroll);
+		
+	}
+	
+	isInViewport(){
+		const rect = this.getBoundingClientRect();
+		const pad = 0;
+		const view = {
+				top : 0 - pad,
+				left : 0 - pad,
+				bottom : window.innerHeight + pad,
+				right : window.innerWidth + pad
+		};
+		
+		if(view.right < rect.left){
+			return false;
+			
+		}
+		
+		if(view.left > rect.right){
+			return false;
+			
+		}
+		
+		if(view.top > rect.bottom){
+			return false;
+			
+		}
+		
+		if(view.bottom < rect.top){
+			return false;
+			
+		}
+		
+		return true;
+		
+	}
+	
+}
+
+customElements.define('lazy-img', lazyImg);
+</script>

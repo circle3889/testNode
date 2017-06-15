@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script type="text/javascript" src="js/webcomponents-lite.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="js/common_ui.js"></script>
+</head>
+<body>
+<div id="wrap">
+	<header id="hd">
+		<h1 class="logo"><a href="type.html">T world</a></h1>
+		<a href="type.html" class="btn_type">타입선택 바로가기</a>
+		<button type="button" onclick="sizeUp();" class="btn_enlarge" id="btn_enlarge" style="display:none;">글자 크기 확대</button>
+		<button type="button" onclick="sizeDown();" class="btn_contract" id="btn_contract" style="display:none;">글자 크기 축소</button>
+		<button type="button" onclick="toggleMenu();" class="btn_menu" id="btn_menu">메뉴 보기</button>
+	</header>
+	
+	<div id="menuLayer" class="layer_menu">
+	<main-c1></main-c1>
+	</div>
+	
+	<main-c2></main-c2> <!-- main_a.html:회선정보 main_b.html:미사용 main_c.html:미사용-->
+
+	<div id="module_wrap"> 
+		<main-c3></main-c3> <!-- main_a.html:잔여    main_b.html:회선정보          main_c.html:잔여 -->
+		<main-c4></main-c4> <!-- main_a.html:실시간  main_b.html:잔여              main_c.html:알림 -->
+		<main-c5></main-c5> <!-- main_a.html:배너    main_b.html:멤버십(->추천배너) main_c.html:미사용 -->
+		<main-c6></main-c6> <!-- main_a.html:멤버십  main_b.html:실시간            main_c.html:미사용 -->
+	</div>
+</div>
+</body>
+</html>

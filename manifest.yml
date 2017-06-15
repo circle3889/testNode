@@ -1,0 +1,10 @@
+---
+applications:
+- name: twdNode
+  memory: 100M
+  instances: 1
+  random-route: false
+  buildpack: nodejs_buildpack
+  path: .
+  services:
+   - Redis-ma

@@ -1,0 +1,7069 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<!-- @@ 2016.02.23 웹접근성 END -->
+<!-- @@ 2016.02.23 웹접근성 START -->
+<!-- 웹접근성 수정  -->
+<title>로그인 &lt; T world</title>
+<style>
+/**
+ * inspired by Eric Meyer (v2.0; 20110126; No License)
+ * http://meyerweb.com/eric/tools/css/reset/
+ */
+
+/** css reset ***************************************************************/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u,
+i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table,
+caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+embed, figure, figcaption, footer, header, menu, nav, output, ruby, section,
+summary, time, mark, audio, video {
+ z-index: inherit;
+ padding: 0;
+ border: 0;
+ margin: 0;
+ vertical-align: baseline;
+ font: inherit;
+ font-size: 100%;
+}
+article, aside, details, figcaption, figure,
+footer, header, menu, nav, section {
+ display: block;
+}
+body {
+ line-height: 1;
+ font-style: normal;
+ font-weight: normal;
+ -webkit-text-size-adjust: none;
+ -ms-text-size-adjust: none;
+}
+ol, ul {
+ list-style: none;
+}
+a {
+ text-decoration: none;
+}
+blockquote, q {
+ quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+ content: none;
+}
+table {
+ width: 100%;
+ border-collapse: collapse;
+ border-spacing: 0;
+}
+input[type=button], input[type=text], input[type=image], input[type=submit],
+input[type=password], input[type=tel], input[type=number], select, textarea {
+ -webkit-appearance: none;
+ -moz-appearance: none;
+ border-radius: 0;
+}
+input[type=checkbox] {
+ -webkit-appearance: checkbox;
+ -moz-appearance: checkbox;
+}
+input[type=radio] {
+ -webkit-appearance: radio;
+ -moz-appearance: radio;
+}
+input::-ms-clear {
+ display: none;
+ width: 0;
+ height: 0;
+}
+input::-ms-reveal {
+ display: none;
+ width: 0;
+ height: 0;
+}
+
+/** for util ****************************************************************/
+
+/* supplemental place for ux */
+#ux-supplement {
+ position: absolute;
+ top: 0;
+ left: 0;
+ z-index: 20000;
+ height: 0 !important;
+ overflow: visible;
+}
+
+/* ellipsis */
+.ellipsis {
+ word-break: break-all;
+}
+
+/** css utilities ***********************************************************/
+
+/* horizontal group */
+.h-group {
+ display: block;
+}
+.h-group:after {
+ content: '';
+ display: block;
+ clear: both;
+}
+.h-item {
+ display: block;
+ float: left;
+ height: 100%;
+}
+.h-group > .h-item:first-child {
+ margin-left: 0 !important;
+}
+
+/* horizontal centering */
+.h-align {
+ overflow: hidden;
+}
+.h-align > .h-aligner {
+ position: relative;
+ float: left;
+ left: 50%;
+}
+.h-align > .h-aligner > .h-aligned {
+ position: relative;
+ float: left;
+ left: -50%;
+}
+
+/** common ******************************************************************/
+/* 20151106 : 수정 */
+a, button/*, .role-holder*/ {
+ cursor: pointer;
+}
+
+.role-holder {
+ display: inline-block;
+ position: relative;
+ box-sizing: border-box;
+}
+
+.btn, .cbox, .rbox, .tbox, .sbox {
+ box-sizing: border-box;
+ width: 100%;
+ height: 100%;
+ padding: 0;
+ border: 0;
+ margin: 0;
+}
+/* 20151106 : 추가 */
+.btn, .cbox, .rbox, .sbox {
+ cursor: pointer;
+}
+/* 20151106 : 추가 */
+button:disabled, button.disabled,
+.btn:disabled, .cbox:disabled, .rbox:disabled, .sbox:disabled,
+.btn.disabled, .cbox.disabled, .rbox.disabled, .sbox.disabled {
+ cursor: default !important;
+}
+
+
+.role-message {
+ display: block;
+ /*word-break: break-all;*/
+}
+
+/** components **************************************************************/
+
+/* btn */
+.btn {
+ display: inline-block;
+ position: relative;
+ box-sizing: border-box;
+ padding: 0;
+ border: 0;
+ margin: 0;
+ background: 0;
+}
+
+/* sbox */
+.sbox-list {
+ position: absolute;
+ box-sizing: border-box;
+ max-height: 221px; /* 20160406 : 추가 */
+ overflow-y: auto; /* 20160406 : 추가 */
+}
+.device-mobile .role-select {
+ z-index: -1;
+}
+.device-mobile .sbox {
+ display: block;
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ opacity: 0;
+}
+
+/* popup */
+body.has-popup {
+ /*overflow: hidden;*/
+}
+.popup-layer {
+ display: none;
+ position: fixed;
+ top: 0;
+ right: 0;
+ bottom: 0;
+ left: 0;
+ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCQjFENjZBRjQ3NzgxMUU0QTA1N0E3QkM3NkE4Nzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCQjFENjZCMDQ3NzgxMUU0QTA1N0E3QkM3NkE4Nzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJCMUQ2NkFENDc3ODExRTRBMDU3QTdCQzc2QTg3NzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJCMUQ2NkFFNDc3ODExRTRBMDU3QTdCQzc2QTg3NzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+YecHeQAAABtJREFUeNpiZGBgWMZABGBiIBKMKqSOQoAAAwAY8QC6mMWMHAAAAABJRU5ErkJggg==');
+}
+.popup {
+ display: none;
+ position: absolute;
+}
+
+/* toast */
+.toast {
+ display: none;
+ position: absolute;
+ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCQjFENjZBRjQ3NzgxMUU0QTA1N0E3QkM3NkE4Nzc3MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCQjFENjZCMDQ3NzgxMUU0QTA1N0E3QkM3NkE4Nzc3MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJCMUQ2NkFENDc3ODExRTRBMDU3QTdCQzc2QTg3NzcxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJCMUQ2NkFFNDc3ODExRTRBMDU3QTdCQzc2QTg3NzcxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+YecHeQAAABtJREFUeNpiZGBgWMZABGBiIBKMKqSOQoAAAwAY8QC6mMWMHAAAAABJRU5ErkJggg==');
+ color: #fff;
+ white-space: nowrap;
+}
+
+/** common ******************************************************************/
+
+::-webkit-input-placeholder {
+ color: #8c8c8c !important;
+ font-weight: 400;
+ font-family: Verdana, '돋움', Dotum;
+}
+:-moz-placeholder {
+ color: #8c8c8c !important;
+ font-weight: 400;
+ font-family: Verdana, '돋움', Dotum;
+ opacity: 1;
+}
+::-moz-placeholder {
+ color: #8c8c8c !important;
+ font-weight: 400;
+ font-family: Verdana, '돋움', Dotum;
+ opacity: 1;
+}
+:-ms-input-placeholder {
+ color: #8c8c8c !important;
+ font-weight: 400;
+ font-family: Verdana, '돋움', Dotum;
+}
+.placeholder {
+ color: #8c8c8c !important;
+ font-weight: 400 !important;
+ font-family: Verdana, '돋움', Dotum;
+}
+
+.tbox, .pbox { /* 20151224 수정 */
+ outline: 0;
+}
+
+/** components **************************************************************/
+
+/* btn */
+.btn-red {
+ border: 1px solid #ed1f46;
+ background: #ed1f46;
+ color: #fff;
+}
+.btn-red:hover{ /* 20151224 추가 */
+ border-color: #f8385d;
+ background-color: #f8385d;
+}
+.btn-red:active { /* 20151224 추가 */
+ border-color: #d80d33;
+ background-color: #d80d33;
+}
+.btn-gray {  /* 20151224 수정 */
+ border: 1px solid #e2e2e2;
+ background-color: #f3f3f3;
+ color: #000;
+}
+.btn-gray:hover {  /* 20151224 추가 */
+ background-color: #f9f9f9;
+}
+.btn-gray:active { /* 20151224 수정 */
+ border-color: #d3d3d3;
+ background-color: #dcdcdc;
+}
+.btn-red.disabled,
+.btn-gray.disabled,
+.btn-red.disabled:active,
+.btn-gray.disabled:active {
+ border-color: #ececec;
+ background: #ececec;
+ color: #9a9a9a;
+ cursor: default; /* 20151106 : 추가 */
+}
+.btn-auth-method {
+ width: 100%;
+ height: 92px;
+ border: 1px solid #747474;
+}
+
+/* tbox */
+.holds-tbox {
+ width: 100%;
+}
+.holds-tbox.disabled .tbox {
+ width: 100%;
+ background: #f8f8f8;
+ color: #9a9a9a; /* 20150826 */
+ border-bottom-color: transparent; /* 20150826 */
+}
+.holds-tbox.focus .tbox,
+.tbox:focus {
+ border-color: #ed1f46;
+}
+
+/* sbox */
+.role-holder.holds-sbox.is-placeholder .btn-select {
+ color: #8c8c8c;
+ font-weight: 400;
+ opacity: 1;
+}
+/* 20150826 */
+.btn-select:disabled {
+ border-bottom: 1px solid transparent;
+ opacity: 0.5; /* 20150826 : down-arrow image를 grey 처리하기 위함 */
+ background-color: #f0f0f0; /* 20150829 : 위의 opacity 0.5를 감안하여 color 조정 */
+ color: #343434; /* 20150829 : 위의 opacity 0.5를 감안하여 color 조정 */
+}
+
+/* pbox */
+.holds-pbox {
+ width: 100%;
+}
+.holds-pbox.focus .pbox,
+.pbox:focus {
+ border-color: #ed1f46;
+}
+.holds-pbox.disabled .pbox {
+ width: 100%;
+ background: #f8f8f8;
+}
+
+/* tab */
+.tab-switcher:after {
+ content: '';
+ display: block;
+ clear: both;
+}
+.tab-switcher .tab-switch {
+ display: block;
+ float: left;
+ width: 50%;
+ padding: 0;
+ border: 0;
+ outline: 0;
+ background: #fff;
+}
+.tab-switch.selected .tab-switch-title {
+ color: #000;
+ border-bottom-color: #ed1f46;
+}
+
+/* popup */
+.popup {
+ background: #fff;
+}
+.popup-wide {
+ top: 0;
+ right: 0;
+ bottom: 0;
+ left: 0;
+ background: #fff;
+}
+.popup .popup-title {
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.popup .popup-direction {
+ text-align: center;
+}
+
+/** base css for elements ***************************************************/
+* {
+ -webkit-tap-highlight-color: transparent;
+}
+*{
+ *behavior: url(../css/boxsizing.htc);
+}
+
+html, body {
+ width: 100%;
+ height: 100%;
+ font-size: 12px;
+ letter-spacing: -.5px;
+ color: #000;
+}
+body {
+ box-sizing: border-box;
+}
+html, body, div, span, a, p, label, strong, em, button {
+ font-family: Tahoma, '돋움', Dotum;
+}
+a, a:link, a:visited {
+ color: #000;
+}
+strong {
+ font-weight: bold;
+}
+em {
+ color: #ed1f46;
+}
+
+.label-hidden {
+ position: absolute;
+ left: -9999px;
+}
+/* 20151106 : 수정 */
+label, .label {
+ cursor: default;
+}
+/** GNB **************************************************************/
+.gnb-holder {
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ z-index: 100;
+ height: 70px;
+ background: url(../images/gnb-background-pattern.png) repeat-x;
+}
+.gnb-holder .tid-logo {
+ display: inline-block;
+ margin-left: 30px;
+ /*background: url(../images/vi-tid-logo.png) no-repeat left center;*//* 20151008 : 삭제 */
+ width: 150px;
+ height: 65px;
+ /*text-indent: 200%;*//* 20151008 : 삭제 */
+ /*white-space: nowrap;*//* 20151008 : 삭제 */
+ /*overflow: hidden;*//* 20151008 : 삭제 */
+ line-height: 62px;/* 20151008 : 추가 */
+ /* 수정시작: 20151224 */
+ /* 웹접근성 수정 */
+ height: 50px;
+ margin-top: 8px;
+ /* 수정종료: 20151224 */
+}
+.gnb-holder .tid-logo img {
+ /* 수정시작: 20151224 */
+ /* 웹접근성 수정: 삭제 */
+ /* vertical-align: middle;/* 20151008 : 추가 */
+ /* 수정종료: 20151224 */
+}
+.gnb-holder .gnb-controls {
+ float: right;
+ line-height: 65px;
+ padding-right: 20px;
+}
+/* 수정시작: 20151224 */
+.gnb-holder .gnb-controls a {
+ /* padding: 0 15px; */
+ /* border-left: 1px solid #000; */
+ margin: 0 15px;
+ font-size: 17px;
+}
+/* .gnb-holder .gnb-controls a:first-child {
+ border-left: 0;
+} */
+/* 수정종료: 20151224 */
+.is-showroom .gnb-holder {
+ background: 0;
+}
+.is-showroom .gnb-holder .tid-logo {
+ /*background-image: url(../images/t-id-w.png);*//* 20151008 : 삭제 */
+}
+
+/** components **************************************************************/
+.btn {
+ height: 46px;
+ font-size: 17px;
+ font-weight: bold;
+ line-height: 45px;
+}
+.field-button-double:after {
+ content: '';
+ display: block;
+ clear: both;
+}
+.field-button-double .btn {
+ width: 48%;
+ margin-left: 4%;
+}
+.btn-tooltip {
+ width: 26px;
+ height: 26px;
+ background: url(../images/bt-question.png) no-repeat;
+ /* background-size: 22px 22px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.btn-tooltip:hover { /* 20151224 추가 */
+ background: url(../images/bt-question-h.png) no-repeat;
+}
+.btn-tooltip:active { /* 20151224 추가 */
+ background: url(../images/bt-question-a.png) no-repeat;
+}
+.btn-popup-close {
+ position: absolute;
+ top: 10px;
+ right: 10px;
+ width: 24px;
+ height: 24px;
+ background: url(../images/bt-close.png) no-repeat;
+ background-size: 24px 24px;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.popup-wide .btn-popup-close {
+ top: 17px;
+ right: 15px;
+}
+.btn-t-login {
+ background: #cb142f url(../images/vi-t-trans.png) no-repeat 12px center;
+ /* background-size: 50px 50px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.btn-t-login span {
+ display: block;
+ margin-left: 46px;
+ background: #e51937 url(../images/ti-tid-login-w.png) no-repeat 80px center;
+ /* background-size: 134px 50px; */
+ font-size: 17px;
+ text-align: center;
+ color: #fff;
+}
+.btn-t-sign-up {
+ background: #cb142f url(../images/vi-t-trans.png) no-repeat 12px center;
+ /* background-size: 50px 50px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.btn-t-sign-up span {
+ display: block;
+ margin-left: 46px;
+ background: #e51937 url(../images/bt-t-sign-up.png) no-repeat center center;
+ /* background-size: 130px 50px; */
+}
+.btn-t-sign-up.btn-sign-up-en span {
+ background-image: url(../images/bt-t-sign-up-en.png);
+}
+.btn-t-login:hover,
+.btn-t-sign-up:hover { /* 20151224 추가 */
+ background-color: #db1a3d;
+}
+.btn-t-login:hover span,
+.btn-t-sign-up:hover span { /* 20151224 추가 */
+ background-color: #ed2148;
+}
+.btn-t-login:active,
+.btn-t-sign-up:active,
+.btn-t-login:hover:active,
+.btn-t-sign-up:hover:active { /* 20151224 추가 */
+ background-color: #b51129;
+}
+.btn-t-login:active span,
+.btn-t-sign-up:active span,
+.btn-t-login:hover:active span,
+.btn-t-sign-up:hover:active span { /* 20151224 추가 */
+ background-color: #cd1732;
+}
+.btn-auth-method { /* 20151224 수정 */
+ width: 313px; /* 201509017 : 수정 */
+    height: auto;
+ min-height: 75px;
+    padding: 10px 15px 10px 100px;
+    border: 1px solid #e2e2e2;
+    background: #f5f5f5 no-repeat 22px center;
+    /* background-size: 60px 60px; */
+ color: #333;
+    text-align: left;
+    box-sizing: content-box;
+}
+.btn-auth-method:hover { /* 20151224 수정 */
+ background-color: #f9f9f9;
+}
+.btn-auth-method:active {  /* 20151224 수정 */
+ background-color: #dcdcdc;
+}
+.btn-auth-method.btn-icon-phone {
+ background-image: url(../images/vi-phone.png);
+}
+.btn-auth-method.btn-icon-lock {
+ background-image: url(../images/vi-lock.png);
+}
+.btn-auth-method.btn-icon-email {
+ background-image: url(../images/vi-email.png);
+}
+.btn-auth-method.btn-icon-number {
+ background-image: url(../images/vi-number.png);
+}
+.btn-auth-method.btn-icon-card {
+ background-image: url(../images/vi-card.png);
+}
+.btn-auth-method.btn-icon-certificate {
+ background-image: url(../images/vi-certificate.png);
+}
+.btn-auth-method.btn-icon-register-phone {
+ background-image: url(../images/vi-register-phone.png);
+}
+.btn-auth-method .title {
+ display: block;
+ font-size: 16px;
+ line-height: 21px;
+ /*color: #696969;*/ /* 20150902 : 삭제 */
+}
+.btn-auth-method .description {
+ display: block;
+ padding-top: 5px; /* 20150902 : 수정 */
+ font-size: 14px;
+ font-weight: normal;
+ line-height: 19px;
+ /*color: #696969;*/ /* 20150902 : 삭제 */
+}
+.btn.btn-underline {
+ display: inline-block;
+ width: auto;
+ height: auto;
+ padding-bottom: 2px;
+ border-bottom: 1px solid #000;
+ font-size: 12px;
+ line-height: 12px;
+}
+.btn.btn-underline.btn-red {
+ border: 0;
+ border-bottom: 1px solid #ed1f46;
+ color: #ed1f46;
+ background: 0;
+}
+.btn-t-id-making {
+ background: #cb142f url(../images/vi-t-trans.png) no-repeat 12px center;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.btn-t-id-making span {
+ display: block;
+ margin-left: 46px;
+ background: #e51937 url(../images/bt-t-sign-up.png) no-repeat 80px center;
+}
+.btn-t-id-making:hover { /* 20151224 추가 */
+ background-color: #db1a3d;
+}
+.btn-t-id-making:hover span { /* 20151224 추가 */
+ background-color: #ed2148;
+}
+.btn-t-id-making:active,
+.btn-t-id-making:hover:active { /* 20151224 추가 */
+ background-color: #b51129;
+}
+.btn-t-id-making:active span,
+.btn-t-id-making:hover:active span { /* 20151224 추가 */
+ background-color: #cd1732;
+}
+.btn-nav-arrow {
+ width: 30px;
+ height: 62px;
+ background: no-repeat center center;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.btn-nav-arrow.btn-nav-arrow-left {
+ background-image: url(../images/bt-slide-left.png);
+}
+.btn-nav-arrow.btn-nav-arrow-right {
+ background-image: url(../images/bt-slide-right.png);
+}
+
+.cbox {
+ width: 100%;
+ height: 100%;
+ -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+ filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+ opacity: 0;
+}
+.holds-cbox {
+ width: 20px;
+ height: 20px;
+ margin: 0 8px 0 0;
+ background: url(../images/check-box.png) no-repeat 0 0;
+ /* background-size: 30px 60px; */
+}
+.holds-cbox:hover { /* 20151224 추가 */
+ background-position: 0 -20px;
+}
+.holds-cbox.checked { /* 20151224 수정 */
+ background-position: 0 -40px;
+}
+.holds-cbox.disabled { /* 20151224 수정 */
+ background-position: 0 -60px;
+}
+.holds-cbox.disabled .cbox { /* 20151224 추가 */
+ cursor: default;
+}
+.holds-cbox.checked.disabled,
+.holds-cbox.checked.disabled:hover { /* 20151224 수정 */
+ background-position: 0 -80px;
+}
+.holds-cbox.checked.disabled .cbox { /* 20151224 추가 */
+ cursor: default;
+}
+.holds-cbox.focus { /* 20151224 추가 */
+ background-position: 0 -100px;
+}
+.holds-cbox.checked.focus { /* 20151224 추가 */
+ background-position: 0 -120px;
+}
+.holds-cbox + .label {
+ display: inline-block;
+ height: 20px;
+ line-height: 20px;
+ vertical-align: top;
+ font-size: 17px;
+}
+.cbox-small .holds-cbox { /* 20151224 수정 */
+ width: 18px;
+ height: 18px;
+ margin: 0 8px 0 0;
+ background: url(../images/check-box-small.png) no-repeat 0 0;
+}
+.cbox-small .holds-cbox:hover { /* 20151224 추가 */
+ background-position: 0 -18px;
+}
+.cbox-small .holds-cbox.checked { /* 20151224 수정 */
+ background-position: 0 -36px;
+}
+.cbox-small .holds-cbox.disabled,
+.cbox-small .holds-cbox.disabled:hover { /* 20151224 추가 */
+ background-position: 0 -54px;
+}
+.cbox-small .holds-cbox.disabled .cbox { /* 20151224 추가 */
+ cursor: default;
+}
+.cbox-small .holds-cbox.checked.disabled { /* 20151224 추가 */
+ background-position: 0 -72px;
+}
+.cbox-small .holds-cbox.checked.disabled .cbox { /* 20151224 추가 */
+ cursor: default;
+}
+.cbox-small .holds-cbox.focus { /* 20151224 추가 */
+ background-position: 0 -90px;
+}
+.cbox-small .holds-cbox.checked.focus { /* 20151224 추가 */
+ background-position: 0 -108px;
+}
+.cbox-small .label {
+ height: 20px;
+ line-height: 20px;
+}
+
+.rbox {
+ width: 100%;
+ height: 100%;
+ -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+ filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+ opacity: 0;
+}
+.holds-rbox {
+ width: 26px;
+ height: 26px;
+ margin: 1px 3px 1px 0;
+ background: url(../images/bt-radio-radius.png) no-repeat 0 0;
+ /* background-size: 18px 36px; */
+}
+.holds-rbox:hover { /* 20151224 추가 */
+ background-position: 0 -26px;
+}
+.holds-rbox.checked { /* 20151224 추가 */
+ background-position: 0 -52px;
+}
+.holds-rbox.disabled,
+.holds-rbox.disabled:hover { /* 20151224 추가 */
+ background-position: 0 -78px;
+}
+.holds-rbox.disabled .rbox { /* 20151224 추가 */
+ cursor: default;
+}
+.holds-rbox.checked.disabled,
+.holds-rbox.checked.disabled:hover { /* 20151224 추가 */
+ background-position: 0 -104px;
+}
+.holds-rbox.checked.disabled .rbox { /* 20151224 추가 */
+ cursor: default;
+}
+.holds-rbox.focus { /* 20151224 추가 */
+ background-position: 0 -130px;
+}
+.holds-rbox.checked.focus { /* 20151224 추가 */
+ background-position: 0 -156px;
+}
+.holds-rbox + .label {
+ display: inline-block;
+ height: 20px;
+ line-height: 20px;
+ vertical-align: top;
+}
+
+.tbox {
+ height: 35px;
+ padding: 0 6px 0 6px;
+ border: 2px solid #fff;
+ border-bottom: 2px solid #ddd;
+ outline: 0;
+ color: #000;
+ font-size: 17px;
+ /* font-weight: 600; */
+ line-height: 34px;
+}
+.holds-tbox.focus .tbox {
+ padding-right: 26px;
+}
+.holds-tbox > .btn-clear {
+ position: absolute;
+ top: 10px;
+ right: 9px;
+ width: 14px;
+ height: 14px;
+ background: url(../images/x-icon-small.png) no-repeat;
+ /* background-size: 14px 14px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.holds-tbox > .role-message {  /* 20151103 : 수정 */
+ padding: 5px 0 5px;
+    color: #ed1f46;
+    font-size: 12px;
+    line-height: 18px;
+ word-wrap: break-word;
+}
+.holds-tbox.valid:after, .holds-tbox.valid:after {
+ content: '';
+ position: absolute;
+ top: 5px;
+ right: -40px;
+ width: 30px;
+ height: 24px;
+ background: url(../images/vi-valid.png) no-repeat center center;
+ /* background-size: 16px 12px; */
+}
+.holds-tbox.focus.valid:after, .holds-tbox.focus.valid:after {
+ content: none;
+}
+.holds-tbox.invalid .role-message {
+ color: #ed1f46;
+}
+
+.pbox {
+ box-sizing: border-box;
+ width: 100%;
+ height: 35px;
+ padding: 0 30px 0 6px;
+ border: 2px solid #fff;
+ border-bottom: 2px solid #ddd;
+ margin: 0;
+ font-size: 17px;
+ line-height: 31px;
+ /* font-weight: 600; */
+}
+.holds-pbox > .btn-question {
+ position: absolute;
+ top: 8px;
+ right: 6px;
+ width: 18px;
+ height: 18px;
+ background: url(../images/bt-question.png) no-repeat;
+ /* background-size: auto 22px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.holds-pbox > .btn-question:hover { /* 20151224 추가 */
+ background: url(../images/bt-question-h.png) no-repeat;
+}
+.holds-pbox > .btn-question:active { /* 20151224 추가 */
+ background: url(../images/bt-question-a.png) no-repeat;
+}
+.holds-pbox > .btn-clear {
+ position: absolute;
+ top: 10px;
+ right: 9px;
+ width: 14px;
+ height: 14px;
+ background: url(../images/x-icon-small.png) no-repeat;
+ /* background-size: 14px 14px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.holds-pbox > .role-message { /* 20151026 : 수정 */
+ padding: 5px 7px 5px;
+    color: #ed1f46;
+    font-size: 14px;
+    line-height: 18px;
+ word-wrap: break-word;
+}
+.holds-pbox.invalid .role-message {
+ color: #ed1f46;
+}
+.holds-pbox > .role-message .security {
+ display: inline-block;
+ color: #8c8c8c; /* 20151026 : 수정 */
+ height: 100%;
+ font-size: 14px;
+}
+.holds-pbox > .role-message .security span {
+ display: inline-block;
+ height: 100%;
+ padding-right: 40px;
+ background: no-repeat right 6px;
+ /* background-size: 10px 10px; */
+}
+.holds-pbox > .role-message .security.security-safe span {
+ background-image: url(../images/vi-security-safe.png);
+ color: #22ca15;
+}
+.holds-pbox > .role-message .security.security-normal span {
+ background-image: url(../images/vi-security-normal.png);
+ color: #ffb400;
+}
+.holds-pbox > .role-message .security.security-danger span {
+ background-image: url(../images/vi-security-danger.png);
+ color: #ed1f46;
+}
+
+.role-holder.holds-tab {
+ display: block;
+}
+.tab-switcher .tab-switch-title {
+ display: block;
+ height: 38px;
+ border-bottom: 4px solid #ddd;
+ font-size: 15px;
+ line-height: 38px;
+ text-align: center;
+ color: #8c8c8c;
+}
+.tab-switcher .tab-switch-arrow {
+ display: block;
+ width: 100%;
+ height: 12px;
+ background: #fff no-repeat center top;
+ /* background-size: 8px 4px; */
+}
+.tab-switch.selected .tab-switch-arrow {
+ background-image: url(../images/vi-tab-switch-arrow-s.png); /* 20150831 : 수정 */
+}
+.tab {
+ margin-top: 21px;
+}
+/* 20150831 : 수정 */
+.tab-switch .tab-switch-title {
+ height: 55px;
+ line-height: 55px;
+ font-size: 20px;
+}
+.tab-switch .btn.btn-tab {
+ /*height: 56px;*/
+ height: auto;
+}
+/* 수정 시작 : 20151026 */
+.tab-switch.selected .tab-switch-title {
+ /* color: #ed1f46; */
+ color: #000;
+}
+/* // 수정 종료 20151026 */
+.tab-switch .tab-switch-title:hover,
+.tab-switch .btn-tab:focus .tab-switch-title { /* 20151224 수정 */
+ color: #000;
+}
+.tab-switch .tab-switch-title:active { /* 20151224 수정 */
+ color: #000;
+}
+
+.popup-layer,
+.toast {
+ background: rgba(0, 0, 0, 0.7);
+}
+.popup .section {
+ margin-left: 0;
+ margin-right: 0;
+}
+
+.popup-medium {
+ /* width: 620px; */
+ width: 440px;
+ height: auto;
+}
+.popup-header {
+ padding: 35px 0 10px; /* 20150831 : 수정 */
+ width: 100%;
+ height: auto;
+ text-align: center;
+ border-bottom: 1px solid #dedede;
+ /* background-color: #fafafa; */
+}
+.popup-scrollable {
+ max-height: 475px;
+ overflow: auto;
+}
+@media screen and (min-height: 810px) { /* 20160122 수정 */
+ .popup-layer .popup-identity-check-phone .popup-content, .popup-control {
+  max-height: 600px;
+ }
+}
+@media screen and (max-height: 600px) { /* 20160122 수정 */
+ .popup-layer .popup-identity-check-phone .popup-content, .popup-control {
+  max-height: 350px;
+ }
+}
+.popup-layer .popup-password-invalid .popup-content, /* 추가: 20151106 */
+.popup-content,
+.popup-control {
+ padding: 20px 25px; /* 20150902 : 수정 */
+}
+.popup-wide {
+ padding: 36px 0 0;
+ overflow: auto;
+}
+.popup-wide .popup-direction {
+ margin-top: 14px;
+ font-size: 17px;
+ line-height: 24px;
+}
+.popup-wide .popup-content {
+ margin-top: 38px;
+}
+.popup-wide .popup-control {
+ padding: 38px 21px 22px;
+}
+.popup .popup-direction {
+ font-size: 15px;
+ line-height: 22px;
+ font-weight: 600;
+}
+
+/** P-POPUP : begin *******************************************************************/
+.popup-alarm {
+ box-sizing: border-box;
+ width: 450px;
+ margin: 0 10%;
+ padding: 20px 18px 15px;
+}
+.popup-alarm.popup-tooltip{
+ box-sizing: border-box;
+ width: 360px;
+ margin: 0 20%;
+ padding: 20px 18px 15px;
+}
+.popup-alarm .popup-header {
+ height: auto;
+ border: 0;
+ background: #fff;
+}
+.popup-alarm .popup-title {
+ height: 66px;
+ background: url(../images/popup-exclamation.png) no-repeat center top;
+}
+.popup-alarm .popup-content {
+ padding: 30px 0 50px;
+ line-height: 24px;
+ font-size: 17px;
+}
+.popup-alarm .h-group {
+ margin-top: 20px;
+}
+.popup-alarm .holds-cbox + .label {
+ font-size: 22px;
+}
+
+.popup-confirm {
+ box-sizing: border-box;
+ width: 450px;
+ margin: 0 10%;
+ padding: 20px 18px 15px;
+}
+.popup-confirm .popup-header {
+ height: auto;
+ border: 0;
+ background: #fff;
+}
+.popup-confirm .popup-title {
+ height: 66px;
+ background: url(../images/popup-question.png) no-repeat center top;
+}
+.popup-confirm .popup-content {
+ padding: 30px 0 50px;
+ line-height: 24px;
+ font-size: 17px;
+}
+.popup-confirm .popup-control .h-item {
+ width: 48%;
+ margin-left: 4%;
+}
+.popup-content.popup-centering {
+ text-align: center;
+}
+.popup-content.popup-align-left {
+ padding: 30px 35px 50px 35px;
+}
+/** P-POPUP : end *******************************************************************/
+
+
+/** blocks ******************************************************************/
+
+#ux-container {
+ margin: 0 auto;
+ width: 600px;
+ padding: 130px 0 34px 0;
+ text-align: center;
+}
+#ux-container.page-direct-login {
+ width: 1035px
+}
+#ux-container .content {
+ width: 430px;
+}
+/* header */
+.header > .title {
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.header > .title.title-line1 {
+ height: 70px;
+ background: no-repeat center top;
+}
+.header > .title.title-line2 {
+ height: 80px;
+ background: no-repeat center top;
+ /* background-size: auto 76px; */
+}
+.header > .title.title-line3 {
+ height: 101px;
+ background: no-repeat center top;
+ /* background-size: auto 101px; */
+}
+.header > .title.title-line4 {
+ height: 133px;
+ background: no-repeat center top;
+ /* background-size: auto 133px; */
+}
+.header > .direction {
+ padding-top: 15px;
+ line-height: 24px;
+ font-size: 17px;
+ /* font-weight: bold; */
+ text-align: center;
+}
+
+.content > .direction {
+ margin: 0 20px;
+ color: #545454;
+ font-size: 14px;
+ font-weight: 600;
+ text-align: left;
+}
+#ux-container .content.has-division {
+ width: 100%;
+ overflow: hidden;
+}
+.division-holder {
+ position: relative;
+ display: inline-block;
+ width: 535px;
+ float: left;
+}
+.division-holder:first-child {
+ width: 500px;
+}
+
+/* section */
+.section {
+ margin: 20px 20px 0;
+ height: auto;
+ text-align: left;
+}
+.content .section:first-child {
+ margin-top: 0 !important;
+}
+
+.section-menu-inline {
+ margin: 17px 0 0;
+}
+.section-menu-inline .h-group > .h-item {
+ padding: 0 11px 0 13px;
+ background: url(../images/length-bar.png) no-repeat left center;
+ /* background-size: 2px 17px; */
+}
+.section-menu-inline .h-group > .h-item:first-child {
+ background: 0;
+}
+/*.section-menu-inline .h-group > .h-item:first-child {
+ padding-left: 0;
+ background: 0;
+}
+.section-menu-inline .h-group > .h-item:last-child {
+ padding-right: 0;
+}*/
+.section-menu-inline .h-group > .h-item > a {
+ /* display: inline-block;
+ height: 15px;
+ line-height: 15px; */
+ display: inline-block;
+ height: 18px;
+ line-height: 18px;
+ font-size: 14px;
+}
+.section-menu-inline .h-group > .h-item > a:hover { /* 20151224 추가 */
+ color: #ed1f46;
+ text-decoration: underline;
+}
+
+.section-guide {
+ position: relative;
+ height: 18px;
+    font-size: 14px;
+}
+.section-guide:after {
+ content: '';
+ display: block;
+ clear: both;
+}
+.section-guide .guide-nav {
+ /* display: block;
+ position: absolute;
+ top: 0;
+ right: 0; */
+ margin-left: 4px;
+ padding-bottom: 2px;
+ border-bottom: 1px solid #ed1f46;
+ font-size: 14px;
+}
+/* 수정시작: 20151224 */
+.page-account .btn.btn-underline.btn-red:hover,
+.popup-email-auth-check .btn.btn-underline.btn-red:hover,
+.popup-email-auth-check-main .btn.btn-underline.btn-red:hover,
+.page-email-auth-check .btn.btn-underline.btn-red:hover,
+.popup-page-tid-check .user-no-info .btn-protection-check:hover em,
+.section .guide-nav:hover em,
+.section-guide.guide-nav:hover em {
+ color: #d80d33;
+}
+.page-account .btn.btn-underline.btn-red:hover,
+.popup-email-auth-check .btn.btn-underline.btn-red:hover,
+.popup-email-auth-check-main .btn.btn-underline.btn-red:hover,
+.page-email-auth-check .btn.btn-underline.btn-red:hover,
+.popup-page-tid-check .user-no-info .btn.btn-underline.btn-red:hover,
+.page-already-id-info .guide-nav:hover em,
+.section .guide-nav:hover,
+.section-guide .guide-nav:hover {
+ border-color: #d80d33;
+}
+/* 수정종료: 20151224 */
+.section-info .info-content {
+ margin-top: 17px;
+ color: #252525;
+ font-size: 12px;
+ line-height: 20px;
+}
+
+.section.section-auth-methods > .field {
+ margin-top: 14px;
+}
+
+.section-sep .field {
+ background: url(../images/under-bar.png) repeat-x 0 center;
+ /* background-size: 2px 2px; */
+}
+.section-sep .field p {
+ width: 55px;
+ height: 18px;
+ margin: 0 auto;
+ background: #fff;
+ text-align: center;
+ font-size: 14px;
+ font-weight: bold;
+}
+.content .section.section-control {
+ margin-top: 60px;
+}
+.content .section.section-control:first-child {
+ margin-top: 45px !important;
+}
+
+/* field */
+.section > .field {
+ display: block;
+ margin-top: 25px;
+ height: auto;
+ /* overflow: hidden; */
+}
+.section > .field:first-child {
+ margin-top: 0 !important;
+}
+
+.section > .field-auto-login {
+ position: relative;
+}
+.section > .field-auto-login:after {
+ content: '';
+ display: block;
+ clear: both;
+}
+.section > .field-auto-login > label {
+ display: block;
+ float: left;
+}
+.section > .field-auto-login > .btn-tooltip {
+ position: absolute;
+ top: -1px;
+ right: 0;
+}
+/* .holds-cbox + .label {
+ font-size: 14px;
+} */
+
+.field-cbox label {
+ display: inline-block;
+}
+.field-cbox .direction {
+ margin: 20px 0 0 0;
+ color: #545454;
+    font-size: 14px;
+ font-weight: bold;
+ line-height: 21px;
+}
+.field.field-cbox {
+ height: auto;
+ line-height: 20px;
+}
+
+.field-card-id {
+ position: relative;
+ height: 74px;
+}
+.field-card-id .holds-rbox {
+ position: absolute;
+ top: 38%;
+ left: 0;
+ /* margin: 28px 0 28px 7px; */
+}
+.field-card-id .holds-rbox + .label {
+ display: block;
+ height: 54px;
+ padding: 18px 15px;
+ border-left: 1px solid #ed1f46;
+ margin-left: 36px;
+ background: #f7f7f7;
+}
+.section-card-id-single .field-card-id .holds-rbox {
+ position: absolute;
+ top: 0;
+ left: -9999px;
+ display: none;/* 추가: 20160122 */
+}
+.section-card-id-single .field-card-id .holds-rbox + .label {
+ margin-left: 0;
+}
+.field-card-id .card-id span {
+ display: inline-block;
+ /* margin-top: 5px; */
+ width: 470px;
+ text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.section-card-id-single .field-card-id .card-id span {
+ width: 520px;
+}
+.field-card-id .card-id-date {
+ font-size: 15px;
+    height: 19px;
+    line-height: 19px;
+    padding-top: 5px;
+}
+.field-card-id .card-id-value {
+ font-weight: bold;
+ font-size: 21px;
+    height: 22px;
+    line-height: 22px;
+}
+.field.btn-field {
+ margin-top: 0;
+}
+
+/* tooltip */
+.tooltip {
+ display: none;
+ position: absolute;
+ top: 20px;
+ left: -7px;
+ right: -7px;
+ z-index: 1000;
+ padding: 20px 6px 20px;
+}
+.tooltip .tooltip-content {
+ padding: 20px 8px 0;
+ background: url(../images/bg-tooltip.png);
+}
+.tooltip .tooltip-top {
+ position: absolute;
+ top: 0;
+ left: 8px;
+ right: 52px;
+ height: 20px;
+ background: url(../images/vi-tooltip-top.png) repeat-x;
+ /* background-size: 8px 14px; */
+}
+.tooltip .tooltip-top-left {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 8px;
+ height: 20px;
+ background: url(../images/vi-tooltip-top-left.png) no-repeat;
+ /* background-size: 8px 14px; */
+}
+.tooltip .tooltip-top-right {
+ position: absolute;
+ top: 0;
+ right: 0;
+ width: 52px;
+ height: 20px;
+ background: url(../images/vi-tooltip-top-right.png) no-repeat;
+ /* background-size: 32px 14px; */
+}
+.tooltip .tooltip-left {
+ position: absolute;
+ top: 20px;
+ left: 0;
+ bottom: 20px;
+ width: 6px;
+ background: url(../images/vi-tooltip-left.png) repeat-y;
+ /* background-size: 6px 6px; */
+}
+.tooltip .tooltip-right {
+ position: absolute;
+ top: 20px;
+ right: 0;
+ bottom: 20px;
+ width: 20px;
+ background: url(../images/vi-tooltip-right.png) repeat-y;
+ /* background-size: 6px 6px; */
+}
+.tooltip .tooltip-bottom {
+ position: absolute;
+ left: 8px;
+ bottom: 0;
+ right: 52px;
+ height: 20px;
+ background: url(../images/vi-tooltip-bottom.png) repeat-x;
+ /* background-size: 8px 14px; */
+}
+.tooltip .tooltip-bottom-left {
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ width: 8px;
+ height: 20px;
+ background: url(../images/vi-tooltip-bottom-left.png) no-repeat;
+ /* background-size: 8px 14px; */
+}
+.tooltip .tooltip-bottom-right {
+ position: absolute;
+ right: 0;
+ bottom: 0;
+ width: 52px;
+ height: 20px;
+ background: url(../images/vi-tooltip-bottom-right.png) no-repeat;
+ /* background-size: 32px 14px; */
+}
+
+.tooltip .info-content {
+ margin-top: 10px;
+ color: #252525;
+ font-size: 12px;
+ line-height: 20px;
+}
+@media screen and (max-width: 320px) {
+ .tooltip .info-content {
+  font-size: 11px;
+ }
+}
+/* tooltip - new */
+.tooltip-flexible {
+ position: absolute;
+ left: auto;
+ right: auto;
+ padding: 12px 6px 6px;
+}
+.tooltip-flexible .tooltip-content {
+ padding: 10px;
+ background: url(../images/tf-bg.png);
+}
+.tooltip-flexible .tooltip-top-left {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 10px;
+ height: 10px;
+ background: url(../images/tf-top-left.png);
+}
+.tooltip-flexible .tooltip-top-right {
+ position: absolute;
+ top: 0;
+ right: 0;
+ width: 10px;
+ height: 10px;
+ background: url(../images/tf-top-right.png);
+}
+.tooltip-flexible .tooltip-bottom-left {
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ width: 10px;
+ height: 10px;
+ background: url(../images/tf-bottom-left.png);
+}
+.tooltip-flexible .tooltip-bottom-right {
+ position: absolute;
+ bottom: 0;
+ right: 0;
+ width: 10px;
+ height: 10px;
+ background: url(../images/tf-bottom-right.png);
+}
+.tooltip-flexible .tooltip-bottom {
+ position: absolute;
+ left: 6px;
+ right: 6px;
+ bottom: 0;
+ height: 10px;
+ background: url(../images/tf-bottom.png) repeat-x;
+}
+.tooltip-flexible .tooltip-top-hands-left {
+ position: absolute;
+ top: 0;
+ left: 6px;
+ height: 10px;
+ background: url(../images/tf-top.png) repeat-x;
+}
+.tooltip-flexible .tooltip-top-hands-right {
+ position: absolute;
+ top: 0;
+ right: 6px;
+ height: 10px;
+ background: url(../images/tf-top.png) repeat-x;
+}
+.tooltip-flexible .tooltip-left {
+ position: absolute;
+ top: 12px;
+ left: 0;
+ bottom: 6px;
+ width: 10px;
+ background: url(../images/tf-left.png) repeat-y;
+}
+.tooltip-flexible .tooltip-right {
+ position: absolute;
+ top: 12px;
+ right: 0;
+ bottom: 6px;
+ width: 10px;
+ background: url(../images/tf-right.png) repeat-y;
+}
+.tooltip-flexible .tooltip-top-arrow {
+ position: absolute;
+ top: 0;
+ width: 18px;
+ height: 14px;
+ background: url(../images/tf-arrow.png) no-repeat;
+}
+
+/* select box */
+.role-holder.holds-sbox {
+ width: 100%;
+}
+.btn-select,
+.btn-option {
+ padding: 0 10px 0 5px;
+ text-align: left;
+ height: 35px;
+ line-height: 33px;
+ font-size: 17px;
+ background-color: #fff;
+}
+.btn-select {
+ background: url(../images/vi-select-normal.png) no-repeat right center;
+}
+.btn-select:hover {
+ background-image: url(../images/vi-select-down.png);
+}
+/* 수정 20151224 */
+/* 수정 20151224 */
+.sbox.disabled + .btn-select,
+.sbox:disabled + .btn-select,
+.btn-select.disabled {
+ background-image: url(../images/vi-select-normal.png);
+}
+.role-holder.holds-sbox.opened .btn-select {
+ background-image: url(../images/vi-select-up.png);
+}
+/* 수정 20151224 */
+.btn-select {
+ border: 2px solid transparent;
+ border-bottom: 2px solid #ddd;
+ outline: 0;
+}
+/* 수정 20151224 */
+.btn-select.focus {
+ border-color: #ed1f46 !important;
+}
+.sbox-list {
+ padding: 0 6px;
+ border: 1px solid #e5e5e5;
+ background: #fff;
+}
+.sbox-list-item {
+ border-top: 2px solid #e5e5e5;
+}
+.sbox-list-item:first-child {
+ border-top: 0;
+}
+.btn-option {
+ padding: 0 10px; /* 20160406 : 수정 */
+/* background-color: #f5f5f5;*/
+ font-size: 17px;
+}
+.role-holder.holds-sbox.opened .btn-select {
+ border: 2px solid #ed1f46;
+ color: #ed1f46;
+ background-color: #fff;
+}
+.sbox-list-item.selected .btn-option,
+.sbox-list-item .btn-option:hover {
+ color: #ed1f46;
+}
+
+.role-holder.holds-sbox.opened .btn-select {
+ border: 2px solid #ed1f46;
+ color: #ed1f46;
+ background-color: #fff;
+}
+.sbox-list-item.selected .btn-option,
+.sbox-list-item .btn-option:hover {
+ color: #ed1f46;
+}
+
+.preview-version .btn-select {
+ height: 46px;
+ border: 1px solid #747474;
+ padding: 0 10px;
+ background-color: #f5f5f5;
+ font-size: 17px;
+}
+.preview-version .role-holder.holds-sbox.opened .btn-select {
+ border: 1px solid #ed1f46;
+ color: #ed1f46;
+ background-color: #fff;
+}
+.sbox-list.is-previous-term {
+ padding: 0;
+ border: 1px solid #747474;
+ background: #fff;
+}
+.sbox-list.is-previous-term .sbox-list-item {
+ height: 43px;
+ border-top: 1px solid #747474;
+}
+.sbox-list.is-previous-term .sbox-list-item:first-child {
+ border-top: 0;
+}
+.sbox-list.is-previous-term .sbox-list-item.selected .btn-option,
+.sbox-list.is-previous-term .sbox-list-item .btn-option:hover {
+ color: #ed1f46;
+}
+.sbox-list.is-previous-term .btn-option {
+ height: 43px;
+ background-color: #f5f5f5;
+ font-size: 17px;
+ line-height: 43px;
+}
+
+ 
+
+/* sso */
+.sso-accounts {
+ margin: 0 20px;
+}
+.sso-accounts .sso-account {
+ position: relative;
+ margin-top: 10px;
+ padding-right: 51px;
+}
+.sso-accounts .sso-account:first-child {
+ margin-top: 0;
+}
+.sso-accounts .sso-account .btn-account {
+ height: 50px;
+ border: 1px solid #df5252;
+ background: #df5252;
+}
+.sso-accounts .sso-account .btn-account span {
+ display: block;
+ height: 24px;
+ padding: 0 16px;
+ color: #fff;
+ font-weight: 600;
+ line-height: 24px;
+ text-align: left;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.sso-accounts .sso-account .btn-remove {
+ position: absolute;
+ top: 0;
+ right: 0;
+ width: 50px;
+ height: 50px;
+ border: 1px solid #df5252;
+ background: #df5252;
+}
+
+/** pages *******************************************************************/
+.page-login .content {
+ margin: 40px auto 0;
+}
+.page-login .header .title {
+ background-image: url(../images/ti-login.png);
+}
+/* .page-login .content {
+ padding-top: 36px;
+} */
+/*.page-login .section-login .field:last-child {
+ margin-top: 55px;
+}*/
+.page-login .section-login .field .btn-wide {
+ margin-top: 50px;
+}
+.page-login .info-sign-up-id {
+ font-size: 17px;
+ line-height: 25px;
+ text-align: center;;
+}
+.label-login {
+ display: inline-block;
+ padding-bottom: 5px;
+ height: 20px;
+ line-height: 20px;
+ font-size: 16px;
+}
+.holds-tbox .tbox {
+ height: 35px;
+ font-size: 17px;
+}
+.section-login button[type="submit"].btn {
+ height: 46px;
+ font-size: 17px;
+}
+.section-label {
+ display: block;
+ padding-bottom: 5px;
+ height: 22px;
+ line-height: 22px;
+ font-size: 13px;
+ font-weight: bold;
+ color: #545454;
+}
+.page-login .holds-tbox > .btn-clear {
+ top: 10px;
+ width: 14px;
+ height: 14px;
+ /* background-size: 20px 20px; */
+}
+.section-guide  {
+ text-align: center;
+}
+.section-guide .guide-title,
+.section-guide .guide-nav {
+ display: inline-block;
+}
+.page-login .section.section-guide {
+ margin: 25px 0 0;
+}
+.page-login .field-login-guide {
+ line-height: 24px;
+ text-align: center;
+    font-size: 17px;
+ font-weight: bold;
+}
+.section-guide.section-guide-line2 {
+ position: absolute;
+ margin: 55px 0 0 0;
+ padding-bottom: 20px;
+}
+
+.page-direct-login .content {
+ margin: 55px auto 0;
+}
+.division-holder .section-login {
+ padding-right: 50px;
+}
+.page-direct-login .section-login .btn-field {
+ margin-top: 25px;
+}
+.page-direct-login .header .title {
+ background-image: url(../images/ti-login.png);
+}
+.page-direct-login .section-login .field .btn-wide {
+ margin-top: 35px;
+}
+.division-holder .section-auth-login { /* 20151029 수정 */
+ position: relative;
+ padding: 0;
+ width: 478px;
+ height: 326px;
+ border: 1px solid #8b8b8b;
+}
+.division-holder .section-auth-login .section-auth-login-content {
+ width: 100%;
+ height: 100%;
+}
+.section-auth-login .request-auth .holds-tbox {
+ display: inline-block;
+ width: 60%;
+}
+.section-auth-login .request-auth .btn-request-auth {
+ display: inline-block;
+ width: 32%;
+ float: right;
+}
+.section-auth-login .header + .field {
+ margin-top: 0;
+}
+.section-auth-login .field .description {
+ margin-top: 10px;
+ padding-left: 30px;
+ height: auto;
+ min-height: 22px;
+ line-height: 22px;
+ font-size: 17px;
+ background: url(../images/vi-notice-medium.png) no-repeat left 0;
+}
+.section-auth-login .header .title.title-line1 {
+ height: 48px;
+ background-image: url(../images/ti-phone-certification-s.png);
+}
+
+.page-select-auth-method .header .title {
+ background-image: url(../images/ti-user-authentication.png);
+}
+.page-select-auth-method .header .title.title-en {
+ background-image: url(../images/ti-user-authentication-en.png);
+}
+.page-select-auth-method .content {
+ padding-top: 55px;
+ width: 430px;
+ margin: 0 auto;
+}
+.page-select-auth-method .section {
+ margin-top: 23px;
+}
+.page-select-auth-method.page-id-check .header .title {
+ background-image: url(../images/ti-id-check.png);
+}
+
+.section-auth-login .holds-tbox .tbox {
+ font-size: 17px;
+}
+.page-direct-login .section-menu-inline,
+.page-direct-login .section-guide {
+ padding-right: 50px;
+}
+
+.page-find-id .content {
+ margin: 0 auto;
+ margin-top: 50px; /*20150917 수정*/
+ width: 430px;
+}
+.page-find-id .content .section.section-control:first-child {
+ margin-top: 0 !important;
+}
+.page-find-id .tab-content {
+ padding-top: 20px;
+}
+.page-find-id .header .title {
+ background-image: url(../images/ti-find-id.png);
+}
+.page-find-id .header .title.title-en {
+ background-image: url(../images/ti-find-id-en.png);
+}
+.page-find-id .tab-content li {
+ margin-top: 14px;
+}
+.page-find-id .tab-content li:first-child {
+ margin-top: 0;
+}
+/* .page-find-id.has-no-real-name-id .section-auth-methods {
+ padding-top: 9px;
+} */
+.page-find-id.has-no-real-name-id .content {
+ margin-top: 50px;
+}
+/* .page-find-id .section-control .field-button-double .btn:first-child {
+ width: 61%;
+}
+.page-find-id .section-control .field-button-double .btn:last-child {
+ width: 35%;
+} */
+.page-find-id .alarm-icon {
+ display: inline-block;
+ margin-top: 15px;
+ width: 92px;
+ height: 90px;
+ background: url(../images/ti-alarm-not-find.png) no-repeat center center;
+ text-align: center;
+ text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.page-find-id .field.field-cbox .holds-cbox {
+ float: left;
+}
+.page-find-id .section-control + .section-guide {
+ margin: 20px 0 0;
+}
+
+.content .direction + .section.section-auth-methods {
+ margin: 15px 0 20px; /* 20150909 : 수정 */
+}
+.page-select-auth-method .direction,
+.page-id-check-method .direction,
+.page-password-change-method .direction {
+ margin: 0 0; /* 20150909 : 추가 */
+}
+
+.page-auth-email .header .title {
+ background-image: url(../images/ti-auth-email.png);
+}
+.page-auth-email .header .title.title-en {
+ background-image: url(../images/ti-auth-email-en.png);
+}
+.page-auth-email .content {
+ padding-top: 32px;
+}
+.page-auth-email .section-send-auth-number {
+ margin-top: 30px;
+}
+.page-auth-email .section-send-auth-number .direction {
+ font-size: 12px;
+ line-height: 18px;
+}
+
+.page-auth-phone .header .title {
+ background-image: url(../images/ti-auth-phone.png);
+}
+.page-auth-phone .header .title.title-en {
+ background-image: url(../images/ti-auth-phone-en.png);
+}
+.page-auth-phone .content {
+ padding-top: 32px;
+}
+.page-auth-phone .section-send-auth-number {
+ margin-top: 30px;
+}
+.page-auth-phone .section-send-auth-number .direction {
+ font-size: 12px;
+ line-height: 18px;
+}
+
+.page-sign-up-agreement .header .title {
+ background-image: url(../images/ti-sign-up-new.png);
+}
+.page-sign-up-agreement .header .title.title-en {
+ background-image: url(../images/ti-sign-up-new-en.png);
+}
+.popup-tid-terms-detail .popup-control {
+ padding-top: 10px;
+}
+
+.progress-indicator-step1 {
+ width: 100%;
+ height: 36px;
+ background: url(../images/vi-progress-step1.png) no-repeat center 0;
+ /* background-size: auto 18px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+#ux-container.page-sign-up-agreement .content {
+ margin: 60px auto 0;
+ width: 530px;
+}
+/* 약관 리스트*/
+.holds-terms {
+ position: relative;
+ padding: 30px 0;
+ border-bottom: 1px solid #ddd;
+ color: #2a2a2a;
+ font-weight: 600;
+}
+.holds-terms .h-group {
+ display: inline-block;
+ white-space: nowrap;
+}
+.holds-terms .holds-cbox {
+ margin-right: 6px;
+}
+.holds-terms .holds-cbox + .label {
+ width: auto;
+ height: auto;
+ font-size: 14px;
+ white-space: normal;
+}
+.terms-content {
+ margin-top: 20px;
+ width: 100%;
+ height: 160px;
+ overflow: hidden;
+ overflow-y: auto;
+ background-color: #f7f7f7;
+}
+.terms-detail {
+ display: block;
+ position: absolute;
+ top: 34px;
+ right: 9px;
+ padding-bottom: 2px;
+ border-bottom: 1px solid #000;
+ font-size: 14px;
+}
+/* 수정시작 : 20150930 */
+.page-sign-up-agreement .section-control {
+ /* margin: 55px auto 0; */
+ margin: 55px 20px 0;
+ /* width: 600px; */
+}
+/* 수정종료 : 20150930 */
+.field-agree-all label {
+ position: relative;
+ display: block;
+ width: 100%;
+ height: 21px;
+ border: 1px solid #8c8c8c;
+ margin: 30px 0 0;
+ padding: 15px 0;
+ font-weight: 600;
+ text-align: center;
+}
+.field-agree-all label.checked {
+ border-color: #ed1f46 !important; /* 20151005 수정 */
+ /* color: #ed1f46; */ /* 20151224 수정 */
+}
+.field-agree-all .holds-cbox {
+ background-image: url(../images/check-box-r.png);
+}
+
+.page-tid-terms-agreement .content {
+ margin: 55px auto 0;
+ width: 532px !important;
+}
+.page-tid-terms-agreement .content .section {
+ margin-left: 0;
+ margin-right: 0;
+}
+.page-tid-terms-agreement .header .title {
+ background-image: url(../images/ti-t-id-agree.png);
+}
+.page-tid-terms-agreement .header .direction {
+/*  font-size: 17px;
+ line-height: 20px; */ /* 20151025 수정 */
+}
+.page-tid-terms-agreement .holds-terms .label {
+ font-size: 14px;
+ font-weight: 600;
+}
+/* 수정시작 : 20150930 */
+.page-tid-terms-agreement .field-agree-all label {
+ position: relative;
+ display: block;
+ box-sizing: border-box;
+ width: 100%;
+ height: 50px; /* 20151025 수정 */
+ /* border: 2px solid #9a9a9a; */
+ border: 1px solid #9a9a9a;
+ margin: 15px 0 0;
+ padding: 14px 0;
+ font-weight: 600;
+ line-height: 52px;
+ text-align: center;
+}
+.page-tid-terms-agreement .field-agree-all label.checked {
+ /* border: 2px solid #ed1941; */
+ border: 1px solid #ed1941;
+ /*background: #f39eae;*/
+ /* color: #ed1941; */ /* 20151224 수정 */
+}
+/* 수정종료 : 20150930 */
+.page-tid-terms-agreement .field-agree-all .holds-cbox {
+ background: none;
+}
+.page-tid-terms-agreement .field-agree-all .holds-cbox.checked {
+ background: url(../images/red-check-agree.png) no-repeat 0 2px;
+}
+
+.page-t-id-sign-up .header .title {
+ background-image: url(../images/ti-t-id-sign-up.png);
+}
+.page-t-id-sign-up .header .headline {
+ font-size: 20px;
+ padding: 34px 0 15px;
+}
+.page-t-id-sign-up .content {
+ margin-top: 48px;
+}
+/*.page-t-id-sign-up .content .section:last-child {
+ margin-top: 32px;
+ text-align: center;
+}*/
+
+.page-t-world-switch .content {
+ margin: 55px auto 0;
+ /* width: 600px; */
+}
+.page-t-world-switch .header .title {
+ background-image: url(../images/ti-t-world-login.png);
+}
+.page-t-world-switch .content {
+ margin-top: 55px;
+}
+.page-t-world-switch .section-switch .field .btn-wide {
+ margin-top: 30px;
+}
+
+.page-account .header .title {
+ background-image: url(../images/ti-account.png);
+}
+.page-account .content {
+ margin: 55px auto 0;
+ width: 600px;
+}
+.page-account .section {
+ position: relative;
+ margin: 0;
+ padding: 10px 0 10px 10px;
+ border-left: 2px solid #8c8c8c;
+ margin-top: 15px;
+}
+.page-account .section.section-control {
+ margin: 25px 0 0 0;
+ padding: 0 ;
+ border: 0;
+}
+.section-control + .section-guide {
+ margin-top: 50px;
+}
+.page-account .section.disabled {
+ border-width: 1px 1px 1px 2px;
+ border-color: #8c8c8c;
+ border-style: solid;
+}
+.page-account .section.section-guide {
+ padding: 0;
+ border: 0;
+ text-align: left;
+ height: 18px;
+}
+.page-account .section.section-guide.agreement {
+ margin-top: 15px; /* 20150921 수정 */
+}
+.page-account .field {
+ margin: 0;
+}
+.page-account .field.field-direction {
+ margin: 12px 0;
+}
+.page-account .section .head {
+ width: auto;
+ height: 18px;
+ color: #8c8c8c;
+ font-size: 14px;
+ font-weight: 600;
+ line-height: 18px;
+}
+.page-account .section .data {
+ /*height: 21px;*/
+ padding-top: 5px;
+ font-size: 21px;
+ /* font-weight: 600; */
+ color: #000;
+ white-space: nowrap;
+ text-overflow: ellipsis;
+ overflow: hidden;
+ height: 30px;
+ line-height: 30px;
+}
+.page-account .section.disabled .data {
+ color: #8c8c8c;
+}
+.page-account .field label {
+ display: inline-block;
+ white-space: nowrap;
+}
+.page-account .field .holds-cbox + .label {
+ height: auto;
+ white-space: normal;
+ font-size: 14px;
+}
+.page-account .field .btn.btn-underline.btn-red {
+ font-size: 14px;
+ line-height: 20px;
+ height: 20px;
+ margin-top: 14px;
+}
+.page-account .field-cbox .btn.btn-underline.btn-red {
+ margin-top: 0px;
+ float: right;
+}
+@media screen and (max-width: 320px) {
+ .page-account .field .holds-cbox + .label {
+  width: 235px;
+ }
+}
+.page-account .section .direction {
+ font-size: 14px;
+ color: #000;
+ line-height: 18px;
+}
+/*@media screen and (min-width: 321px) {
+ .page-account .section .direction {
+  width: 290px;
+ }
+}*/
+.page-account .section .btn.btn-gray {
+ position: absolute;
+    top: 30px;
+    right: 0;
+    width: 105px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+ margin-right: 10px;/* 추가: 20160520 */
+}
+/* 추가: 20160520 */
+.page-account .section:first-child .btn.btn-gray {
+ top: 19px;
+}
+.page-account .section-guide .guide {
+ display: inline-block;
+ /* padding: 10px 90px 10px 0; */
+ font-weight: 600;
+}
+/* 수정 시작 : 20151030 */
+/* 추가 */
+.page-account .section-guide .btn {
+ display: inline-block;
+ margin-left: 10px;
+ font-size: 14px;
+ float:right;
+}
+/* // 수정 종료 : 20151030 */
+.page-account .section.section-change .data {
+ padding-right: 125px;
+}
+.page-account .section.section-change.is-on-change {
+ border-color: #ed1f46;
+}
+.page-account .section.section-change.is-on-change .head {
+ color: #ed1f46;
+}
+.page-account .section.section-change .field-request-auth form {
+ position: relative;
+ margin-top: 5px;
+}
+.page-account .section.section-change .field-request-auth .holds-tbox {
+ width: 300px;
+}
+@media screen and (max-width: 320px) {
+ .page-account .section.section-change .field-request-auth .holds-tbox {
+  width: 140px;
+ }
+}
+.page-account .section.section-change .field-request-auth .btn-gray {
+ top: 0;
+ /* height: 60px; */
+}
+.page-account .field.field-change-name {
+ margin-top: 10px;
+}
+.page-account .section.section-change-name .btns-double {
+ margin-top: 10px;
+}
+.page-account .section.section-change-name .btns-double .btn {
+ width: 48%;
+ height: 50px;
+ margin-left: 4%;
+ line-height: 50px;
+}
+.page-account .field.field-cbox {
+ margin: 15px 0 0;
+}
+.page-account .holds-tbox > .btn-clear {
+ top: 11px;
+}
+.page-account .field.field-cbox .role-holder.holds-cbox {
+ float: left;
+}
+.page-account .section.section-change .field-request-auth .head {
+ margin-top: 15px;
+}
+.page-account .section.section-change .field-request-auth form.send-auth {
+ margin-top: 15px;
+}
+.page-account .section-guide.terms-check .btn {
+ float: right;
+}
+.page-account .section.section-change-name .bt-auth-group .btn {
+ height: 34px;
+ line-height: 34px;
+ text-align: center;
+ border: 1px solid #747474;
+    background: #f5f5f5;
+ color: #000;
+}
+.page-account .section.section-change-name .bt-auth-group .btn:active {
+ background-color: #fff;
+ border-color: #ed1f46;
+}
+.page-account .section-change-name .bt-auth-group .btn p {
+ display: inline-block;
+ height: 20px;
+ line-height: 20px;
+ font-size: 16px;
+}
+.page-account .section-change-name .bt-auth-group .btn:active p {
+ color: #ed1f46;
+}
+/* 20150924 수정 */
+/*
+.page-account .section-change-name .bt-auth-group .btn .bt-auth-phone {
+ background: url(../images/bt-auth-phone-s.png) no-repeat left -1px;
+}
+.page-account .section-change-name .bt-auth-group .btn:active .bt-auth-phone {
+ background: url(../images/bt-auth-phone-active-s.png) no-repeat left -1px;
+}
+.page-account .section-change-name .bt-auth-group .btn .bt-auth-ipin {
+ background: url(../images/bt-auth-ipin-s.png) no-repeat left -1px;
+}
+.page-account .section-change-name .bt-auth-group .btn:active .bt-auth-ipin {
+ background: url(../images/bt-auth-ipin-active-s.png) no-repeat left -1px;
+}
+ */
+.page-auth-for-hidden .header .title {
+ background-image: url(../images/ti-auth-for-hidden.png);
+}
+.page-auth-for-hidden .header .title.title-en {
+ background-image: url(../images/ti-auth-for-hidden-en.png);
+}
+.page-auth-for-hidden .content {
+ margin-top: 43px;
+    margin: 0 auto;
+    padding-top: 55px;
+}
+.page-auth-for-hidden .section {
+ margin-top: 24px;
+}
+.popup-t-id-transfer-notice .section.tid-notice-section .service-title { /* 20151104 수정 */
+ font-size: 15px;
+ line-height: 22px;
+ font-weight: 700; /* 추가: 20160520 */
+}
+
+.page-t-id-term-agreement .header .title {
+ background-image: url(../images/ti-t-id-term-agreement.png);
+}
+.page-t-id-term-agreement .header .title.title-en {
+ background-image: url(../images/ti-t-id-term-agreement.png);
+}
+.page-t-id-term-agreement .content {
+ margin-top: 35px;
+}
+.page-t-id-term-agreement .section {
+ margin-top: 0;
+}
+.page-t-id-term-agreement .section.section-notice {
+ position: relative;
+ margin: 0 15px;
+ height: 20px;
+ padding: 20px;
+ background: #f5f5f5;
+ line-height: 20px;
+}
+.page-t-id-term-agreement .section.section-notice .label {
+ font-weight: bold;
+}
+.page-t-id-term-agreement .holds-terms {
+ position: relative;
+ padding: 15px 40px 15px 0;
+ border-bottom: 1px solid #ddd;
+ color: #2a2a2a;
+ font-weight: 600;
+}
+.page-t-id-term-agreement .holds-terms .h-group {
+ display: inline-block;
+ white-space: nowrap;
+}
+.page-t-id-term-agreement .holds-terms .holds-cbox {
+ margin-right: 6px;
+}
+.page-t-id-term-agreement .holds-terms .holds-cbox + .label {
+ width: 250px;
+ height: auto;
+ white-space: normal;
+}
+@media screen and (max-width: 320px) {
+ .page-t-id-term-agreement .holds-terms .holds-cbox + .label {
+  width: 210px;
+ }
+}
+.page-t-id-term-agreement .terms-detail {
+ display: block;
+ position: absolute;
+ top: 19px;
+ right: 9px;
+ padding-bottom: 2px;
+ border-bottom: 1px solid #000;
+ font-size: 12px;
+}
+.page-t-id-term-agreement .section-notice .terms-detail {
+ top: 22px;
+ right: 14px;
+}
+.page-t-id-term-agreement .field-agree-all label {
+ position: relative;
+ display: block;
+ box-sizing: border-box;
+ width: 100%;
+ height: 50px;
+ border: 1px solid #8c8c8c;
+ margin: 15px 0 0;
+ padding: 14px 0;
+ font-weight: 600;
+ text-align: center;
+}
+.page-t-id-term-agreement .field-agree-all label.checked {
+ border-color: #ed1f46;
+ /* color: #ed1f46; */ /* 20151224 수정 */
+}
+.page-t-id-term-agreement .field-agree-all .holds-cbox {
+ background-image: url(../images/check-box-r.png);
+}
+.page-recommend-password-change .header .title {
+ background-image: url(../images/ti-change-password.png);
+}
+.page-recommend-password-change .content {
+ margin: 0 auto;
+ width: 600px;
+}
+.page-recommend-password-change .content .section:first-child.section-control {
+ margin-top: 95px !important; /* 20151005 수정 */
+}
+
+.page-require-password-change .content {
+ margin: 0 auto;
+ width: 600px;
+}
+.page-require-password-change .content .section.section-control { /* 20151005 수정 */
+ margin-top: 95px !important;
+ /* 수정시작: 20151224 */
+ /* 웹접근성 수정: 삭제 */
+ /* overflow: hidden; */
+ /* 수정종료: 20151224 */
+}
+/* .page-require-password-change .section-control .btn {
+ font-size: 24px;
+} */
+.page-require-password-change .header .title {
+ background-image: url(../images/ti-change-password-must.png);
+}
+
+.page-sign-up-personal .header .title {
+ background-image: url(../images/ti-sign-up-new.png);
+}
+.page-sign-up-personal .header .title.title-en {
+ background-image: url(../images/ti-t-id-sign-up-en.png);
+}
+.progress-indicator-step2 {
+ width: 100%;
+ height: 36px;
+ background: url(../images/vi-progress-step2.png) no-repeat center 0;
+ /* background-size: auto 18px; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+#ux-container.page-sign-up-personal .content {
+ position: relative;
+ margin: 55px auto 0 15%;
+ width: 475px;
+}
+.page-sign-up-personal .section {
+ margin: 45px 20px 0 20px;
+}
+.page-sign-up-personal .section.section-control {
+ margin-top: 45px; /* 20150921 수정 */
+}
+.page-sign-up-personal .section.has-left-bar.section-id-and-password {
+ margin: 55px 20px 0;
+}
+/* .page-sign-up-personal .section.has-left-bar.section-id-and-password .field {
+ padding-right: 40px;
+} */
+.page-sign-up-personal .section.has-left-bar {
+ padding: 0 0 10px 15px;
+ border-left: 2px solid #ed1f46;
+}
+.page-sign-up-personal .section.has-left-bar .title {
+ position: absolute;
+ left: -230px;
+ width: 235px;
+ line-height: 31px;
+ font-size: 25px;
+    /* font-weight: 600; */ /*20150917 제거*/
+    text-align: right;
+}
+.page-sign-up-personal .section.has-left-bar .direction {
+ color: #545454;
+ font-size: 14px;
+ line-height: 20px;
+ /* font-weight: 600; */ /*20150917 제거*/
+}
+.page-sign-up-personal .auth-methods {
+ margin: 0 auto;
+ /* padding: 0 50px; */
+}
+.page-sign-up-personal .auth-method {
+ width: 50%;
+}
+.page-sign-up-personal .btn-auth {
+ display: block;
+ box-sizing: border-box;
+ width: 100%;
+ height: auto;
+ padding-top: 120px;
+ margin-top: 30px; /* 20151005 수정 */
+ color: #333;
+ font-size: 14px; /*20150917 수정*/
+ font-weight: bold;
+ line-height: normal;
+ text-align: center;
+ background: no-repeat top center;
+ /* background-size: 60px 60px; */
+}
+.page-sign-up-personal .btn-auth:hover,
+.page-sign-up-personal .btn-auth:focus { /* 20151224 추가 */
+ color: #ed1f46;
+ /* outline: 0; */
+}
+.page-sign-up-personal .btn-auth.btn-auth-phone {
+ background-image: url(../images/bt-auth-phone.png);
+}
+.page-sign-up-personal .btn-auth.btn-auth-ipin {
+ background-image: url(../images/bt-auth-ipin.png);
+}
+.page-sign-up-personal .btn-auth.btn-auth-alien {
+ background-image: url(../images/bt-auth-alien.png);
+}
+.page-sign-up-personal .btn-auth.btn-auth-social {
+ background-image: url(../images/bt-authsocial-number.png);
+}
+.page-sign-up-personal .section.has-left-bar .direction.guide {
+ margin-top: 10px;
+ font-size: 14px;
+}
+.page-sign-up-personal .section.has-left-bar .hidden-label {
+ position: absolute;
+ left: -9999px;
+}
+.page-sign-up-personal .info-personal {
+ margin-top: 10px;
+}
+.page-sign-up-personal .cbox-small {
+ border-bottom: 1px solid #ddd;
+}
+/* 수정시작 */
+/* 추가(이동) */
+.page-sign-up-personal .holds-pbox > .btn-question {
+ top: -27px;
+ left: 57px;
+}
+/* 수정종료: 20151224 */
+/* 수정시작: 20151224 */
+/* .page-sign-up-personal .holds-pbox > input.label-en + .btn-question { */
+.page-sign-up-personal .holds-pbox > .btn-question-en {
+/* 수정종료: 20151224 */
+ top: -27px;
+ left: 68px;
+}
+/* 수정시작: 20151224 */
+/* 삭제 */
+/* .page-sign-up-personal .holds-pbox > .btn-question {
+ top: -27px;
+ left: 57px;
+} */
+/* 수정종료: 20151224 */
+.page-sign-up-personal .field-parent-agree .auth-success {
+ padding: 25px 0 10px;
+ font-size: 20px;
+ color: #22ca15;
+ font-weight: bold;
+ text-align: center;
+}
+
+.content.work-when-full .section.disabled {
+ border-width: 1px 1px 1px 2px;
+ border-color: #8c8c8c;
+ border-style: solid;
+}
+.page-sign-up-personal .info-personal td:first-child {
+ display: block;
+ margin-top: 20px;
+ padding: 5px;
+ color: #000;
+ font-size: 12px;
+ font-weight: 600;
+ text-align: left;
+}
+.page-sign-up-personal .info-personal tr:first-child td {
+ margin-top: 0;
+}
+.page-sign-up-personal .info-personal td {
+ display: block;
+ padding: 5px 10px;
+ color: #000;
+ font-size: 21px;
+ /* font-weight: 600; */ /*20150917 제거*/
+}
+.page-sign-up-personal .section-under-14 .direction {
+ color: #000;
+ font-size: 12px;
+}
+.page-sign-up-personal .section-under-14 .field-cbox .h-group {
+ white-space: nowrap;
+}
+.page-sign-up-personal .section-under-14 .field-cbox .label {
+ width: auto;
+ height: auto;
+ margin: -1px 0 0 0;
+ color: #7e7e7e;
+ font-size: 14px;
+ white-space: normal;
+}
+.page-sign-up-personal .section-under-14 .field-cbox.cbox-small {
+ margin-top: 15px;
+}
+.section-personal .tab-content {
+ margin-top: 10px; /* 20151015 수정 */
+}
+.page-sign-up-personal .section-personal .tab-switch-title {
+ font-size: 20px;
+ line-height: 54px;
+}
+.page-sign-up-personal.page-en .tab-switch:first-child .tab-switch-title {
+ font-size: 20px;
+ line-height: 24px;
+}
+.page-sign-up-personal .section-personal .holds-tab {
+ margin-top: 20px;
+}
+.page-sign-up-personal .section-personal .holds-tab .tab {
+ margin-top: 0;
+}
+.popup-alien-other-number .field.birthday .birth-year,
+.page-sign-up-personal .section-personal .tab-content .tab-field .birth-year {
+ width: 36%;
+}
+.popup-alien-other-number .field.birthday .birth-month,
+.popup-alien-other-number .field.birthday .birth-day,
+.page-sign-up-personal .section-personal .tab-content .tab-field .birth-month,
+.page-sign-up-personal .section-personal .tab-content .tab-field .birth-day {
+ width: 30%;
+ margin-left: 2%;
+}
+.page-sign-up-personal .section-personal .tab-content .tab-field {
+ margin-top: 15px;
+}
+.page-sign-up-personal .section-personal .tab-content .tab-field:first-child {
+ margin-top: 0;
+}
+/* .page-sign-up-personal .section-personal .tab-content .tab-field.tab-field-toggle {
+ border-bottom: 1px solid #8c8c8c;
+} */
+.page-sign-up-personal .section-personal .tab-content .tab-field.tab-field-toggle label {
+ width: 50%;
+ height: 35px;
+ text-align: center;
+}
+.page-sign-up-personal .section-personal .tab-content .tab-field.tab-field-toggle .section-label + label {
+ background: url(../images/bg-radio-division-line.png) no-repeat right center;
+}
+.page-sign-up-personal .section-personal .tab-content .tab-field.tab-field-toggle label .holds-rbox {
+ margin: 4px 5px 0 0;
+}
+.page-sign-up-personal .section-personal .tab-content .tab-field.tab-field-toggle label .label {
+ display: inline-block;
+ height: 35px;
+ color: #8c8c8c;
+ font-size: 20px;
+ line-height: 35px;
+}
+.page-sign-up-personal .section-personal .tab-content .tab-field.tab-field-toggle label .holds-rbox.checked + .label,
+.rbox-label-lt-ie9 {
+ color: #000 !important;
+ font-weight: 100 !important;
+}
+.lt-ie9 .page-sign-up-personal .section-personal .tab-content .tab-field.tab-field-toggle label .holds-rbox.checked + .label {
+ color: #8c8c8c;
+ font-weight: normal;
+}
+.page-sign-up-personal .section-under-14.section-guardian-agree {
+ padding: 0;
+}
+.page-sign-up-personal .section-under-14.section-guardian-agree .info-personal-under-14 .title {
+ margin-left: 0;
+}
+.page-sign-up-personal .section-under-14.section-guardian-agree .info-personal-under-14 {
+ padding: 5px 0 0 10px;
+ background: #f7f7f7;
+}
+.page-sign-up-personal .section-under-14.section-guardian-agree .info-personal-under-14 .info-personal {
+ margin: 10px 10px 0;
+}
+.page-sign-up-personal .section-under-14.section-guardian-agree .info-personal-under-14 .sep {
+ margin: 10px 10px 0 0;
+ border-bottom: 1px solid #ddd;
+}
+.page-sign-up-personal .section-under-14.section-guardian-agree .guardian-agree {
+ padding-left: 20px;
+}
+.page-sign-up-personal .section-under-14.section-guardian-agree .guardian-agree .field-cbox {
+ margin-top: 10px;
+}
+.page-sign-up-personal .section.has-left-bar .field-parent-agree .direction {
+ font-size: 14px;
+}
+.role-holder.holds-sbox .sbox {
+ width: 0;
+ height: 0;
+}
+.role-holder.holds-sbox.is-placeholder .btn-select {
+ height: 35px;
+ line-height: 35px;
+ font-size: 17px;
+}
+
+.page-password-reset .header .title {
+ background-image: url(../images/ti-password-reset.png);
+}
+.page-password-reset .header .title-line1.title-en {
+ background-image: url(../images/ti-password-reset-en.png);
+}
+/* 수정시작 : 20151001 */
+.page-template-term .content,
+.page-password-reset .content {
+ margin: 0 auto;
+ margin-top: 60px;
+ width: 600px;
+}
+/* 수정종료 : 20150101 */
+.page-password-reset .content [type=submit] {
+ margin-top: 23px;
+}
+.page-password-reset .holds-tbox > .btn-clear {
+ top: 10px;
+}
+.page-password-reset .holds-pbox > .btn-question {
+ top: -27px;
+    left: 85px;
+ right: initial;
+}
+/* 수정시작: 20151224 */
+/* .page-password-reset .holds-pbox > input.label-en + .btn-question { */
+.page-password-reset .holds-pbox > .btn-question-en {
+/* 수정종료: 20151224 */
+ top: -27px;
+ left: 100px;
+}
+
+.page-email-auth-check .content {
+ margin: 55px auto 0;
+ width: 600px;
+}
+.page-email-auth-check .title.title-line1 {
+ background-image: url(../images/ti-auth-email.png);
+}
+.page-email-auth-check .title.title-line1.title-en {
+ background-image: url(../images/ti-auth-email-en.png);
+}
+.page-email-auth-check .content .section.section-control {
+ margin-top: 70px;
+}
+.page-email-auth-check .email-auth-nav {
+ font-size: 14px;
+}
+.page-email-auth-check .sub-direction {
+ margin-top: 40px;
+ font-size: 18px;
+ line-height: 30px;
+}
+.auth-email-holder {
+ margin-top: 32px;
+ height: 30px;
+ line-height: 30px;
+ text-align: center;
+ font-size: 21px;
+ /* background-color: #f7f7f7; */
+}
+.auth-email-holder .auth-email {
+ padding: 0 4%;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.description-holder {
+ width: 100%;
+ height: auto;
+ text-align: center;
+ font-size: 14px;
+ line-height: 24px;
+}
+.description-holder .description {
+ width: 100%;
+ word-wrap: break-word;
+}
+.page-email-auth-check .field-button-double .btn.btn-red {
+ width: 62%;
+}
+.page-email-auth-check .field-button-double .btn.btn-gray {
+ width: 32%;
+}
+.field-auth-link {
+ margin-top: 20px;
+ width: 100%;
+ height: 18px;
+ line-height: 18px;
+ text-align: center;
+}
+.page-email-auth-check .section-control .field .next-btn {
+ margin-top: 55px;
+}
+
+.popup-email-auth-check .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-receive-e-mail.png) no-repeat center top;
+ /* background-size: auto 44px; */
+}
+.popup-email-auth-check .popup-header .popup-title.title-en {
+ height: 66px;
+ background: url(../images/ti-popup-receive-e-mail-en.png) no-repeat center top;
+ /* background-size: auto 44px; */
+}
+/* .popup-email-auth-check .popup-content,
+.popup-e-email-auth-check .popup-content {
+ padding: 0 21px;
+} */
+.email-auth-nav-list {
+ padding: 0 21px 0 40px;
+ width: auto;
+ height: auto;
+ list-style-type: decimal;
+}
+.email-auth-nav-list-item {
+ padding-bottom: 10px;
+ height: auto;
+ font-size: 15px;
+}
+.email-auth-nav-content {
+ line-height: 20px;
+ word-wrap: break-word;
+}
+.page-password-change button[type="submit"] {
+ margin-top: 35px;
+}
+.page-password-change .content {
+ margin: 0 auto;
+ width: 600px;
+}
+.page-password-change .holds-pbox > .btn-question {
+ top: -27px;
+ left: 84px;
+ right: initial;
+}
+/* 수정시작: 20151224 */
+/* 웹접근성 수정 */
+/* .page-password-change .holds-pbox > input.label-en + .btn-question { */
+/* 수정종료: 20151224 */
+.page-password-change .holds-pbox > .btn-question-en {
+ top: -26px;
+ left: 99px;
+}
+.page-password-change .title.title-line1,
+.page-password-change-method .title.title-line1 {
+ background-image: url(../images/ti-change-password.png);
+}
+.page-password-change .content,
+.page-password-change-method .content {
+ /* margin-top: 55px; */
+ padding-top: 55px;
+    margin: 0 auto;
+}
+.page-password-change .title.title-line1.title-en,
+.page-password-change-method .title.title-line1.title-en {
+ background-image: url(../images/ti-change-password-en.png);
+}
+.page-password-change .field-button-double {
+ margin-top: 55px;
+}
+.page-password-change .field-button-double button[type="submit"] {
+ margin-top: 0;
+}
+.page-service-agreement .header .title {
+ background-image: url(../images/ti-service-agreement.png);
+}
+/* 수정시작 : 20151008 */
+.page-service-agreement .content {
+ /* margin-top: 35px; */
+ margin: 55px auto 0;
+}
+/* 수정종료 : 20151008 */
+.page-service-agreement .section {
+ margin-top: 0;
+}
+.page-service-agreement .section.section-notice {
+ position: relative;
+ margin: 0 15px;
+ height: 20px;
+ padding: 20px;
+ background: #f5f5f5;
+ line-height: 20px;
+}
+.page-service-agreement .section.section-notice .label {
+ font-weight: bold;
+}
+/* .page-service-agreement .field > ul {
+ border-top: 1px solid #ddd;
+} */
+.page-service-agreement .holds-terms {
+ position: relative;
+ /* padding: 15px 40px 15px 0; */
+ border-bottom: 1px solid #ddd;
+ color: #2a2a2a;
+ font-weight: 600;
+}
+.page-service-agreement .holds-terms .h-group {
+ display: inline-block;
+ white-space: nowrap;
+}
+.page-service-agreement .holds-terms .holds-cbox {
+ margin-right: 6px;
+}
+.page-service-agreement .holds-terms .holds-cbox + .label {
+ width: 350px;
+ height: auto;
+ white-space: normal;
+}
+@media screen and (max-width: 320px) {
+ .page-service-agreement .holds-terms .holds-cbox + .label {
+  width: 210px;
+ }
+}
+/* 삭제: 20151019
+.page-service-agreement .terms-detail {
+ display: block;
+ position: absolute;
+ top: 19px;
+ right: 9px;
+ padding-bottom: 2px;
+ border-bottom: 1px solid #000;
+ font-size: 12px;
+} */
+.page-service-agreement .section-notice .terms-detail {
+ top: 22px;
+ right: 14px;
+}
+.page-service-agreement .field-agree-all label {
+ position: relative;
+ display: block;
+ box-sizing: border-box;
+ width: 100%;
+ height: 50px;
+ border: 1px solid #8c8c8c;
+ margin: 15px 0 0;
+ padding: 14px 0;
+ font-weight: 600;
+ text-align: center;
+}
+.page-service-agreement .field-agree-all label.checked {
+ border-color: #ed1f46;
+ /* color: #ed1f46; */ /* 20151224 수정 */
+}
+.page-service-agreement .field-agree-all .holds-cbox {
+ background-image: url(../images/check-box-r.png);
+}
+
+.page-user-auth-method .title.title-line1 {
+ background-image: url(../images/ti-need-auth-check.png);
+}
+.page-user-auth-method .content {
+ margin-top: 32px;
+}
+.page-user-auth-method .title + .direction {
+ padding: 8px 21px 0;
+ word-wrap: break-word;
+}
+
+.page-input-password .header .title {
+ background-image: url(../images/ti-type-password.png);
+}
+.page-input-password .content {
+ margin: 40px auto 0;
+}
+
+.page-user-auth-method .title.title-line2.title-en {
+ background-image: url(../images/ti-verify-identify.png);
+}
+
+.page-email-certification .title.title-line1 {
+ background-image: url(../images/ti-auth-email.png);
+}
+
+.page-phone-certification .content {
+ margin-top: 32px;
+}
+.page-phone-certification .title.title-line1 {
+ background-image: url(../images/ti-membership-info.png);
+}
+
+.page-alien-registration-number .header .title {
+ height: 84px;
+ background: url(../images/ti-alien-registration-number.png) no-repeat center top;
+ /* background-size: auto 84px; */
+}
+.page-alien-registration-number .label-hidden {
+ display: block;
+ position: static;
+ left: auto;
+ height: 14px;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 12px;
+ font-weight: bold;
+ line-height: 14px;
+}
+.page-alien-registration-number .field .direction {
+ display: block;
+ margin-top: 5px;
+ color: #545454;
+ font-size: 12px;
+ line-height: 18px;
+}
+.page-alien-registration-number .field .h-group .h-item {
+ width: 45%;
+}
+.page-alien-registration-number .field .h-group span.sep.h-item {
+ width: 10%;
+ height: 40px;
+ color: #545454;
+ font-size: 17px;
+ line-height: 40px;
+ text-align: center;
+}
+.page-alien-registration-number .content {
+ margin-top: 40px;
+}
+.page-alien-registration-number .field-name {
+ margin-bottom: 43px;
+}
+.page-alien-registration-number .field-control {
+ margin-top: 74px;
+}
+
+.page-alien-other-number .header .title {
+ height: 116px;
+ background: url(../images/ti-alien-other-number.png) no-repeat center top;
+ /* background-size: auto 116px; */
+}
+.page-alien-other-number .label {
+ display: block;
+ position: static;
+ left: auto;
+ height: 14px;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 12px;
+ font-weight: bold;
+ line-height: 14px;
+}
+.page-alien-other-number .tab-switch .btn-tab {
+ height: 80px;
+}
+.page-alien-other-number .tab-switch .tab-switch-title {
+ height: 64px;
+ padding-top: 10px;
+ font-size: 12px;
+ line-height: 18px;
+ vertical-align: middle;
+}
+.page-alien-other-number .field .direction {
+ display: block;
+ margin-top: 5px;
+ color: #545454;
+ font-size: 12px;
+ line-height: 18px;
+}
+
+.page-alien-other-number .content {
+ margin-top: 20px;
+}
+.page-alien-other-number .field-control {
+ margin-top: 43px;
+}
+
+.page-enter-password .header .title {
+ height: 46px;
+ background-image: url(../images/ti-enter-password.png);
+ /* background-size: auto 46px; */
+}
+.page-enter-password .content {
+ margin-top: 32px;
+}
+.page-enter-password .field-control {
+ margin-top: 63px;
+}
+
+#ux-container .page-security {
+ width: 620px;
+}
+#ux-container.page-security .content {
+ margin: 55px 0 0;
+ width: 620px;
+}
+.page-security .header .title {
+ height: 70px;
+ background-image: url(../images/ti-security.png);
+ /* background-size: auto 46px; */
+}
+.page-security .content {
+ margin: 55px auto 0;
+ width: 880px;
+}
+.page-security .content > .title {
+ padding-bottom: 7px;
+ border-bottom: 2px solid #ed1f46;
+ margin: 0 20px;
+ font-size: 25px;
+ font-weight: 600;
+ text-align: left;
+}
+.page-security .section-config {
+ padding-left: 10px;
+ overflow: hidden;
+}
+.page-security .title + .section-config {
+ padding-bottom: 65px;
+ border-bottom: 2px solid #ddd;
+}
+.page-security .section-config .field {
+ position: relative;
+ overflow: hidden;
+}
+.page-security .section-config .field .title {
+ padding: 5px 0 5px 60px; /* 20151224 수정 */
+ height: 36px;
+ font-size: 21px;
+ font-weight: 600;
+ line-height: 36px;
+}
+.page-security .section-tab .total-logout .direction {
+ font-size: 13px; /* 20150911 : 수정 */
+ line-height: 20px;
+ text-align: left;
+ width: 340px; /* 20150911 : 추가 */
+ float: left; /* 20150911 : 추가 */
+}
+.page-security .section-config .field .title.ip-block {
+ background: url(../images/vi-ip-block.png) no-repeat left center;
+}
+.page-security .section-config .field .title.new-device-alarm {
+ background: url(../images/vi-new-device-alarm.png) no-repeat left center;
+}
+.page-security .section-config .field label {
+ position: absolute;
+ display: block;
+ top: 5px;
+ right: 0;
+}
+.page-security .section-config .is-toggle .holds-cbox {
+ width: 73px;
+ height: 36px;
+ background: url(../images/bt-toggle.png) no-repeat 0 -36px;
+ /* background-size: 80px 68px; */
+}
+.page-security .section-config .is-toggle .holds-cbox.checked {
+ background-position: 0 0;
+}
+.page-security .section-config .is-toggle .holds-cbox.focus {
+ outline: 1px solid #a5c7fe;
+}
+.is-ie .page-security .section-config .is-toggle .holds-cbox.focus {
+ outline: 1px dotted #808080;
+}
+.page-security .section-config .direction {
+ margin-top: 15px;
+ font-size: 16px;
+ line-height: 20px;
+}
+.page-security .section-config .field-alarm.field-alarm-email {
+ margin-top: 30px;
+}
+
+.page-security .section-config .field-alarm label {
+ position: static;
+ display: inline-block;
+ height: 20px;
+ line-height: 20px;
+ /* float: left; */
+}
+.page-security .section-config .field-alarm label .holds-cbox {
+ display: inline-block;
+ float: left;
+}
+.page-security .section-config .field.field-alarm-phone {
+ margin-top: 10px;
+}
+.page-security .section-config .field-alarm .user-info,
+.page-security .section-config .field-alarm .user-no-info {
+ display: inline-block;
+ /* float: left; */
+ margin-left: 5px;
+ height: 20px;
+ vertical-align: middle;
+ line-height: 20px;
+ font-size: 17px;
+}
+.page-security .section-config .field-alarm .user-no-info {
+ line-height: 20px;
+}
+.page-security .section-config .field-alarm .user-no-info .guide {
+ margin-right: 3px;
+}
+.page-security .section-config .field-alarm .user-no-info .btn-underline {
+ display: inline-block;
+ vertical-align: top;
+ margin-top: 3px;
+}
+.page-security .section-config .field-alarm .user-no-info br {
+ display: none;
+}
+@media screen and (max-width: 320px) {
+ .page-security .section-config .field-alarm .user-no-info br {
+  display: inline-block;
+ }
+}
+.page-security .tab-content .total-logout {
+ position: relative;
+ text-align: right;
+}
+.page-security .tab-content .total-logout .btn-gray {
+ vertical-align: middle;
+ width: 190px;
+ height: 42px;
+ margin-right: 5px;
+ line-height: 42px;
+ font-size: 16px;
+ text-align: center;
+}
+.page-security .tab-content .total-logout .btn-tooltip {
+ width: 23px;
+ height: 23px;
+ background: url(../images/bt-question-large.png) no-repeat center center;
+ vertical-align: middle;
+}
+.page-security .tab-content .total-logout .btn-tooltip:hover { /* 20151224 추가 */
+ background: url(../images/bt-question-large-h.png) no-repeat center center;
+}
+.page-security .tab-content .total-logout .btn-tooltip:active { /* 20151224 추가 */
+ background: url(../images/bt-question-large-a.png) no-repeat center center;
+}
+.page-security .tab-content .total-logout .tooltip { /* 20150921 수정 */
+ top: 34px; /* 20150921 수정 */
+ width: 200px;
+ left: auto;
+ right: -9px; /* 20150921 수정 */
+ text-align: left;
+}
+.page-security .tab-content .devices {
+ padding-top: 10px;
+}
+.page-security .tab-content .device {
+ position: relative;
+ padding: 10px 65px 0 0;
+}
+.page-security .tab-content .device .btn {
+ height: 56px;
+ padding: 0 10px;
+ border: 2px solid #bbbaba;
+ text-align: left;
+}
+.page-security .tab-content .device .btn-device .device-name {
+ display: block;
+ font-size: 16px;
+ /* height: 29px;
+ line-height: 29px; */
+ text-overflow: ellipsis;
+ overflow: hidden;
+ white-space: nowrap;
+}
+.page-security .tab-content .device .btn-device .device-service {
+ display: block;
+ height: 24px;
+ font-size: 18px;
+ line-height: 24px;
+}
+/* .page-security .tab-content .device.device-current .btn {
+ border-color: #df5252;
+ background: #df5252;
+ color: #fff;
+} */
+.page-security .tab-content .device.device-current {
+ padding: 10px 0 0;
+}
+.page-security .tab-content .device.device-current .btn-device {
+ background: url(../images/vi-using.png) no-repeat right center;
+}
+.page-security .tab-content .device.device-current .device-name {
+ width: 100%;
+}
+.page-security .tab-content .device.device-current .btn-logout {
+ display: none;
+}
+.page-security .tab-content .device .btn-logout {
+ position: absolute;
+ top: 10px;
+ right: 0;
+ width: 56px;
+ padding: 0;
+ text-align: center;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+ background: url(../images/bt-logout-icon.png) no-repeat center center;
+}
+.page-security .tab-content .device .btn-device:active,
+.page-security .tab-content .device .btn-logout:active,
+.page-security .tab-content .login-history .btn:active {
+ border-color: #ed1f46;
+}
+.page-security .tab-content .device .btn-device:active .device-name,
+.page-security .tab-content .login-history .btn:active span {
+ /* color: #ed1f46; */
+}
+.page-security .tab-content .device .btn-logout:active {
+ /* background: url(../images/bt-logout-icon-active.png) no-repeat center center; */
+}
+.page-security .section-tab .tab-content .tab-filter {
+ display: inline-block;
+ margin-top: 20px;
+ width: 35%;
+}
+.page-security .tab-content .tab-filter .h-item {
+ position: relative;
+ width: 30%;
+ height: 36px;
+ margin-left: 2%;
+}
+.page-security .tab-content .tab-filter .holds-rbox {
+ width: 100%;
+ height: 100%;
+ background: #ececec;
+ border-radius: 8px;
+}
+.page-security .tab-content .tab-filter .label { /* 20151224 수정 */
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 36px;
+ color: #000;
+ font-size: 15px;
+ font-weight: 600;
+ line-height: 36px;
+ text-align: center;
+ cursor: pointer;
+}
+.page-security .tab-content .tab-filter .holds-rbox:hover,
+.page-security .tab-content .tab-filter .label:hover { /* 20151224 추가 */
+ background-color: #f5f5f5;
+ border-radius: 8px;
+}
+.page-security .tab-content .tab-filter .holds-rbox.checked,
+.page-security .tab-content .tab-filter .holds-rbox.checked:hover { /* 20151224 수정 */
+ background: #ed1f46;
+}
+.page-security .tab-content .tab-filter .holds-rbox.checked + .label:hover { /* 20151224 추가 */
+ background: none;
+}
+.page-security .tab-content .tab-filter .holds-rbox.focus { /* 20151224 추가 */
+ outline: 1px solid #a5c7fe;
+}
+.is-ie .page-security .tab-content .tab-filter .holds-rbox.focus { /* 20151224 추가 */
+ outline: 1px dotted #808080;
+}
+.page-security .tab-content .tab-filter .holds-rbox.checked + .label {
+ color: #fff;
+}
+.page-security .tab-content .tab-query {
+ position: relative;
+ display: inline-block;
+ margin-top: 20px;
+ padding: 0 72px 0 10px;
+ float: right;
+ width: 50%;
+}
+.page-security .tab-content .tab-query .hidden-label {
+ position: absolute;
+ left: -9999px;
+}
+.page-security .tab-content .tab-query label {
+ width: 47%;
+}
+.page-security .tab-content .tab-query .tbox {
+ height: 36px;
+    line-height: 36px;
+    font-size: 16px;
+}
+.page-security .tab-content .tab-query .btn-clear {
+ top: 10px;
+}
+.page-security .tab-content .tab-query .sep-tilda {
+ width: 5%;
+    height: 36px;
+    font-size: 16px;
+    line-height: 36px;
+    text-align: center;
+    font-weight: bold;
+}
+.page-security .tab-content .tab-query .btn-gray {
+ position: absolute;
+    top: 0;
+    right: 0;
+    width: 69px;
+    height: 36px;
+    line-height: 36px;
+}
+.page-security .tab-content .login-histories {
+ padding: 43px 0 0;
+}
+.page-security .tab-content .login-history .btn {
+ margin-top: 10px;
+ height: 56px;
+    padding: 0 10px;
+    border: 2px solid #bbbaba;
+    text-align: left;
+}
+.page-security .tab-content .login-history:first-child .btn {
+ margin-top: 0;
+}
+.page-security .tab-content .login-history .btn span {
+ display: block;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 24px;
+    line-height: 24px;
+}
+.page-security .tab-content .login-history .btn .device-service {
+ font-size: 14px;
+}
+.page-security .section-config .user-no-info {
+ margin-top: 10px;
+    font-size: 14px;
+    padding-left: 30px;
+ /* 수정시작: 20151224 */
+ /* 웹접근성 수정 */
+ margin-bottom: 2px;
+ /* 수정종료: 20151224 */
+}
+.page-security .section-config .user-no-info a.btn-red {
+ margin-left: 10px;
+ font-size: 14px;
+}
+.page-security .section-tab .total-logout-btn-holder {
+ margin-top: 10px;
+ height: 42px;
+ line-height: 42px;
+}
+.page-security .tooltip-total-logout .tooltip-content {
+ padding: 10px 8px 0;
+}
+.page-security .tooltip-total-logout .info-title {
+ height: 20px;
+ line-height: 20px;
+}
+
+.page-identity-check-method .title.title-line1 {
+ background-image: url(../images/ti-need-check-identity.png);
+}
+.page-identity-check-method .content {
+ margin-top: 32px;
+}
+
+.page-identity-check-phone .content {
+ margin-top: 32px;
+}
+.page-identity-check-phone .title.title-line1 {
+ background-image: url(../images/ti-popup-phone-verification.png);
+}
+.page-identity-check-phone .tab-switcher {
+ padding-bottom: 20px;
+}
+.tab-section {
+ padding-bottom: 20px;
+ width: 100%;
+ height: auto;
+ overflow: hidden;
+}
+.tab-content.terms-holder {
+ background-color: #f5f5f5;
+}
+.identity-check-form-list {
+ position: relative;
+}
+.identity-check-item {
+ padding-bottom: 1.1em;
+ height: auto;
+    overflow: hidden;
+}
+.identity-check-item .h-group {
+ display: inline-block;
+}
+.identity-check-item .sbox-sex {
+ width: 48%;
+ float: left;
+}
+.identity-check-item .sbox-local {
+ width: 48%;
+ float: right;
+}
+.identity-check-item.date-select {
+ text-align: left; /* 20150831 : 수정 */
+}
+.identity-check-item .sbox-year {
+ /* width: 35%; */
+ width: 34%;
+ margin-right: 1%;
+ float: left;
+}
+.identity-check-item .sbox-month {
+ margin-right: 1%;
+ width: 30%;
+}
+.identity-check-item .sbox-day {
+ width: 30%;
+}
+.identity-check-item .sbox-telecom {
+ width: 27%;
+ float: left;
+}
+.identity-check-item .cell-phone-number {
+ width: 70%;
+ float: right;
+}
+.page-identity-check-phone .holds-terms {
+    position: relative;
+    padding: 10px 50px 10px 10px;
+    color: #2a2a2a;
+    font-weight: 600;
+}
+.page-identity-check-phone .holds-terms .h-group {
+    display: inline-block;
+    white-space: nowrap;
+}
+.page-identity-check-phone .holds-terms .holds-cbox {
+    margin-right: 6px;
+}
+.page-identity-check-phone .holds-terms .holds-cbox + .label {
+    width: auto;
+    max-width: 215px;
+    height: auto;
+    white-space: normal;
+}
+.page-identity-check-phone .terms-detail {
+    display: block;
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    font-size: 12px;
+}
+.page-identity-check-phone .field-agree-all label {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #8c8c8c;
+    margin: 0;
+    padding: 14px 0;
+    font-weight: 600;
+    text-align: center;
+}
+.page-identity-check-phone .field-agree-all label.checked {
+    border-color: #ed1f46;
+    /* color: #ed1f46; */ /* 20151224 수정 */
+}
+.page-identity-check-phone .field-agree-all .holds-cbox {
+    background-image: url(../images/check-box-r.png);
+}
+.page-identity-check-phone .terms-holder .holds-cbox {
+ background-image: url(../images/check-box-icon-w.png);
+}
+.captcha-holder {
+ position: relative;
+ margin-top: 12px;
+ margin-bottom: 10px;
+ width: 100%;
+ height: 105px;
+}
+.captcha-image {
+ display: inline-block;
+ position: absolute;
+    top: 0;
+    left: 0;
+    right: 20%;
+    bottom: 0;
+ width: 330px;
+ background-color: #f5f5f5;
+}
+.captcha-btn-group {
+ display: inline-block;
+    float: right;
+    padding: 0;
+    width: 50px;
+    text-align: right;
+}
+.captcha-btn-group button { /* 20151224 수정 */
+ width: 50px;
+ height: 50px;
+ border: 0;
+ /* background-size: 32px auto; */
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.captcha-btn-sound { /* 20151224 수정 */
+ margin-bottom: 5px;
+ background: url(../images/bt-speaker.png) no-repeat 0 0;
+}
+.captcha-btn-sound:hover { /* 20151224 수정 */
+ background-position: 0 -50px;
+}
+.captcha-btn-sound:active { /* 20151224 수정 */
+ background-position: 0 -100px;
+}
+.captcha-btn-reload { /* 20151224 수정 */
+ background: url(../images/bt-replay.png) no-repeat 0 0;
+}
+.captcha-btn-reload:hover { /* 20151224 수정 */
+ background-position: 0 -50px;
+}
+.captcha-btn-reload:active { /* 20151224 수정 */
+ background-position: 0 -100px;
+}
+.identity-check-phone-number .identity-check-item {
+ width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+.economy-cell-phone-number + .sbox-telecom {
+ float: right;
+ width: 48%;
+}
+.economy-cell-phone-number {
+    height: 18px;
+    line-height: 18px;
+    margin-bottom: 22px;
+}
+.economy-cell-phone-number .btn-tooltip {
+ top: 6px;
+}
+
+.page-already-id .header .title-line2 {
+ background-image: url(../images/ti-real-name-id.png);
+}
+span.already-id {
+ color: #ed1f46;
+}
+.page-already-id .content {
+ margin-top: 32px;
+}
+.page-already-id .section {
+ height: auto;
+ overflow: hidden;
+}
+.page-already-id-info .guide-title,
+.page-already-id-info .guide-nav { /* 20151005 수정 */
+ display: block;
+ /* padding-left: 25px; */
+ /* 수정시작: 20151224 */
+ /* 웹접근성 수정 */
+ /* padding-left: 10px; */
+ margin-left: 10px;
+ /* 수정종료: 20151224 */
+ height: 24px;
+    line-height: 23px;
+ font-size: 15px;
+}
+.page-already-id-info .guide-nav em {
+ border-bottom: 1px solid #ed1f46;
+}
+.page-already-id-info .guide-title { /* 20151005 수정 */
+ background: url(../images/vi-exclamation.png) no-repeat left 0;
+ /* background: url(../images/vi-popup-exclamation.png) no-repeat left center; */
+ /* background-size:  20px auto; */
+}
+/*.popup-all-id-check .popup-header .popup-title {
+ height: 44px;
+ background: url(../images/ti-all-id-check.png) no-repeat center top;
+}
+.popup-all-id-check .popup-content .direction {
+    margin: 0 20px;
+    color: #545454;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+}*/
+.page-already-id-info .guide-title strong { /* 20151005 추가 */
+ font-weight: 100;
+}
+
+.page-identity-check-method .header .title.title-en {
+ background-image: url(../images/ti-verify-identify.png);
+}
+
+.popup-medium.popup-page-tid-check {
+ width: 495px;
+}
+.popup-page-tid-check .popup-content {
+ padding: 25px 35px;
+}
+.popup-page-tid-check .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-id-check.png) no-repeat center top;
+}
+.popup-page-tid-check .popup-header .popup-title.title-en {
+ background: url(../images/ti-popup-id-check-en.png) no-repeat center top;
+}
+.popup-page-tid-check .popup-text {
+ font-size: 15px;
+ line-height: 24px;
+}
+.popup-page-tid-check .user-no-info {
+ margin-top: 35px;
+}
+.popup-page-tid-check .user-no-info .guide {
+ display: inline-block;
+ line-height: 22px; /* 20151013 추가 */
+ height: 22px;
+ padding-left: 30px;
+ font-size: 15px;
+ background: url(../images/vi-exclamation.png) no-repeat left 0;
+}
+.popup-page-tid-check .user-no-info {
+    height: auto;
+    min-height: 30px;
+    line-height: 22px;/* 20151013 수정 */
+    text-align: center;
+}
+.popup-page-tid-check .user-no-info .btn-protection-check {
+ margin-left: 10px;
+ font-size: 15px;
+}
+
+.popup-page-auth-phone .popup-header .popup-title {
+ height: 66px;
+ background: url(../images/ti-phone-check-s.png) no-repeat center top;
+}
+.popup-page-auth-phone .section {
+ margin-top: 40px;
+}
+.popup-page-auth-phone .section-label {
+ padding-bottom: 0;
+}
+.popup-page-auth-phone .section-send-auth-number .direction {
+ margin-top: 15px;
+ font-size: 16px;
+ color: #7e7e7e;
+}
+.popup-page-auth-phone .section .field {
+ margin-top: 40px;
+}
+.popup-page-auth-phone .popup-text {
+ font-size: 22px;
+ text-align: center;
+}
+
+/** popups ******************************************************************/
+.popup-tid-introduction {
+ width: 490px; /* 20150921 수정 */
+ height: 650px;
+ margin: 0 auto;
+}
+.popup-tid-introduction .popup-title {
+ height: 96px;
+ background: url(../images/ti-tid.png) no-repeat center top;
+}
+.popup-tid-introduction li {
+ position: relative;
+}
+.popup-tid-introduction li p {
+ position: absolute;
+ left: -9999px;
+}
+.popup-tid-introduction {
+ padding: 0;
+}
+.popup-tid-introduction .popup-content {
+ position: absolute;
+ top: 0;
+ right: 0;
+ bottom: 0;
+ left: 0;
+ padding: 0;
+ margin: 0;
+ z-index: -1;
+}
+.popup-tid-introduction .holds-slide {
+ width: 100%;
+ height: 100%;
+ overflow: hidden;
+}
+.popup-tid-introduction .slides {
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ font-size: 0;
+}
+.popup-tid-introduction .slide {
+ position: relative;
+ display: inline-block;
+ width: 100%;
+ height: 100%;
+ background: no-repeat center center;
+ background-size: cover;
+}
+.popup-tid-introduction .slide[data-page="1"] {
+ background-image: url(../images/bg-intro-slide1.png);
+}
+.popup-tid-introduction .slide[data-page="2"] {
+ background-image: url(../images/bg-intro-slide2.png);
+}
+.popup-tid-introduction .slide[data-page="3"] {
+ background-image: url(../images/bg-intro-slide3.png);
+}
+.popup-tid-introduction .slide p {
+ position: absolute;
+ left: -9999px;
+}
+.popup-tid-introduction .slide .intro-title {
+ position: absolute;
+ top: 18px;
+ left: 24px;
+ width: 110px;
+ height: 40px;
+}
+.popup-tid-introduction .slide .intro-description {
+ position: absolute;
+ left: 24px;
+ bottom: 130px;
+ width: 330px;
+ height: 148px;
+}
+.popup-tid-introduction.popup-wide .btn-popup-close {
+ position: fixed;
+}
+.popup-tid-introduction .popup-control {
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ right: 0;
+}
+.popup-tid-introduction .popup-control .pager {
+ width: 110px;
+ height: 22px;
+ padding-bottom: 20px;
+ margin: 0 auto;
+}
+.popup-tid-introduction .popup-control .pager .page {
+ width: 16px;
+ height: 16px;
+ margin-left: 16px;
+}
+.popup-tid-introduction .popup-control .pager .page .btn {
+ width: 16px;
+ height: 16px;
+ background: url(../images/bt-pager.png) no-repeat 0 0;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.popup-tid-introduction .popup-control .pager .page .btn.selected {
+ background-position: 0 -16px;
+}
+.popup-tid-introduction .btn-nav-arrow {
+ position: absolute;
+ top: 300px;
+}
+.popup-tid-introduction .btn-nav-arrow.btn-nav-arrow-left {
+ left: 23px;
+}
+.popup-tid-introduction .btn-nav-arrow.btn-nav-arrow-right {
+ right: 23px;
+}
+.popup-tid-introduction .popup-control {
+ padding-bottom: 20px;
+}
+
+/** P-TERM : begin *******************************************************************/
+.popup-tid-terms-detail .popup-terms-content,
+.popup-tid-terms-check .popup-terms-content { /* 20151106 수정 */
+ width: 100%;
+ /*height: 100%;*/
+ /*height: 530px;*/
+ height: 200px;
+ /*border: 1px solid #ddd;*/
+ border: 0;
+ background-color: #f7f7f7;
+}
+@media screen and (min-height: 800px) { /* 20160122 수정 */
+ .popup-layer .popup-tid-terms-detail .popup-terms-content,
+ .popup-layer .popup-tid-terms-check .popup-terms-content {
+  height: 370px;
+ }
+}
+@media screen and (max-height: 580px) { /* 20160122 수정 */
+ .popup-layer .popup-tid-terms-detail .popup-terms-content,
+ .popup-layer .popup-tid-terms-check .popup-terms-content {
+  height: 180px;
+ }
+}
+
+.popup-tid-terms-check.popup-medium { /* 20151106 수정 */
+ width: 430px;
+ /* width: 530px; */
+ /*height: 600px;*/
+}
+.popup-tid-terms-check.popup-medium.has-tab {
+ /*height: 673px;*/
+}
+.popup-tid-terms-check.popup-medium.has-tab .tab-switch .tab-switch-title {
+ height: 50px;
+ line-height: 50px;
+}
+.popup-tid-terms-check.popup-medium.has-tab .popup-content {
+ padding-top: 10px;
+}
+.popup-tid-terms-check .popup-header {
+ background-color: #fff;
+}
+.popup-tid-terms-check .popup-direction,
+.popup-tid-terms-detail .popup-direction { /* 20160108 수정 */
+ padding-bottom: 10px;
+ font-size: 17px;
+ font-weight: bold;
+ line-height: 30px;
+}
+
+.popup-tid-terms-check .h-group {
+ border: 1px solid #747474;
+ background-color: #f5f5f5;
+ width: 100%;
+ height: 46px;
+ box-sizing: border-box;
+ margin-top: 25px;
+}
+.popup-tid-terms-check .h-item {
+ padding-top: 11px;
+ width: 50%;
+ text-align: center;
+}
+.popup-tid-terms-check .holds-rbox { /* 20151224 수정 */
+ width: 20px;
+ height: 20px;
+ background: url(../images/bt-radio-radius-s.png) no-repeat 0 0;
+}
+.popup-tid-terms-check .holds-rbox:hover { /* 20151224 추가 */
+ background-position: 0 -20px;
+}
+.popup-tid-terms-check .holds-rbox.checked { /* 20151224 수정 */
+ background-position: 0 -40px;
+}
+.popup-tid-terms-check .holds-rbox.disabled,
+.popup-tid-terms-check .holds-rbox.disabled:hover { /* 20151224 추가 */
+ background-position: 0 -60px;
+}
+.popup-tid-terms-check .holds-rbox.disabled .rbox { /* 20151224 추가 */
+ cursor: default;
+}
+.popup-tid-terms-check .holds-rbox.checked.disabled,
+.popup-tid-terms-check .holds-rbox.checked.disabled:hover { /* 20151224 추가 */
+ background-position: 0 -80px;
+}
+.popup-tid-terms-check .holds-rbox.checked.disabled .rbox { /* 20151224 추가 */
+ cursor: default;
+}
+.popup-tid-terms-check .holds-rbox.focus { /* 20151224 추가 */
+ background-position: 0 -100px;
+}
+.popup-tid-terms-check .holds-rbox.checked.focus { /* 20151224 추가 */
+ background-position: 0 -120px;
+}
+
+.popup-tid-terms-check .holds-rbox + .label {
+ height: 20px;
+ font-size: 17px;
+ line-height: 20px;
+ font-weight: bold;
+ margin-left: 10px;
+ }
+.rbox-telecom.h-group {
+    display: block;
+}
+.rbox-telecom.h-group .h-item {
+  width:124px;
+  margin-left: 5px;
+ }
+.rbox-telecom.h-group .h-item .label{
+ display: inline-block;
+ margin-top: 0;
+ height: 26px;
+ font-size: 16px;
+ font-weight: normal;
+ line-height: 26px;
+ }
+.popup-tid-terms-check .empty {
+ height: 532px;
+ font-size: 21px;
+ text-align: center;
+ line-height: 530px;
+}
+.popup-tid-terms-check.has-tab .empty {
+ height: 372px;
+ line-height: 372px;
+}
+.popup-tid-terms-check .hidden-label {
+ position: absolute;
+ left: -9999px;
+}
+
+.popup-tid-terms-detail .popup-title,
+.popup-tid-terms-check .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-terms-detail.png) no-repeat center top;
+ /* background-size: auto 44px; */
+}
+.popup-tid-terms-detail .popup-title.terms-usage,
+.popup-tid-terms-check .popup-title.terms-usage { /* 20160108 이용약관 타이틀 추가 */
+ height: 48px;
+ background: url(../images/ti-popup-terms-usage.png) no-repeat center top;
+}
+.popup-tid-terms-detail .popup-title.title-en,
+.popup-tid-terms-check .popup-title.title-en {
+ height: 48px;
+ background: url(../images/ti-popup-terms-detail-en.png) no-repeat center top;
+}
+
+.popup-tid-terms-check .popup-control {
+ padding-top: 10px;
+ text-align: center;
+}
+.popup-tid-terms-check.popup-medium.has-tab .popup-control {
+ padding-top: 0;
+}
+.popup-tid-terms-check .btn-red {
+ width: 390px;
+}
+
+.popup-tid-terms-check.has-tab .popup-terms-content {
+ /*height: 440px;*/
+}
+.popup-tid-terms-check.has-agree .popup-terms-content {
+ /*height: 100px;*/
+}
+.popup-tid-terms-check.has-tab.has-agree .popup-terms-content {
+ /*height: 348px;*/
+}
+
+.popup-tid-terms-check .role-holder.holds-tab {
+ height: 100%;
+}
+/* 삭제 : Patrick */
+/*.popup-tid-terms-check .holds-term {
+ position: absolute;
+ top: 70px;
+ bottom: 0;
+ right: 0;
+ left: 0;
+}*/
+.popup-tid-terms-check  .preview-version + .holds-term {
+ top: 130px;
+ margin-top: 25px;
+}
+.popup-tid-terms-check  .preview-version + .holds-term .popup-terms-content {
+ height: 350px;
+}
+/** P-TERM : end *******************************************************************/
+
+/* .popup-tid-terms-detail .popup-content,
+.popup-tid-terms-check .popup-content {
+ position: absolute;
+    top: 126px;
+ left: 21px;
+ right: 21px;
+    bottom: 110px;
+ margin-top: 0;
+} */
+.popup-medium.popup-tid-terms-detail {
+ width: 530px;
+}
+/*.popup-tid-terms-detail .popup-content {*/
+/*height: 530px;*/
+/*}*/
+/* .popup-tid-terms-detail .popup-control,
+.popup-tid-terms-check .popup-control {
+ position: absolute;
+ right: 0;
+ bottom: 0;
+ left: 0;
+} */
+.popup-tid-terms-detail .popup-header .direction {
+ font-size: 16px;
+}
+
+.popup-password-invalid .popup-title {
+ height: 48px;
+ background: url(../images/ti-password-invalid.png) no-repeat center top;
+ /* background-size: auto 44px; */
+}
+.popup-password-invalid .popup-title.popup-title-en {
+ height: 48px;
+ background: url(../images/ti-password-invalid-en.png) no-repeat center top;
+ /* background-size: auto 44px; */
+}
+.popup-password-invalid .popup-title.title-line2{
+ height: 76px;
+}
+.popup-password-invalid .popup-content ul {
+ list-style: disc;
+ /* padding: 0 20px; */
+ margin: 0 0 0 20px;
+ font-size: 22px;
+ line-height: 30px;
+}
+.popup-password-invalid .popup-content li {
+ /* margin-top: 8px; */
+ font-size: 14px;
+}
+.popup-password-invalid .popup-content.popup-content-en li {
+ line-height: 22px;
+}
+
+.popup-tid-transfer .popup-title {
+ height: 46px;
+ background: url(../images/ti-popup-tid-transfer.png) no-repeat center top;
+}
+.popup-tid-transfer .popup-content {
+ position: absolute;
+ top: 104px;
+ left: 21px;
+ right: 21px;
+ bottom: 96px;
+ margin-top: 0;
+}
+.popup-tid-transfer .popup-control {
+ position: absolute;
+ right: 0;
+ bottom: 0;
+ left: 0;
+}
+
+.popup-tid-transfer .popup-notice-content {
+ width: 100%;
+ height: 100%;
+ border: 1px solid #ddd;
+}
+
+.popup-password-changed {
+ position: fixed;
+ top: 30px;
+ height: auto;
+ min-height: 345px;
+ /* max-height: 460px; */
+}
+.popup-password-changed .popup-header {
+ background: #fff;
+ border: 0;
+}
+.popup-password-changed .popup-title { /* 20151106 수정 */
+ height: 48px;
+ /* background: url(../images/ti-popup-password-changed-.png) no-repeat center top; */
+ background: url(../images/ti-logout-device-p.png) no-repeat center top;
+}
+.popup-password-changed .direction {
+ margin-top: 15px;
+    font-size: 15px;
+    line-height: 20px;
+    text-align: center;
+}
+.popup-password-changed .popup-content {
+ /* position: absolute;
+ top: 170px;
+ right: 20px;
+ bottom: 120px;
+ left: 20px;
+ padding: 0;
+ margin: 0;
+ background: #f7f7f7; */
+}
+.popup-password-changed .popup-content:after {
+ content: '';
+ display: block;
+ clear: both;
+}
+.popup-password-changed .popup-content .device {
+ padding: 10px 10px 0;
+}
+.popup-password-changed .popup-content .device label { /* 20151224 수정 */
+ /* position: relative;
+ display: block;
+ width: 100%;
+ height: 35px;
+ background: #fff; */
+ background: #fff;
+    display: block;
+    box-sizing: border-box;
+    width: 100% !important;
+    height: 35px;
+    border: 1px solid #ddd;
+ cursor: pointer;
+ text-align: center;
+}
+.popup-password-changed .popup-content .device label.label-checked {  /* 20151224 수정 */
+ border-color: #ed1f46;
+}
+.popup-password-changed .popup-content .device label .holds-cbox { /* 20151224 수정 */
+ /* position: relative;
+ display: block;
+ box-sizing: border-box;
+ width: 100%;
+ height: 100%;
+ border: 1px solid #ddd; */
+ margin-left: -35px;
+ background: transparent;
+}
+.popup-password-changed .popup-content .device label .label { /* 20151224 수정 */
+ /* position: absolute;
+ top: 0;
+ left: 0;
+ box-sizing: border-box; */
+ width: auto;
+ height: 35px;
+ padding: 0 25px;
+ text-align: center;
+ line-height: 35px;
+ color: #2a2a2a;
+ font-size: 16px;
+ white-space: nowrap;
+ text-overflow: ellipsis;
+ overflow: hidden;
+ cursor: pointer;
+}
+.popup-password-changed .device label .holds-cbox.checked + .label {  /* 20151224 수정 */
+ /* color: #ed1f46; */
+ background-image: url(../images/red-check-agree.png);
+ background-repeat: no-repeat;
+ background-position: left center;
+}
+/* 20151224 수정 */
+/*.popup-password-changed .popup-content .device label .label.label-checked {
+ border-color: #ed1f46;
+ background: url(../images/bg-opacity-red.png);
+ color: #b31e3a;
+}*/
+.popup-password-changed .popup-content .device label .check-mark {
+ display: none;
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: url(../images/bg-check-white.png) no-repeat center center;
+}
+.popup-password-changed .popup-content .device label .check-mark.show {
+ display: block;
+}
+.popup-password-changed .device label .holds-cbox.checked {
+ border-color: #ed1f46;
+    /*background-color: #f8a3b3;*/
+}
+.popup-password-changed .device label .label .device-name {
+    width: auto;
+    display: inline-block;
+    padding: 0 25px;
+}
+.popup-password-changed .content .device label .holds-cbox {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.popup-password-changed .content .device label .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 35px;
+    padding: 0 14px;
+    text-align: center;
+    line-height: 35px;
+    color: #2a2a2a;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.popup-password-changed  .device label .holds-cbox.checked + .label .device-name {
+ background: url(../images/red-check-agree.png) no-repeat left center;
+ color: #ed1f46;
+}
+.popup-password-changed .device-all {
+ /* position: absolute;
+ bottom: 0;
+ right: 0;
+ left: 0; */
+ margin-top: 10px;
+ padding: 10px;
+ /* width: 100%; */
+}
+.popup-password-changed .holds-devices {
+ /* position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 70px; */
+ /* max-height: 140px; */
+ overflow: hidden;
+}
+.popup-password-changed .device-all label { /* 20151224 수정 */
+ position: relative;
+ display: block;
+ box-sizing: border-box;
+ width: 100% !important;
+ height: 35px;
+ border: 1px solid #ddd;
+ /* padding: 9px; */
+ background: #fff;
+ font-weight: 600;
+ text-align: center;
+ cursor: pointer;
+}
+.popup-password-changed .device-all label .label { /* 20151224 추가 */
+ cursor: pointer;
+}
+.popup-password-changed .device-all label.checked { /* 20151224 수정 */
+ border-color: #ed1f46;
+ /* color: #ed1f46; */
+}
+.popup-password-changed  .holds-cbox.checked {
+ background-position: 0;
+}
+.popup-password-changed .device-all .holds-cbox {
+ margin-left: -35px;
+    width: 20px;
+ height: 35px;
+    background: url(../images/bg-check-white.png) no-repeat 0 center;
+}
+.popup-password-changed .device-all .label {
+ display: inline-block;
+ height: 35px;
+ font-size: 16px;
+ line-height: 35px;
+ vertical-align: top;
+}
+ul.devices { /* 20151224 추가 */
+ padding-bottom: 1px;
+}
+.popup-content .device label.focus,
+.popup-password-changed .device-all label.focus { /* 20151224 추가 */
+ outline: 1px solid #a5c7fe;
+}
+.is-ie .popup-content .device label.focus,
+.popup-password-changed .device-all label.focus { /* 20151224 추가 */
+ outline: 1px dotted #808080;
+}
+
+.popup-password-changed .popup-control { /* 20151106 수정 */
+ /* position: absolute;
+ bottom: 0;
+ right: 0;
+ left: 0; */
+ padding: 0 35px 20px;
+}
+.popup-password-changed .popup-control .h-item {
+ width: 48%;
+ margin-left: 4%;
+}
+
+.popup-login-detail {
+ width: 440px;
+}
+/* .popup-login-detail .popup-header {
+ border: 0;
+ background: #fff;
+} */
+.popup-login-detail .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-login-current-info.png) no-repeat center top;
+}
+.popup-login-detail.history .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-login-history-info.png) no-repeat center top;
+}
+.popup-login-detail .popup-content ul {
+ padding: 0 20px;
+}
+.popup-login-detail .popup-content li {
+ position: relative;
+ height: 50px;
+ padding: 5px 10px 5px 15px;
+ border-left: 2px solid #525252;
+ /* margin-left: 100px; */
+ margin-bottom: 15px;
+}
+.popup-login-detail .popup-content li .label {
+ color: #8c8c8c;
+    font-size: 14px;
+    font-weight: bold;
+ /* position: absolute;
+ top: -5px;
+ right: 100%;
+ width: 100px;
+ padding-right: 20px;
+ color: #8c8c8c;
+ font-size: 20px;
+ font-weight: bold;
+ line-height: 30px;
+ text-align: right; */
+}
+.popup-login-detail .popup-content li .data {
+ margin-top: 10px;
+ font-size: 17px;
+ /* font-weight: bold; */ /*20150917 삭제*/
+}
+.popup-login-detail .popup-content li.control {
+ padding-top: 0;
+ padding-bottom: 0;
+}
+/* .popup-login-detail .popup-content li .btn-logout {
+ width: 150px;
+ height: 50px;
+ line-height: 50px;
+} */
+
+.popup-auth-method .popup-header {
+ height: auto;
+ border: 0;
+ background: #fff;
+}
+.popup-auth-method .popup-header .popup-title {
+ height: 120px;
+ background: url(../images/ti-popup-auth-for-hidden.png) no-repeat center top;
+}
+.popup-auth-method .popup-header .popup-title.popup-title-en {
+ background-image: url(../images/ti-popup-auth-for-hidden-en.png);
+}
+
+.popup-id-check-method .direction {
+ font-size: 15px;
+ text-align: center;
+}
+
+
+.popup-content .popup-auth-methods .direction {
+ margin-top: 15px;
+ color: #545454;
+ font-size: 14px;
+ font-weight: 600;
+ text-align: left;
+}
+.popup-auth-method .popup-content .section-auth-methods {
+ margin: 0;
+}
+.popup-auth-method .popup-content .section-auth-methods .btn-auth-method {
+ width: 100%;
+}
+.popup-content .popup-auth-methods .section .field {
+ margin-top: 15px;
+}
+
+.popup-password .popup-header {
+ /* border: 0; */
+ background: #fff;
+}
+.popup-password .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-input-password.png) no-repeat center top;
+}
+.popup-password .popup-content .direction {
+ text-align: center;
+ font-size: 15px;
+}
+.popup-password .popup-content form {
+ margin: 25px 0 0 0;
+}
+.popup-password .label {
+ display: block;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 16px;
+ font-weight: bold;
+}
+/* .popup-password .popup-content .field-control {
+ margin-top: 65px;
+} */
+
+.popup-auth-email .popup-header {
+ /* border: 0; */
+ background: #fff;
+}
+.popup-auth-email .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-auth-email.png) no-repeat center top;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.popup-auth-email .popup-header .popup-title.title-en {
+ background-image: url(../images/ti-email-verification-s.png);
+}
+/* 수정시작 : 20151008 */
+.popup-auth-email .section.section-send-auth-number .direction-field,
+.popup-auth-phone .section.section-send-auth-number .direction-field {
+ /* margin-top: 5px; */
+ margin-top: 25px;
+ font-size: 15px;
+ text-align: left;
+}
+/* 수정종료 : 20151008 */
+.popup-auth-email .introduction:first-child {
+ padding-top: 0;
+}
+.popup-auth-email .direction {
+ text-align: center;
+ font-size: 15px;
+ line-height: 20px;
+}
+.popup-auth-email .field.direction-field .direction {
+ text-align: left;
+ /* font-size: 10px; */
+}
+.popup-auth-email .section {
+ margin: 30px 0 0;
+}
+.popup-auth-email .section-send-auth-number .direction {
+ color: #7e7e7e;
+ font-size: 14px;
+ line-height: 18px;
+ text-align: left; /* 20151005 추가 */
+}
+.popup-auth-email .label {
+ display: block;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 16px;
+ font-weight: bold;
+}
+.popup-auth-email .section-request-auth-number .user-email {
+ padding: 0 15px;
+ height: 46px;
+ background: #f8f8f8;
+ font-size: 17px;
+ font-weight: 600;
+ line-height: 46px;
+ text-align: left;
+ border-left: 1px solid #ed1f46;
+}
+
+.popup-auth-phone .popup-header {
+ background: #fff;
+}
+.popup-auth-phone .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-phone-verification.png) no-repeat center top;
+    text-indent: 200%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.popup-auth-phone .popup-header .popup-title.popup-title-en {
+    height: 48px;
+    background: url(../images/ti-phone-verify-s-en.png) no-repeat center top;
+}
+.popup-auth-phone .section {
+ margin: 30px 0 0;
+}
+.popup-auth-phone .direction {
+ text-align: center;
+ color: #7e7e7e;
+ font-size: 14px;
+ line-height: 18px;
+}
+.popup-auth-phone .section.section-send-auth-number .direction {
+ text-align: left;
+}
+.popup-auth-phone .label {
+ display: block;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 16px;
+ font-weight: bold;
+}
+
+.popup-medium.popup-lead-into-t-id {
+ width: 495px;
+}
+.popup-lead-into-t-id .popup-content {
+ padding: 25px 35px;
+}
+.popup-lead-into-t-id .popup-content
+.popup-lead-into-t-id .popup-header {
+ background: #fff;
+}
+.popup-lead-into-t-id .popup-header .popup-title,
+.popup-id-check-method .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-id-check.png) no-repeat center top;
+}
+.popup-lead-into-t-id .popup-header .popup-title.popup-title-en,
+.popup-id-check-method .popup-header .popup-title.popup-title-en {
+    height: 48px;
+    background: url(../images/ti-confirm-your-id-s.png) no-repeat center top;
+}
+.popup-lead-into-t-id .popup-content > .direction {
+ font-size: 15px;
+ line-height: 24px;
+ text-align: center;
+}
+/* 수정시작 : 20151008 */
+.popup-lead-into-t-id .popup-content .page-already-id-info {
+    margin: 8px 20px 0;
+ position: relative;
+ text-align: center;
+}
+/* 수정종료 : 20151008 */
+.page-auth-for-hidden .content .page-already-id-info strong {
+ font-size: 14px;
+ font-weight: normal;
+}
+.page-auth-for-hidden .content .page-already-id-info .guide-title,
+.popup-lead-into-t-id .popup-content .page-already-id-info .guide-title {
+ height: 22px;
+ padding-left: 30px; /* 20151013 수정 */
+ line-height: 22px;
+ background: url(../images/vi-exclamation.png) no-repeat left center;
+ display: inline-block;
+}
+
+.page-auth-for-hidden .content .page-already-id-info .guide-nav,
+.popup-lead-into-t-id .popup-content .page-already-id-info .guide-nav {
+/*  display: block;
+ position: absolute; */
+ display: inline-block;
+ top: 0;
+ right: 0;
+ height: 26px;
+ line-height: 26px;
+}
+/* .popup-lead-into-t-id .popup-content .page-already-id-info + .section-control {
+ margin-top: 25px;
+} */
+
+.popup-t-id-transfer-notice .popup-header {
+ height: auto;
+ background: #fff;
+}
+.popup-t-id-transfer-notice .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-t-id-notice-s.png) no-repeat center top;
+}
+/* .popup-t-id-transfer-notice .popup-content {
+ padding-top: 0;
+ padding-left: 0;
+ padding-right: 0;
+} */
+.popup-t-id-transfer-notice .section {
+ margin-top: 50px;
+}
+/* 수정: 20160520 */
+.popup-t-id-transfer-notice .section.tid-notice-section {
+ text-align: left;
+ position: absolute;
+ left: 0;
+ right: 0;
+ top: 570px;
+ margin: 0 35px 0;
+}
+.popup-t-id-transfer-notice .introduction-title {
+ padding-left: 12px;
+ font-size: 15px;
+ font-weight: bold; /* 20150902 : 추가 */
+ background: url(../images/vi-list-style-disc.png) no-repeat left 4px;
+}
+.popup-t-id-transfer-notice .popup-content .section:first-child {
+ margin-top: 0;
+}
+.popup-t-id-transfer-notice li p {
+ padding-top: 18px;
+ font-size: 14px; /* 20150917 수정 */
+ line-height: 20px; /* 20151104 수정 */
+ /* font-weight: bold; */ /* 20150902 : 추가 */
+}
+.popup-t-id-transfer-notice .introduction {
+ height: auto;
+ padding: 30px 15px 0; /* 20150921 수정 */
+}
+.popup-t-id-transfer-notice .introduction:first-child {
+ padding-top: 0; /* 20150902 : 추가 */
+}
+/* .popup-t-id-transfer-notice .section-control {
+ padding-left: 35px;
+ padding-right: 35px;
+} */
+.popup-t-id-transfer-notice .holds-cbox + .label {
+ font-size: 14px;
+}
+/* 수정시작 : 20151008 */
+.popup-lead-into-t-id .popup-content .direction {
+ /* font-size: 14px;
+ text-align: center; */
+ padding: 25px 35px;
+}
+/* 수정종료 : 20151008 */
+.popup-alien-registartion-number .popup-header {
+ background: #fff;
+}
+.popup-alien-registartion-number .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-alien-registration-number.png) no-repeat center top;
+ text-indent: 200%;
+ overflow: hidden;
+ white-space: nowrap;
+}
+.popup-alien-registartion-number .label-hidden {
+ display: block;
+ position: static;
+ left: auto;
+ height: 18px;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 16px;
+ font-weight: bold;
+ line-height: 18px;
+}
+.popup-alien-registartion-number .field .direction {
+ display: block;
+ margin-top: 10px;
+ color: #7e7e7e;
+ font-size: 14px;
+ line-height: 20px;
+}
+.popup-alien-registartion-number .field .h-group .h-item {
+ width: 45%;
+}
+.popup-alien-registartion-number .field .h-group span.sep.h-item {
+ width: 10%;
+ height: 40px;
+ color: #545454;
+ font-size: 17px;
+ line-height: 40px;
+ text-align: center;
+}
+.popup-alien-registartion-number .content {
+ margin-top: 40px;
+}
+/* .popup-alien-registartion-number form {
+ margin-top: 35px;
+} */
+.popup-alien-registartion-number .field-number {
+ margin-top: 43px;
+}
+/* .popup-alien-registartion-number .field-control {
+ margin-top: 73px;
+} */
+.popup-alien-registartion-number .section {
+ margin: 0;
+}
+
+.popup-alien-other-number .popup-header {
+ background: #fff;
+}
+.popup-alien-other-number .popup-header .popup-title {
+ height: 80px;
+ background: url(../images/ti-popup-alien-other-number.png) no-repeat center top;
+ text-indent: 200%;
+ overflow: hidden;
+ white-space: nowrap;
+}
+.popup-alien-other-number .label {
+ display: block;
+ position: static;
+ left: auto;
+ height: 18px;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 16px;
+ font-weight: bold;
+ line-height: 18px;
+}
+.popup-alien-other-number .tab-switch .btn-tab {
+ height: 80px;
+}
+.popup-alien-other-number .tab-switch .tab-switch-title {
+ height: 50px;
+ padding-top: 10px;
+ font-size: 15px;
+ line-height: 20px;
+ vertical-align: middle;
+}
+.popup-alien-other-number .field .direction {
+ display: block;
+ margin-top: 10px;
+ color: #7e7e7e;
+ font-size: 14px;
+ line-height: 20px;
+}
+.popup-alien-other-number .section {
+ margin-top: 0;
+}
+.popup-alien-other-number .section-label {
+ font-size: 15px; /* 20150902 : 추가 */
+}
+/* .popup-alien-other-number .field-control {
+ margin-top: 43px;
+} */
+
+#ux-container.page-main {
+ position: absolute;
+ top: 0;
+ right: 0;
+ bottom: 0;
+ left: 0;
+ width: 100%;
+ padding: 0;
+ margin: 0;
+ min-width: 1000px; /* 20150918 : 수정 */
+ min-height: 400px;
+}
+.page-main .scrollable {
+ position: relative;
+ width: 100%;
+ height: 100%;
+ overflow: hidden;
+}
+#ux-container.page-main .content {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+}
+.page-main .section-show {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ margin: 0;
+ overflow: hidden;
+}
+.page-main .section-show .bg-holder {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ overflow: hidden;
+}
+.page-main .section-show .bg-holder .bg-full {
+ display: block;
+ position: absolute;
+ top: 0;
+ right: 0;
+}
+.page-main .section-show .title {
+ position: absolute;
+ bottom: 57%;
+ left: 15%;
+ width: 800px;
+ height: 100px;
+ background: no-repeat 0 0;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.page-main .section-show .description {
+ position: absolute;
+ left: -9999px;
+}
+.page-main .section-show .btn-aleary-signed-up {
+ position: absolute;
+ top: 47%;
+ left: 15%;
+ width: 170px;
+ height: 30px;
+ background: url(../images/bt-already-sign-up.png) no-repeat;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+}
+.page-main .section-show .btn-aleary-signed-up:hover { /* 20151224 추가 */
+ background: url(../images/bt-already-sign-up-h.png) no-repeat;
+}
+.page-main .controls {
+ position: absolute;
+ top: 60%;
+ left: 15%;
+ z-index: 50;
+}
+.page-main .controls .control {
+ margin-left: 23px;
+}
+.page-main .controls .control:first-child {
+ margin-left: 0;
+}
+.page-main .controls .btn { /* 20150923 수정 */
+ width: 248px;
+ height: 60px;
+ line-height: 24px;
+ text-indent: 200%;
+ white-space: nowrap;
+ overflow: hidden;
+ /* border: 4px solid #fff; */
+ /* color: #fff; */
+}
+ /* 20150923 수정 */
+/* .page-main .controls .btn:hover,
+.page-main .controls .btn.btn-no:hover {
+ border-color: #ed1941;
+ background-color: #ed1941;
+ color: #fff;
+} */
+.page-main .controls .btn.btn-yes { /* 20150923 수정 */
+ background: url(../images/bt-paper-yes.png) no-repeat;
+}
+.page-main .controls .btn.btn-yes:focus, /* 20151224 추가 */
+.page-main .controls .btn.btn-yes:hover { /* 20150923 추가 */
+ background: url(../images/bt-paper-yes-hover.png) no-repeat;
+}
+.page-main .controls .btn.btn-no { /* 20150923 수정 */
+ background: url(../images/bt-paper-no.png) no-repeat;
+}
+.page-main .controls .btn.btn-no:focus, /* 20151224 추가 */
+.page-main .controls .btn.btn-no:hover { /* 20150923 추가 */
+ background: url(../images/bt-paper-no-hover.png) no-repeat;
+}
+ .page-main .controls .control .direction {
+ display: none;
+ height: 40px;
+ color: #fff;
+ font-family: Tahoma, '돋움', Dotum, Arial, sans-serif;
+ font-size: 14px;
+ line-height: 40px;
+ text-align: left;
+}
+/* .page-main .controls .control .btn:hover + .direction {
+ display: block;
+} */
+/*20150918_01 수정종료 */
+#ux-section-4 {
+ top: 0;
+ z-index: 30;
+ color: #fff;
+}
+#ux-section-4 .title {
+ width: 700px;
+ height: 220px;
+ background-image: url(../images/vi-t-id-make.png);/* 수정: 20160315 */
+}
+.page-main-make #ux-section-4 .title {
+ background-image: url(../images/paper-t-id-make.png);/* 수정: 20160315 */
+}
+.page-main .controls .control .btn:hover + .direction {
+ display: block;
+}
+/** P-1-25, P-1-25-3, P-1-26 : begin *******************************************************************/
+/* 20150831 : 수정 시작 */
+.popup-identity-check-phone .popup-content, .popup-control {
+ padding-top: 0;
+ padding-bottom: 20px;
+}
+.popup-identity-check-phone.popup-medium {
+ width: 438px;
+}
+.popup-identity-check-phone .popup-header {
+ /*border: 0;*/
+ background-color: #fff;
+}
+.popup-identity-check-phone .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-phone-verification.png) no-repeat center top;
+ text-indent: 200%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.popup-identity-check-phone .popup-title.title-en {
+ height: 48px;
+ background: url(../images/ti-phone-verify-s-en.png) no-repeat center top;
+}
+.popup-identity-check-phone .label {
+ display: block;
+ font-size: 12px;
+ font-weight: bold;
+ margin-top: 5px;
+ height: 14px;
+ margin-bottom: 5px;
+}
+.popup-identity-check-phone .tbox,
+.popup-identity-check-phone .btn-select {
+ border-bottom-color: #dddddd;
+ /* height: 40px;
+ line-height: 38px;
+ font-size: 21px; */
+}
+.popup-identity-check-phone .captcha-holder {
+ margin-top: 10px;
+ min-height: 105px;
+}
+.popup-identity-check-phone .holds-terms {
+ padding: 10px;
+ border: 0;
+}
+.popup-identity-check-phone .label.h-item {
+ font-size: 17px;
+ margin-top: 0;
+ line-height: 13px;
+}
+/* .is-ie .popup-identity-check-phone .label.h-item {
+ line-height: 21px;
+} */
+.popup-identity-check-phone .corporate-line-user-info .label.h-item {
+    font-size: 12px;
+ line-height: 18px;
+}
+.popup-identity-check-phone .terms-detail {
+ top: 14px;
+ font-size: 14px;
+}
+.popup-identity-check-phone .identity-check-item .sbox-year,
+.popup-identity-check-phone .identity-check-item .sbox-month {
+ margin-right: 2%;
+}
+.popup-identity-check-phone .identity-check-item .sbox-day {
+ width: 31%;
+}
+.popup-identity-check-phone .holds-terms .label {
+ font-size: 14px;
+ font-weight: 600;
+ height: auto;
+ line-height: 20px;
+ max-width:250px; /* 추가 : 20151104 */
+}
+/* .is-ie .popup-identity-check-phone .holds-terms .label {
+ letter-spacing: -2px;
+} */
+.is-ie .popup-identity-check-phone-en .holds-terms .label {
+ letter-spacing: 0px;
+}
+.popup-identity-check-phone .field-agree-all label { /* 20151103 수정 */
+ position: relative;
+ display: block;
+ box-sizing: border-box;
+ width: 100%;
+ height: 45px;
+ border: 1px solid #9a9a9a;
+ margin: 5px 0 0;
+ padding: 14px 0;
+ font-weight: 600;
+ line-height: 45px;
+ text-align: center;
+}
+.popup-identity-check-phone .field-agree-all label.checked { /* 20151103 수정 */
+ border: 1px solid #ed1941;
+ /*background: #f39eae;*/
+ /* color: #ed1941; */ /* 20151224 수정 */
+}
+.popup-identity-check-phone .economy-cell-phone-number .btn-tooltip {
+    top: 1px;
+}
+.popup-identity-check-phone .field-agree-all .holds-cbox {
+ background: none;
+}
+.popup-identity-check-phone .field-agree-all .checked .holds-cbox {
+ background: url(../images/red-check-agree.png) no-repeat 0 0;
+}
+/*.popup-identity-check-phone .tab-section:last-child {
+ padding-bottom: 40px;
+}*/
+.popup-identity-check-phone .popup-control { /* 20151103 수정 */
+ padding: 60px 0 25px;
+}
+.popup-identity-check-phone .sbox-economy-telecom {
+ width: 100%;
+}
+.popup-identity-check-phone .label-economy-telecom {
+ display: inline-block;
+ width: 110px;
+}
+.popup-identity-check-phone .captcha-btn-group { /* 20151224 수정 */
+    display: inline-block;
+    float: right;
+    padding: 0;
+    width: 46px;
+ margin-right: 3px;
+}
+.popup-identity-check-phone .captcha-btn-group button { /* 20151224 수정 */
+ width: 46px;
+ height: 46px;
+}
+.popup-identity-check-phone .captcha-btn-sound { /* 20151224 수정 */
+    margin-bottom: 10px;
+    background: url(../images/bt-popup-speaker.png) no-repeat 0 0;
+}
+.popup-identity-check-phone .captcha-btn-sound:hover { /* 20151224 수정 */
+ background-position: 0 -46px;
+}
+.popup-identity-check-phone .captcha-btn-sound:active { /* 20151224 수정 */
+ background-position: 0 -92px;
+}
+.popup-identity-check-phone .captcha-btn-reload { /* 20151224 수정 */
+    background: url(../images/bt-popup-replay.png) no-repeat 0 0;
+}
+.popup-identity-check-phone .captcha-btn-reload:hover { /* 20151224 수정 */
+ background-position: 0 -46px;
+}
+.popup-identity-check-phone .captcha-btn-reload:active { /* 20151224 수정 */
+ background-position: 0 -92px;
+}
+.popup-identity-check-phone .captcha-image {
+/*     display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 20%;
+    bottom: 0; */
+    width: 320px;
+    /* background-color: #f5f5f5; */
+}
+.field-security {
+ margin-top: 14px;
+}
+/* 수정 시작 : 20151029 */
+/* 삭제 */
+.field-security .label {
+ /* background: url(../images/security-message.png) no-repeat 55px; */
+ height: 23px;
+ font-size: 12px;
+ font-weight: 600;
+ line-height: 23px;
+ background-size: 20px 22px;
+}
+/* // 수정 종료 : 20151029 */
+/* .is-ie .field-security .label {
+ background: url(../images/security-message.png) no-repeat 60px;
+} */
+.popup-identity-check-phone-en .field-security .label {
+ background-position: 50px;
+}
+.btn-tooltip.btn-tooltip-small {
+ background: url(../images/bt-question.png) no-repeat center;
+ width: 18px;
+ height: 18px;
+ line-height: 18px;
+ vertical-align: text-bottom;
+ margin-left: 5px;
+}
+.btn-tooltip.btn-tooltip-small:hover { /* 20151224 추가 */
+ background: url(../images/bt-question-h.png) no-repeat center;
+}
+.btn-tooltip.btn-tooltip-small:active { /* 20151224 추가 */
+ background: url(../images/bt-question-a.png) no-repeat center;
+}
+.popup-identity-check-phone {
+
+}
+.popup-identity-check-phone .tooltip-flexible {
+ top: 380px;
+ z-index: 30000;
+}
+.popup-identity-check-phone .tooltip-flexible .tooltip-top-left {
+ top: 4px;
+}
+.popup-identity-check-phone .tooltip-flexible .tooltip-top-right {
+ top: 4px;
+}
+.popup-identity-check-phone .tooltip-flexible .tooltip-top-hands-left {
+ top: 4px;
+ width: 110px;
+}
+/* .is-ie .popup-identity-check-phone .tooltip-flexible .tooltip-top-hands-left {
+ top: 4px;
+ width: 121px;
+} */
+.popup-identity-check-phone .tooltip-flexible .tooltip-top-hands-right {
+ top: 4px;
+ width: 232px;
+}
+/* .is-ie .popup-identity-check-phone .tooltip-flexible .tooltip-top-hands-right {
+ top: 4px;
+ width: 221px;
+} */
+.popup-identity-check-phone .tooltip-flexible .tooltip-left {
+ top: 12px;
+}
+.popup-identity-check-phone .tooltip-flexible .tooltip-right {
+ top: 12px;
+}
+.popup-identity-check-phone .tooltip-flexible .tooltip-top-arrow {
+ left: 116px;
+}
+/* .is-ie .popup-identity-check-phone .tooltip-flexible .tooltip-top-arrow {
+ left: 127px;
+} */
+.tooltip-flexible.for-mvno {
+ top: 460px;
+}
+/* .is-ie .tooltip-flexible.for-mvno {
+ top: 462px;
+} */
+.popup-identity-check-phone-en .tooltip-flexible {
+ left: 26px;
+}
+.popup-identity-check-phone-en .tooltip-flexible .tooltip-top-arrow {
+    left: 151px;
+}
+/* .is-ie .popup-identity-check-phone-en .tooltip-flexible .tooltip-top-arrow {
+    left: 149px;
+} */
+.popup-identity-check-phone-en .tooltip-flexible .tooltip-top-hands-right {
+    width: 126px;
+}
+/* .is-ie .popup-identity-check-phone-en .tooltip-flexible .tooltip-top-hands-right {
+    width: 104px;
+} */
+.popup-identity-check-phone-en .tooltip-flexible .tooltip-top-hands-left {
+    width: 145px;
+}
+/* .is-ie .popup-identity-check-phone-en .tooltip-flexible .tooltip-top-hands-left {
+    width: 143px;
+} */
+
+.popup-economy-cell-phone .popup-header {
+ background-color: #fff;
+}
+.popup-economy-cell-phone .popup-content {
+ padding: 0 24px;
+}
+.popup-economy-cell-phone .popup-control {
+ padding: 25px 24px;
+}
+.popup-economy-cell-phone .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-agency-s.png) no-repeat center top;
+}
+.popup-economy-cell-phone .popup-header .popup-title.title-en {
+ height: 48px;
+ background: url(../images/ti-agency-s-en.png) no-repeat center top;
+}
+.economy-agency-list {
+ width: 100%;
+ height: auto;
+/*  border-top: 1px solid #ededed; */
+}
+.economy-agency-item {
+    padding: 15px 0 15px 121px;
+ width: 100%;
+ height: auto;
+ min-height: 70px;
+ border-bottom: 1px solid #ededed;
+ box-sizing: border-box;
+ background-position: 5% center;
+ background-repeat: no-repeat;
+}
+.economy-agency-item:last-child {
+    border:0;
+}
+.economy-agency-summary {
+ font-size: 12px;
+ line-height: 20px;
+ color: #3b3b3b;
+}
+.economy-agency-item.skt {
+ background-image: url(../images/skt-icon.png);
+}
+.economy-agency-item.kt {
+ background-image: url(../images/kt-icon.png);
+}
+.economy-agency-item.lgu {
+ background-image: url(../images/u-plus-icon.png);
+}
+/* 20150831 : 수정 종료 */
+.popup-identity-check-phone .cell-phone-number ::-webkit-input-placeholder {
+ font-size: 17px;
+}
+.popup-identity-check-phone .cell-phone-number :-ms-input-placeholder {
+ font-size: 17px;
+}
+.popup-identity-check-phone .cell-phone-number ::-moz-placeholder {
+ font-size: 17px;
+}
+.popup-identity-check-phone .cell-phone-number :-ms-input-placeholder {
+ font-size: 17px;
+}/** P-1-25, P-1-25-3, P-1-26 : end *******************************************************************/
+/** P-1-1-0, P-1-1-1-0, P-1-1-3-0 **/
+.popup-page-login .popup-title {
+ height: 48px;
+ background: url(../images/ti-login-s.png) no-repeat center top;
+}
+.popup-page-login .section.section-login {
+ margin-top: 0;
+}
+.popup-direct-page-login .popup-content {
+/*     width: 100%; */
+    overflow: hidden;
+}
+.popup-direct-page-login .popup-content.has-division {
+    padding: 0px 0px 19px 20px;
+}
+.popup-direct-page-login .division-holder:first-child {
+    width: 427px;
+}
+.popup-direct-page-login .division-holder { /* 20151029 수정 */
+    width: 450px;
+}
+.popup-direct-page-login .section {
+    margin: 20px 20px 0;
+    height: auto;
+}
+.popup-direct-page-login .popup-title {
+ height: 48px;
+ background: url(../images/ti-login-s.png) no-repeat center top;
+    text-indent: 200%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.popup-direct-page-login .section.section-login {
+ margin-top: 0;
+}
+.popup-direct-page-login .division-holder .section-auth-login { /* 20151030 수정 */
+    position: relative;
+    /*padding: 0;
+    width: auto;
+    height: 200px;*/
+ padding: 0;
+ width: 415px;
+ height: 326px;
+    border: 1px solid #8b8b8b;
+}
+.popup-direct-page-login .section.section-auth-login {
+    margin: 20px 20px 0;
+}
+.popup-direct-page-login .field-captcha {
+ display: none;
+}
+
+.popup-agree-use-certificate.popup-medium {
+  width: 448px;
+ }
+.popup-agree-use-certificate .popup-header {
+ background: #fff;
+}
+.popup-agree-use-certificate .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-certificate-use-s.png) no-repeat center top;
+ /* background-size: auto 44px; */
+}
+.popup-agree-use-certificate .popup-content p {
+ font-size: 15px;
+ line-height: 23px;
+ font-weight: 600;
+}
+.popup-agree-use-certificate-alien .popup-content li,
+.popup-agree-use-certificate .popup-content li {
+ font-size: 12px;
+ line-height: 24px;
+}
+.popup-agree-use-certificate-alien .popup-content ul,
+.popup-agree-use-certificate .popup-content ul {
+ list-style: disc;
+ padding: 10px 10px 10px 30px;
+ border: 1px solid #ddd;
+ color: #666;
+}
+.popup-agree-use-certificate-alien .popup-content p.remark,
+.popup-agree-use-certificate .popup-content p.remark {
+ padding: 5px 0 0;
+ color: #7e7e7e;
+ font-size: 12px;
+ line-height: 18px;
+ font-weight: 200;
+}
+.popup-agree-use-certificate-alien .popup-content p.notice-title,
+.popup-agree-use-certificate .popup-content p.notice-title {
+ padding-top: 10px;
+ font-size: 12px;
+ font-weight: 200;
+}
+
+.popup-agree-use-certificate-alien.popup-medium {
+ width: 448px;
+}
+.popup-agree-use-certificate-alien .popup-header {
+ background: #fff;
+}
+.popup-agree-use-certificate-alien .popup-header .popup-title {
+ height: 80px;
+ background: url(../images/ti-accredited-certificate-s.png) no-repeat center top;
+}
+.popup-agree-use-certificate-alien .popup-content .in-korean {
+ margin-top: 20px;
+}
+.popup-agree-use-certificate-alien .popup-content p {
+ font-size: 15px;
+ line-height: 23px;
+ font-weight: 600;
+}
+/* .popup-agree-use-certificate-alien .popup-content li {
+ font-size: 15px;
+ line-height: 24px;
+}
+.popup-agree-use-certificate-alien .popup-content ol {
+ list-style: decimal;
+ padding-left: 24px;
+ margin: 16px 0 0;
+} */
+/* .popup-agree-use-certificate-alien .popup-content .remark {
+ padding: 10px 0 20px;
+ color: #7e7e7e;
+ font-size: 14px;
+ line-height: 21px;
+}
+ */
+/** P-1-20 **/
+#ux-container.page-service-agreement .content {
+ width: 570px;
+}
+.page-service-agreement .field-agree-all .holds-cbox,
+.page-identity-check-phone .field-agree-all .holds-cbox,
+.page-sign-up-agreement .field-agree-all .holds-cbox {
+    width: 20px;
+    background-image: none;
+}
+.page-t-id-term-agreement .field-agree-all,
+.page-service-agreement .field-agree-all,
+.page-identity-check-phone .field-agree-all,
+.page-sign-up-agreement .field-agree-all,
+.popup-password-changed .device-all label.checked {
+ background-color: #fff;
+}
+.page-t-id-term-agreement .field-agree-all label.checked,
+.page-service-agreement .field-agree-all label.checked,
+.page-identity-check-phone .field-agree-all label.checked,
+.page-sign-up-agreement .field-agree-all label.checked,
+.popup-password-changed .device-all label.checked,
+.page-password-changed-complete .device-all label.checked {
+ border-color: #ed1f46;
+ /* color: #ed1f46; */ /* 20151224 수정 */
+}
+.popup-tid-terms-agreement .field-agree-all .holds-cbox,
+.popup-service-agreement .field-agree-all .holds-cbox,
+.page-t-id-term-agreement .field-agree-all .holds-cbox,
+.page-service-agreement .field-agree-all .holds-cbox,
+.page-identity-check-phone .field-agree-all .holds-cbox,
+.page-sign-up-agreement .field-agree-all .holds-cbox,
+.popup-password-changed .device-all .holds-cbox,
+.page-password-changed-complete .device-all .holds-cbox {
+ background-image: none;
+}
+
+.popup-tid-terms-agreement .field-agree-all .holds-cbox.checked,
+.popup-service-agreement .field-agree-all .holds-cbox.checked,
+.page-t-id-term-agreement .field-agree-all.checked .holds-cbox,
+.page-service-agreement .field-agree-all.checked .holds-cbox,
+.page-identity-check-phone .field-agree-all.checked .holds-cbox,
+.page-sign-up-agreement .field-agree-all.checked .holds-cbox,
+.popup-password-changed .device-all .checked .holds-cbox,
+.page-password-changed-complete .device-all .checked .holds-cbox,
+.page-t-id-term-agreement .field-agree-all .holds-cbox.checked ,
+.page-service-agreement .field-agree-all .holds-cbox.checked,
+.page-identity-check-phone .field-agree-all .holds-cbox.checked,
+.page-sign-up-agreement .field-agree-all .holds-cbox.checked,
+.popup-password-changed .device-all .holds-cbox.checked,
+.page-password-changed-complete .device-all .holds-cbox.checked {
+ background-image: url(../images/red-check-agree.png);
+ background-position: 0 center;
+}
+.page-service-agreement .h-align > .h-aligner > .h-aligned {
+    margin-left: -32px;
+}
+.field-agree-all .h-group > .h-item:first-child {
+ margin-left: -24px !important;
+}
+/*0901*/
+.page-id-check-method .content {
+    padding-top: 55px;
+    width: 430px;
+    margin: 0 auto;
+}
+.page-id-check-method .header .title {
+    background-image: url(../images/ti-id-check.png);
+}
+.page-id-check-method .header .title.title-en {
+    background-image: url(../images/ti-confirm-your-id.png);
+}
+/*0902*/
+.popup-page-login .popup-title {
+    height: 48px;
+    background: url(../images/ti-login-s.png) no-repeat center top;
+ text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.popup-page-login .captcha-image {
+    width: 310px;
+}
+.popup-verify-phone .popup-header {
+ background: #fff;
+}
+.popup-verify-phone .popup-header .popup-title {
+ height: 48px;
+ background: url(../images/ti-popup-phone-verification.png) no-repeat center top;
+ text-indent: 200%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.popup-verify-phone .popup-header .popup-title.title-en {
+ height: 48px;
+ background: url(../images/ti-phone-verify-s-en.png) no-repeat center top;
+}
+.popup-verify-phone .popup-header .popup-title.popup-title-en {
+    height: 48px;
+    background: url(../images/ti-popup-phone-verification-en.png) no-repeat center top;
+}
+.popup-verify-phone .section {
+ margin: 30px 0 0;
+}
+.popup-verify-phone .direction {
+ text-align: center;
+ color: #7e7e7e;
+ font-size: 14px;
+ line-height: 18px;
+}
+.popup-verify-phone .section.section-send-auth-number .direction {
+ text-align: left;
+}
+.popup-verify-phone .label {
+ display: block;
+ margin-bottom: 10px;
+ color: #545454;
+ font-size: 12px;
+ font-weight: bold;
+}
+.popup-body {
+ overflow: hidden !important;
+ width: 100%;
+ height: 100%;
+}
+
+.popup-body .popup-scrollable {
+ max-height: none;
+ position: absolute;
+ left: 0;
+ right: 0;
+ top: 94px;
+ bottom: 97px; /* 20160122 수정 */
+ width: 100%;
+ overflow: auto;
+}
+.popup-body .popup-content {
+ padding: 0;
+ width: 384px;
+ margin: 0 auto;
+}
+.popup-body .popup-page-login .popup-content {
+    padding: 25px 0;
+    width: 410px;
+    margin: 0 auto;
+}
+.popup-body .popup-direct-page-login .popup-content { /* 20151029 수정 */
+    padding: 0;
+    width: 880px; /* 수정: 20151224 */
+    margin: 0 auto;
+}
+.popup-body .popup-alarm .popup-content {
+    padding: 30px 0 50px;
+    line-height: 24px;
+    font-size: 17px;
+ width: auto;
+}
+.popup-body .popup-alarm .popup-title {
+    height: 66px;
+    background: url(../images/vi-information.png) no-repeat center top;
+}
+.popup-tid-introduction .holds-slide {
+ width: 490px; /* 20150921 수정 */
+    margin: 0 auto;
+}
+.popup-tid-introduction .popup-control {
+ width: 390px;
+ margin: 0 auto;
+}
+
+/*0911*/
+.page-error{
+ width:900px;
+}
+#ux-container.page-error { /* 20151224 수정 */
+ /* width:900px; */
+}
+#ux-container.page-error .content{
+ margin: 0 auto;
+ width: auto;
+}
+.page-error.error-type-403 .header .title {
+ background-image: url(../images/ti-page-error-403.png);
+}
+.page-error.error-type-404 .header .title {
+ background-image: url(../images/ti-page-error-404.png);
+}
+.page-error.error-type-503 .header .title {
+ background-image: url(../images/ti-page-error-503.png);
+}
+/*  수정시작 : 20150924 */
+/*  수정시작 : 20150930 */
+.page-error .content .section .alarm{
+ padding-top: 80px;
+ margin-top: 30px;
+ height: auto;
+ font-size: 17px;
+ line-height: 24px;
+ text-align:center;
+ /* background: url(../images/vi-alarm-page-error.png) no-repeat top; */
+ background: url(../images/vi-alarm-page-error.png) no-repeat top;
+ background-size: 50px auto;
+}
+/* 수정종료 : 20150924 */
+/* 수정종료 : 20150930 */
+.page-error-btn{
+ width:390px;
+ height:46px;
+}
+.popup-body .popup-verify-phone .popup-content {
+    padding: 20px;
+    width: 384px;
+    margin: 0 auto;
+}
+.email-error{
+ width:900px;
+}
+.email-error .header .title{
+ background: url(../images/ti-email-error.png) no-repeat top;
+}
+
+#ux-container.email-error .content{
+ margin: 84px auto 0;
+}
+#ux-container.email-error.section.field{
+ width:390px;
+ height:40px
+}
+.page-direct-login .captcha-image {
+    width: 350px;
+}
+.page-password .header .title {
+ background: url(../images/ti-type-password.png) no-repeat center top;
+}
+.page-password .content {
+    margin: 0 auto;
+    margin-top: 60px;
+    width: 600px;
+}
+/*0914*/
+.popup-body .popup-auth-phone .popup-content {
+    padding: 20px;
+    width: 384px;
+    margin: 0 auto;
+}
+.popup-auth-email .direction {
+    text-align: center;
+    color: #7e7e7e;
+    font-size: 14px;
+    line-height: 18px;
+}
+.popup-body .popup-auth-email .popup-content {
+    padding: 20px;
+    width: 384px;
+    margin: 0 auto;
+}
+.popup-body .popup-alien-registartion-number .popup-content {
+    padding: 20px;
+    width: 384px;
+    margin: 0 auto;
+}
+.popup-body .popup-alien-other-number .popup-content {
+ padding: 20px 25px;
+    width: 430px;
+    margin: 0 auto;
+}
+.popup-body .popup-alien-other-number .popup-scrollable {
+    top: 126px;
+}
+.page-password-reset .content > .direction {
+ margin:0;
+}
+/*20150917 추가*/
+#ux-container.page-find-id.page-tab .content{
+ width: 470px;
+}
+/* 20151104 수정 */
+/* .page-find-id .content > .direction {
+ margin: 0;
+} */
+.page-account .section-guide.terms-check.agreement-area-first {
+ margin-top: 50px;
+}
+
+/*20150918 일반팝업*/
+.popup-select-auth-method-id .popup-content > .popup-direction,
+.popup-select-auth-method .popup-content > .popup-direction {
+ padding-top: 55px;
+    margin: 0 20px;
+    color: #545454;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+}
+.popup-select-auth-method .popup-title {
+    height: 48px;
+    background: url(../images/ti-auth-check-popup.png) no-repeat center top;
+    text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.popup-select-auth-method .popup-title.title-en {
+    background: url(../images/ti-user-authentication-popup.png) no-repeat center top;
+}
+/* 수정시작 : 20150924 */
+/* 수정시작 : 20150930 */
+.popup-content > .direction {
+    /* line-height: 24px; */
+ /* font-size: 17px; */
+ /* padding-top: 15px; */
+ /* 추가 */
+ /* font-weight: 600; */
+ padding-top: 20px;
+    line-height: 22px;
+    font-size: 15px;
+    text-align: center;
+}
+/* 수정종료 : 20150924 */
+/* 수정종료 : 20150930 */
+.popup-body .popup-select-auth-method .popup-content {
+    padding-bottom: 20px;
+    width: 470px;
+    margin: 0 auto;
+}
+
+.popup-recommend-password-change .direction {
+    padding-top: 15px;
+    line-height: 24px;
+    font-size: 15px;
+    /* font-weight: bold; */
+    text-align: center;
+}
+.popup-recommend-password-change .popup-content .section.section-control {
+    margin: 95px 40px 0;
+}
+
+.popup-body .popup-id-check-method .popup-content,
+.popup-body .popup-lead-into-t-id .popup-content,
+/*.popup-body .popup-t-id-transfer-notice .popup-content, 삭제: 20160520*/
+.popup-body .popup-email-auth-check .popup-content,
+.popup-body .popup-require-password-change .popup-content,
+.popup-body .popup-select-auth-method-id .popup-content,
+.popup-body .popup-email-auth-check-main .popup-content,
+.popup-body .popup-service-agreement  .popup-content,
+.popup-body .popup-select-auth-method  .popup-content,
+.popup-body .popup-tid-terms-agreement .popup-content,
+.popup-body .popup-password-change .popup-content,
+.popup-body .popup-recommend-password-change .popup-content {
+    padding-bottom: 20px;
+    width: 470px;
+    margin: 0 auto;
+}
+/* 수정시작 : 20151001 */
+/* .popup-tid-terms-check .popup-title, */
+.popup-select-auth-method-id .popup-title,
+.popup-email-auth-check-main .popup-header .popup-title.title-en,
+.popup-email-auth-check .popup-title,
+.popup-service-agreement .popup-title,
+.popup-select-auth-method  .popup-title,
+.popup-tid-terms-agreement .popup-title,
+.popup-require-password-change .popup-title,
+.popup-password-change .popup-title,
+.popup-recommend-password-change .popup-title {
+    height: 48px;
+    background: url(../images/ti-change-password-popup.png) no-repeat center top;
+    text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.popup-tid-terms-check .popup-title{
+ height: 48px;
+ text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+/* 수정종료 : 20151001 */
+.popup-email-auth-check-main .popup-header .popup-title.title-en{
+ background: url(../images/ti-popup-auth-email-en.png) no-repeat center top;
+}
+.popup-id-check-method .popup-title.title-en{
+ background: url(../images/ti-confirm-your-id-popup.png) no-repeat center top;
+}
+.popup-select-auth-method .popup-title.title-en{
+ background: url(../images/ti-user-authentication-popup.png) no-repeat center top;
+}
+.popup-id-check-method .popup-header .popup-title{
+ background: url(../images/ti-popup-id-check.png) no-repeat center top;
+}
+
+
+.popup-select-auth-method-id .popup-title{
+ background: url(../images/ti-popup-id-check.png) no-repeat center top;
+}
+.popup-select-auth-method .popup-title{
+ background: url(../images/ti-auth-check-popup.png) no-repeat center top;
+}
+.popup-service-agreement .popup-title{
+ background: url(../images/ti-service-agree-popup.png) no-repeat center top;
+}
+
+.popup-tid-terms-agreement .popup-title{
+ background: url(../images/ti-popup-t-id-terms.png) no-repeat center top;
+}
+.popup-tid-terms-agreement .field-agree-all label { /* 20151005 추가 */
+ width: auto;
+}
+.popup-body .popup-tid-terms-agreement .popup-content .section.section-control { /* 20151005 추가 */
+ margin: 60px 20px 0;
+}
+.popup-password-change .holds-pbox > .btn-question {
+    top: -27px;
+    left: 84px;
+ right: initial;
+}
+.popup-id-check-method .popup-title.title-en {
+  background: url(../images/ti-confirm-your-id-popup.png) no-repeat center top;
+}
+.popup-password-change .popup-title.title-en {
+    background: url(../images/ti-changing-password-popup.png) no-repeat center top;
+}
+/* 수정시작: 20151224 */
+/* .popup-password-change .holds-pbox > input.label-en + .btn-question { */
+.popup-password-change .holds-pbox > .btn-question-en {
+/* 수정종료: 20151224 */
+    top: -26px;
+    left: 99px;
+}
+.popup-password-change button[type="submit"] {
+    margin-top: 35px;
+}
+
+.popup-id-check-method .popup-content > .popup-direction,
+.popup-password-change .popup-content > .popup-direction {
+ padding-top: 55px;
+    margin: 0 20px;
+    color: #545454;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+}
+.popup-require-password-change .popup-title{
+    background: url(../images/ti-must-change-password-popup.png) no-repeat center top;
+}
+.popup-t-id-transfer-notice .popup .popup-direction {
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 600;
+ text-align: center;
+}
+.popup-t-id-transfer-notice .popup-header .popup-title {
+    height: 48px;
+    background: url(../images/ti-popup-t-id-notice.png) no-repeat center top;
+ text-indent: 200%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.popup-id-check-method .popup-title,
+.popup-auth-for-hidden .popup-title,
+.popup-t-id-transfer-notice .popup .popup-title {
+    text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.popup-t-id-transfer-notice .popup-header {
+    height: auto;
+    background: #fff;
+}
+.popup-t-id-transfer-notice .popup-header {
+    padding: 35px 0 10px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    border-bottom: 1px solid #dedede;
+    /* background-color: #fafafa; */
+}
+.popup-service-agreement .h-align > .h-aligner > .h-aligned {
+   /*  margin-left: -32px; */ /* 20151005 수정 */
+
+}
+.popup-service-agreement .field-agree-all label {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #8c8c8c;
+    margin: 15px 0 0;
+    padding: 14px 0;
+    font-weight: 600;
+    text-align: center;
+}
+.popup-email-auth-check .popup-header .popup-title.title-en {
+ height:48px;
+}
+/* .popup-body .popup-email-auth-check .popup-content {
+ padding: 25px 20px;
+} */
+.popup-id-check-method .section.section-card-id.section-card-id-single {
+ margin: 55px 40px 0;
+}
+.popup-id-check-method .section-card-id-single .field-card-id .card-id span {
+    /* width: 430px; */
+ width: 420px;
+}
+/* 20150924 MH 추가 */
+.popup-body .popup-content .section.section-control { /* 20151104  수정 */
+ margin: 60px 40px 0;
+}
+/* 20150924 MH 수정 */
+/* 수정: 20160520 */
+.popup-t-id-transfer-notice .popup-content .section.section-control {
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ margin: 0 24px 20px;
+ /*margin: 60px 15px 0;*/
+}
+.popup-content .section.section-control {
+ /* margin: 60px 40px 0;  */ /* 20151005 수정 */
+}
+.popup-login-detail .section.section-control .field {
+ padding: 0 20px;
+}
+
+.popup-password-change .section.section-password-reset {
+ margin: 55px 40px 0;
+}
+.popup-service-agreement .popup-content .section.section-control,
+.popup-select-auth-method .popup-content .section.section-control{
+ margin: 60px 20px 0;
+}
+.popup-email-auth-check-main .field-button-double .btn.btn-red {
+    width: 62%;
+}
+.popup-email-auth-check-main .field-button-double .btn.btn-gray {
+    width: 32%;
+}
+.popup-email-auth-check .field-button-double .btn.btn-red {
+    width: 62%;
+}
+.popup-email-auth-check .field-button-double .btn.btn-gray {
+    width: 32%;
+}
+.popup-email-auth-check .section-control .field .next-btn {
+    margin-top: 55px;
+}
+.popup-email-auth-check .email-auth-nav {
+    font-size: 14px;
+}
+.popup-email-auth-check-main .email-auth-nav { /* 20151224 수정 */
+    font-size: 12px;
+}
+.popup-email-auth-check-main .section-control .field .next-btn {
+    margin-top: 55px;
+}
+
+/*P-1-15 바닥 */
+.page-t-id-transfer-notice .content {
+    margin: 55px auto 0;
+/*     width: 532px !important; */
+}
+.page-t-id-transfer-notice .introduction-title {
+    padding-left: 12px;
+    font-size: 15px;
+    font-weight: bold;
+    background: url(../images/vi-list-style-disc.png) no-repeat left 4px;
+}
+.page-t-id-transfer-notice li p {
+    padding-top: 18px;
+    font-size: 14px;
+    line-height: 18px;
+    /* font-weight: bold; */
+}
+.page-t-id-transfer-notice .introduction:first-child {
+    padding-top: 0;
+}
+.page-t-id-transfer-notice .introduction {
+    height: auto;
+    padding: 30px 0 0;
+}
+.page-t-id-transfer-notice .header .title {
+    background-image: url(../images/ti-t-id-notice.png);
+}
+.page-select-auth-method .section.section-control {
+ margin: 60px 0 0;
+}
+
+.page-id-check .content {
+ margin: 50px auto 0;
+}
+.page-id-check .header .title {
+    background-image: url(../images/ti-id-check.png);
+}
+.page-id-check .header .title.title-en {
+    background-image: url(../images/ti-confirm-your-id.png);
+}
+.page-id-check .section.page-already-id-info {
+ margin: 20px 0 0;
+ height: 24px;
+ line-height: 24px;
+ text-align: center;
+}
+.page-id-check .page-already-id-info .guide-title {
+ display: inline-block;
+ padding-left: 25px;
+}
+.page-id-check .page-already-id-info .guide-nav {
+ display: inline-block;
+}
+.page-id-check .section.section-control {
+ margin: 50px 0 0;
+}
+
+.popup-body .popup-email.popup-content,
+.popup-body .popup-password.popup-content{
+ padding: 20px 25px;
+}
+.popup-body .popup-t-id-transfer-notice .popup-content .section.section-control{
+ position: absolute;
+ left: 0; /* 추가: 20160520 */
+ right: 0; /* 추가: 20160520 */
+ top: 440px; /* 추가: 20160520 */ /* 수정: 20160609 */
+ margin: 0 50px;/* 수정: 20160520 */ /* 수정: 20160609 */
+}
+#ux-container.page-login.sso-none-login .content{
+ width:470px;
+}
+.page-login.sso-none-login .content .section {
+ margin: 20px 40px 0;
+}
+.page-login.sso-none-login .content .section-guide { /* 201511222 수정 */
+ margin: 20px 0 0;
+}
+.popup-tid-terms-check .btn-red.width-full{
+ width: 100%;
+}
+.popup-tid-terms-check .popup-terms-content.iframe-height{
+ max-height: 400px;
+ height: 400px;
+}
+.popup-body .popup-tid-terms-check .popup-content{
+ width: 450px;
+ padding-right:8px;
+    margin: 0 auto;
+ margin-top: 60px;
+}
+.popup-body .popup-tid-terms-check .popup-content .section.section-control{
+ margin: 30px auto 0;
+}
+.popup-tid-terms-check .popup-header .direction{
+ margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 30px;
+}
+.popup-body .popup-lead-into-t-id .popup-content .section.section-control{
+ margin: 32px 35px 0;
+}
+.popup-lead-into-t-id .popup-content > .direction.none-padding,
+.popup-page-tid-check .popup-content > .direction.none-padding{
+ padding : 0;
+}
+
+.popup-lead-into-t-id .popup-content .section.section-control{
+ margin-top:25px;
+}
+/* 추가 : 20151013 */
+.popup-tid-terms-agreement .holds-terms .label{
+ font-size: 14px;
+}
+#ux-supplement .popup-lead-into-t-id .section.page-already-id-info{
+ margin-top: 35px;
+}
+
+/* 추가 : 20151013 */
+
+/* 추가 : 20151014 */
+.page-security .content .section.section-control {
+ margin-top: 15px;
+}
+.has-pager .question-list-pager {
+ display: block;
+}
+.question-list-pager {
+ display: none;
+ margin-top: 20px;
+ width: 100%;
+ height: auto;
+ line-height: 30px;
+ text-align: center;
+ /* 수정시작: 20151224 */
+ /* 웹접근성 수정 */
+ /* overflow: hidden; */
+ /* 수정종료: 20151224 */
+}
+.pager-holder {
+ display: inline-block;
+    width: auto;
+ /* 수정시작: 20151224 */
+ /* 웹접근성 수정 */
+ /* overflow: hidden; */
+ /* 수정종료: 20151224 */
+}
+.pager-item-holder .pager-item { /* 20151102 수정 */
+ display: inline-block;
+ float: left;
+ padding: 0 10px;
+ background: url(../images/bg-pager-h.png) no-repeat left 10px;
+}
+.pager-item-holder .pager-item:first-child { /* 20151102 수정 */
+ background: none;
+ color: red;
+}
+.pager-item-holder .pager-item .btn-pager { /* 20151102 수정 */
+ height: 30px;
+    line-height: 30px;
+ font-size: 14px;
+}
+.pager-item-holder .pager-item.selected .btn-pager { /* 20151102 수정 */
+ color: #ed1940;
+}
+.question-item.no-result .question-content .question-answer,
+.question-item.no-result .question-content .answer-description {
+ text-align: center;
+}
+/* 20151102 추가 */
+.pager-controller,
+.pager-item-holder {
+ display: inline-block;
+ float: left;
+}
+.pager-controller .btn-pager {
+ height: 30px;
+ line-height: 30px;
+ font-size: 14px;
+ padding: 0 5px;
+}
+.pager-controller.previous .btn {
+ padding-left: 20px;
+ background: url(../images/bt-pager-previous.png) no-repeat left center;
+}
+.pager-controller.next .btn {
+ padding-right: 20px;
+ background: url(../images/bt-pager-next.png) no-repeat right center;
+}
+/* .pager-holder .pager-item {
+ display: inline-block;
+ float: left;
+ padding: 0 10px;
+ background: url(../images/bg-pager-h.png) no-repeat left 9px;
+}
+.pager-holder .pager-item:first-child {
+ background: none;
+}
+.pager-holder .pager-item .btn-pager {
+ height: 30px;
+    line-height: 30px;
+ font-size: 16px;
+}
+.pager-holder .pager-item.selected .btn-pager {
+ color: #ed1940;
+} */
+
+.popup-alien-other-number .field.gender label:first-child{
+    height: 35px;
+ background: url(../images/bg-side.png) no-repeat right center;
+}
+.popup-alien-other-number .field.gender label{
+    width: 49%;
+    height: 35px;
+    text-align: center;
+}
+.popup-alien-other-number .field.gender label .holds-rbox{
+ margin: 8px 10px 7px 0;
+}
+.popup-alien-other-number .field.gender label .label{
+ display: inline-block;
+ height: 35px;
+ color: #8c8c8c;
+ font-size: 17px;
+ line-height: 35px;
+ font-weight: normal;
+}
+.popup-alien-other-number .field.gender .holds-rbox {
+ width: 20px;
+ height: 20px;
+ margin: 1px 3px 1px 0;
+ background: url(../images/bt-radio-radius-s.png) no-repeat 0 0;
+}
+.popup-alien-other-number .field.gender .holds-rbox:hover { /* 20151224 추가 */
+ background-position: 0 -20px;
+}
+.popup-alien-other-number .field.gender .holds-rbox.checked { /* 20151224 수정 */
+ background-position: 0 -40px;
+}
+.popup-alien-other-number .field.gender .holds-rbox.disabled,
+.popup-alien-other-number .field.gender .holds-rbox.disabled:hover { /* 20151224 추가 */
+ background-position: 0 -60px;
+}
+.popup-alien-other-number .field.gender .holds-rbox.disabled .rbox { /* 20151224 추가 */
+ cursor: default;
+}
+.popup-alien-other-number .field.gender .holds-rbox.checked.disabled,
+.popup-alien-other-number .field.gender .holds-rbox.checked.disabled:hover { /* 20151224 추가 */
+ background-position: 0 -80px;
+}
+.popup-alien-other-number .field.gender .holds-rbox.checked.disabled .rbox { /* 20151224 추가 */
+ cursor: default;
+}
+.popup-alien-other-number .field.gender .holds-rbox.focus { /* 20151224 추가 */
+ background-position: 0 -100px;
+}
+.popup-alien-other-number .field.gender .holds-rbox.checked.focus { /* 20151224 추가 */
+ background-position: 0 -120px;
+}
+.popup-alien-other-number .field.gender .holds-rbox.checked + .label {
+ color: #000;
+}
+
+.popup-alien-other-number .section .field.gender > .title,
+.popup-alien-other-number .section .field.birthday > .title{
+    font-size: 12x;
+    line-height: 18px;
+    vertical-align: middle;
+ font-weight: 600;
+ margin-bottom: 10px;
+}
+/* .popup-identity-check-phone .tab-content.terms-holder .holds-terms .label.h-item {
+ margin-bottom: 0;
+} */
+.popup-alien-other-number .hidden-label{
+ position: absolute;
+ left: -9999px;
+}
+.page-sign-up-agreement .terms-group{
+ margin-top: 32px;
+}
+/* 추가 : 20151019 */
+.page-sign-up-agreement .terms-group .title{
+ height: 36px;
+ line-height: 36px;
+ background-color: #ececec;
+    font-size: 14px;
+ padding-left: 14px;
+ font-weight: 600;
+ margin: 28px 0;
+}
+.page-sign-up-agreement .terms-group .title:first-child{
+ margin-bottom: 0;
+}
+.page-sign-up-agreement .terms-group .terms-detail{
+ right: 0
+}
+.page-sign-up-agreement .field-btn{
+ /* margin: 68px 0; */ /* 20151025 수정 */
+}
+
+ /* 20151025 추가 */
+.page-find-id .content .section.section-control { /* 20151104 수정 */
+ margin: 60px 20px 0;
+}
+/* 수정 시작 : 20151026 */
+.popup-direct-page-login .field > button[type="submit"]{
+ margin-top: 30px;
+}
+
+/* 추가 : 20151029 */
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-captcha.popup-identity-check-phone-en .corporate-line-user-info,
+.no-captcha.popup-identity-check-phone .corporate-line-user-info {
+ margin-bottom: 15px;
+}
+.identity-check-form-list .date-select .hidden-label {
+ position: absolute;
+    left: -9999px;
+}
+.identity-check-form-list .date-select .birth-year {
+ width: 36%;
+}
+.identity-check-form-list .date-select .birth-month,
+.identity-check-form-list .date-select .birth-day {
+ width: 30%;
+    margin-left: 2%;
+}
+/* .field.corporate-line-user-info.h-group.no-captcha{
+ margin-bottom: 15px;
+} */
+.page-error.error-type-service-ready .header .title {
+ background-image: url(../images/ti-page-error-service-ready.png);
+}
+
+/* 20151030 추가 */
+.popup-password .field-control .btn.btn-red,
+.page-password .field-control .btn.btn-red,
+.page-input-password .field .btn.btn-red {
+ margin-top: 30px;
+}
+
+.popup-tid-terms-agreement .holds-terms .transfer-notice-holer, /* 20151108 : 추가 */
+.page-tid-terms-agreement .holds-terms .transfer-notice-holer {
+ padding: 10px;
+    margin-top: 15px;
+    height: auto;
+ font-weight: 100;
+    font-size: 14px;
+    line-height: 24px;
+    overflow: hidden;
+ background: #f5f5f5;
+}
+
+input[type="text"].tbox.has-btn-clear:focus{
+ padding-right: 0\0/IE8+9;
+/* padding-right:6px\10; */
+}
+/* .holds-pbox.focus .pbox
+.pbox.label-en.placeholder:focus, */
+.pbox.label-en:focus {
+ padding-right: 0\0/IE8+9;
+}
+.holds-tbox > .btn.btn-clear {
+  /* width:1em\9; */
+  width:1em\9;
+ height:1em\9;
+ background-color: white\9;
+}
+.holds-pbox > .btn-clear{
+ width:1em\0/IE8+9;
+ height:1em\0/IE8+9;
+ background-color: white\0/IE8+9;
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none){
+ input[type="text"].tbox.has-btn-clear:focus{
+  padding-right: 26px;
+ }
+ .pbox {
+  padding-right: 26px;
+ }
+}
+
+/* 수정시작: 20151103 */
+/* 추가 */
+.popup-identity-check-phone .popup-content {
+ padding: 0 25px;
+}
+.page-account .section .send-auth .direction {
+ padding-top: 5px;
+ font-size: 12px;
+}
+
+/* 20151104 추가 */
+.popup-scrollable, .popup-auth-phone .popup-scrollable { /* 20151224 수정 */
+ max-height: 605px;
+}
+.popup-body #ux-supplement .popup-layer .popup-tid-terms-check .popup-content {
+ margin-top: 0;
+ padding-right: 0;
+ width: 380px;
+}
+
+/* 20151108 추가 */
+.page-sign-up-agreement .holds-terms .holds-cbox + .label {
+ width: 365px;
+}
+
+/* 20151224 추가 */
+/* footer */
+/* 20151224 수정 */
+#ux-container {
+ position: relative;
+ width: auto;
+ min-height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 154px;
+}
+.footer {
+ position: absolute;
+ bottom: 0;
+ right: 0;
+ left: 0;
+ width: 100%;
+ height: 96px;
+ background-color: #f7f7f7;
+ border-top: 1px solid #e5e5e5;
+ text-align: center;
+}
+.popup-body .footer { /* 20160122 수정 */
+ /* position: static;
+ margin-top: 40px; */
+}
+.popup-body .popup-page-login .popup-content {
+ padding: 25px 0 20px;
+}
+.footer-section {
+ margin-top: 30px;
+ font-size: 14px;
+}
+.footer-section .footer-direction {
+ display: inline-block;
+    height: 16px;
+    line-height: 16px;
+ color: #424242;
+}
+.footer-section .guide-nav {
+ display: inline-block;
+    margin-left: 5px;
+    padding-bottom: 2px;
+    height: 16px;
+    line-height: 16px;
+    border-bottom: 1px solid #ed1f46;
+}
+.footer-section .guide-nav:hover {
+ border-color: #d80d33;
+}
+.footer-section .guide-nav:hover em {
+ color: #d80d33
+}
+.footer-copyright {
+ margin: 10px auto 0;
+ width: 339px;
+ font-size: 13px;
+ color: #999;
+ background-image: url('https://auth.skt-id.co.kr/resources/design/web/images/ti-footer-copyright.png');
+ background-repeat: no-repeat;
+ text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.popup-content:after {
+ content: '';
+ display: block;
+ clear: both;
+}
+#ux-container.page-sign-up-personal .content { /* 20151224 수정 */
+ display: inline-block;zoom:1;*display:inline/*IE7 HACK*/;
+ margin: 55px 0 0;
+}
+#ux-container.page-security .content {
+ margin: 55px auto 0;
+}
+#ux-container.page-direct-login {
+ width: 100%;
+}
+#ux-container .content.has-division {
+ width: 1035px;
+}
+/* 20160122 삭제 */
+/* .popup-direct-page-login .footer {
+ margin-top: 60px;
+} */
+.popup-require-password-change .popup-content {
+ overflow: hidden;
+}
+.content .direction + .section.section-auth-methods {
+ margin-bottom: 0;
+}
+/* // 20151224 수정 */
+/* // footer */
+
+.popup-header .header-logo {
+ position: absolute;
+ top: 15px;
+ left: 15px;
+ display: inline-block;
+ width: auto;
+}
+
+
+.gnb-holder .gnb-controls .service-holder {
+ margin: 0;
+ padding: 0;
+ list-style-type: none;
+}
+.gnb-holder .gnb-controls .service-holder .service-item {
+ display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    vertical-align: middle;
+    border-left: 1px solid #000;
+}
+.gnb-holder .gnb-controls .service-holder .service-item:first-child {
+    border: 0;
+}
+.field-agree-all label {
+ cursor: pointer;
+}
+.field-agree-all .holds-cbox {
+ position: absolute;
+ left: 145px;
+}
+.field-agree-all label:hover {/* 추가: 20151224 */
+ border-color: #d3d3d3;
+}
+.field-agree-all label:active {/* 추가: 20151224 */
+ border-color: #ed1f46;
+}
+.popup-content .field-agree-all .holds-cbox {
+ left: 95px;
+}
+.page-sign-up-agreement .field-agree-all .holds-cbox {
+ left: 128px;/* 수정: 20151224 */
+}
+.page-sign-up-agreement .field-agree-all.field-agree-all-en .holds-cbox {
+ left: 115px;
+}
+.field-agree-all .holds-cbox + .label {
+ width: 100%;
+ text-align: center;
+ cursor: pointer;
+}
+.popup-identity-check-phone .field-agree-all .holds-cbox + .label {
+ font-size: 17px;
+ line-height: 20px;
+ height: 20px;
+}
+.popup-identity-check-phone .field-agree-all label {
+ padding: 7px 0;
+}
+.popup-identity-check-phone .field-agree-all .checked .holds-cbox {
+ left: 73px;
+    top: 15px;
+}
+.popup-identity-check-phone.popup-identity-check-phone-en .field-agree-all .checked .holds-cbox {
+ left: 60px;
+}
+
+.gnb-controls .service-holder .service-item:hover {
+ text-decoration: underline;
+}
+.holds-terms a.terms-detail:hover {
+ color: #ed1f46;
+ border-color: #ed1f46;
+}
+/* 수정종료: 20151224 */
+
+/* 20151224 추가 */
+.page-sign-up-completed .content,
+.page-email-auth-check .content {
+ margin: 45px auto 0;
+}
+.page-sign-up-completed .content .section.section-control,
+.page-email-auth-check .content .section.section-control {
+ margin-top: 50px;
+}
+.page-sign-up-completed .field-auth-link,
+.page-email-auth-check .field-auth-link,
+.popup-email-auth-check .field-auth-link,
+.popup-email-auth-check-main .field-auth-link {
+ padding-left: 16px;
+ height: auto;
+ text-align: left;
+ box-sizing: border-box;
+}
+.field-auth-link ul {
+ list-style-type: disc;
+}
+.field-auth-link ul li:first-child {
+ margin-bottom: 10px;
+}
+.page-email-auth-check .email-auth-nav {
+ font-size: 12px;
+}
+.page-email-auth-check .section.section-control > .field {
+ margin-top: 50px;
+}
+.page-email-auth-check .section-control .field .next-btn {
+ margin-top: 0;
+}
+.popup-body .popup-email.popup-content {
+ width: 390px;
+}
+.popup-email.popup-content .email-auth-nav-list {
+ padding: 0 21px 0 25px;
+}
+.popup-email-auth-check .email-auth-nav {
+ font-size: 12px;
+}
+.field-agree-all label.checked:hover{
+ border-color: #d3d3d3!important;
+}
+.popup-tid-introduction .popup-control .pager .page .btn-pager:hover {
+ background-position: 0 -16px;
+}
+.popup-alarm .popup-content {
+ text-align: center;
+}
+a.field-agree-all {
+ display: block;
+}
+.is-ie a.field-agree-all:focus {
+ outline: 1px dotted #808080;
+}
+/* // 20151224 추가 */
+
+/* 추가: 20160122 */
+.info-personal caption{
+ display: none;
+}
+.popup-medium.popup-agree-use-certificate {
+ width: 460px;
+}
+
+.page-account .field .btn.btn-underline.btn-red.terms-detail {
+ margin-top: 7px;
+}
+.popup-body .popup-tid-terms-detail .popup-scrollable,
+.popup-body .popup-tid-terms-check .popup-scrollable {
+ bottom: 0;
+}
+/* 추가: 20160127 */
+.popup.popup-tid-terms-check .popup-header .popup-title, /* 수정: 20160302 */
+.popup-body .popup-tid-terms-check .popup-title { /* 수정: 20160302 */
+    padding: 8px 0;
+    font-size: 26px;
+    font-weight: bold;
+    background: none !important;
+    font-family: 'Malgun Gothic';
+    text-indent: inherit;
+    text-align: center;
+    white-space: normal;
+    height: auto !important;
+}
+.popup-body .popup-tid-terms-check.has-tab .popup-scrollable .popup-terms-content {
+ height: 330px;
+}
+.popup-body .popup-tid-terms-check.has-tab .popup-scrollable .popup-content {
+ margin-top: 40px;
+}
+.popup-tid-terms-check .popup-header .popup-direction{
+    font-size: 15px;
+}
+.popup-body .popup-tid-terms-check.has-tab .popup-scrollable .empty {
+ height: 331px;
+}
+/* 추가: 20160406 */
+.popup-body .popup-tid-terms-check.has-tab .popup-scrollable .preview-version + .holds-term .popup-terms-content {
+ height: 259px;
+}
+/* 추가: 20160520 */
+.popup-t-id-transfer-notice .popup-content {
+ width: 500px; /* 수정: 20160609 */
+ height: 655px; /* 수정: 20160609 */
+ position: relative;
+ background: url(../images/bg-t-id-transfer-notice.png) no-repeat top  center; /* 수정: 20160609 */
+}
+.popup-layer .popup-t-id-transfer-notice .popup-content {
+ height: 750px;
+ padding: 0;
+}
+.popup-t-id-transfer-notice .popup-content .direction {
+ width: 238px;
+ height: 84px;
+ letter-spacing: -1px;
+ text-align: left;
+ position: absolute;
+ left: 50px; /* 수정: 20160609 */
+ top: 330px; /* 수정: 20160609 */
+ padding: 0;
+}
+.popup-t-id-transfer-notice .popup-content .direction .service > span{
+ font-family: "돋움", "Dotum";
+}
+.popup-t-id-transfer-notice .popup-content .direction .service-name-customer {
+ font-size: 30px;
+ font-weight: 700;
+ padding-bottom: 20px;
+}
+.popup-t-id-transfer-notice .popup-content .direction .service-comment {
+ font-size: 15px;
+}
+.popup-t-id-transfer-notice .popup-content .logo-holder {
+ padding: 30px 0 0 24px;
+}
+.popup-t-id-transfer-notice .btn-popup-close {
+ z-index: 300000;
+}
+.popup-layer .popup-t-id-transfer-notice.has-next .popup-content {
+ height: 644px;
+}
+/* 추가: 20160520 */
+.popup-tid-terms-privacy-change-guide .popup-scrollable {
+ top: 134px;
+}
+.popup-tid-terms-privacy-change-guide .popup-title {
+ height: 48px;
+ text-indent: 200%;
+ overflow: hidden;
+ white-space: nowrap;
+ background: url(../images/ti-popup-tid-terms-privacy-change-guide.png) no-repeat center top;
+ margin-top: 40px;
+}
+.popup-tid-terms-privacy-change-guide .direction {
+ font-size: 15px;
+ line-height: 20px;
+ text-align: center;
+ color: #2d2a2b;
+ padding-bottom: 20px;
+}
+.popup-tid-terms-privacy-change-guide .terms-content {
+ margin-top: 10px;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field {
+ overflow: hidden;
+ margin-top: 30px;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field .terms-hold {
+ margin-top: 21px;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field .terms-hold:first-child {
+ margin-top: 0;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field .terms-description {
+ font-size: 14px;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field .terms-detail-changed {
+ font-size: 14px;
+ font-weight: 700;
+ color: #ed1f46;
+ border-bottom: 1px solid #ed1f46;
+ float: right;
+ padding: 10px 0 4px;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field .terms-comment {
+ font-size: 15px;
+ line-height: 20px;
+ letter-spacing: -1px;
+ color: #2d2a2b;
+ margin-left: 20px;
+ padding-bottom: 8px;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field .terms-comment .symbol {
+ margin: 0 4px 0 -11px;
+}
+.popup-tid-terms-privacy-change-guide .section.section-terms .field.field-terms:first-child {
+ border-bottom: 1px solid #d9d8d8;
+ padding-bottom: 30px;
+}
+.popup-body .popup-tid-terms-privacy-change-guide .section.section-control {
+ margin: 30px 20px 20px 20px;
+}
+.popup-body .popup-tid-terms-privacy-change-guide .popup-content {
+ width: auto;
+ padding: 25px 25px;
+}
+/* 추가: 20160524 */
+.popup-body .popup-tid-terms-privacy-change-guide .holds-terms {
+ border: 0;
+ padding: 0 0 15px;
+}
+.popup-tid-terms-privacy-change-guide .popup-scrollable {
+    bottom: 76px;
+}
+/* 추가: 20160527 */
+.popup-tid-terms-privacy-change-guide .popup-content .section.section-control {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 10px 43px;
+}
+.popup-tid-terms-privacy-change-guide .popup-scrollable.has-scroll .section.section-control {
+    padding: 0 42px 0 25px;
+    margin: 10px 20px;
+}
+.popup-tid-terms-privacy-change-agree-guide .popup-scrollable {
+    bottom: 0;
+}
+.popup-tid-terms-privacy-change-agree-guide .field.holds-terms{
+    padding-top: 20px;
+}
+.popup-tid-terms-privacy-change-agree-guide .popup-title {
+    height: 48px;
+    text-indent: 200%;
+    overflow: hidden;
+    white-space: nowrap;
+    background: url(../images/ti-popup-privacy-agree-guide.png) no-repeat center top;
+    margin-top: 40px;
+}
+.popup-tid-terms-privacy-change-agree-guide .popup-scrollable {
+    top: 134px;
+}
+.popup-body .popup-tid-terms-privacy-change-agree-guide .popup-content .section.section-control {
+    margin: 0 20px;
+}
+.popup-body .popup-tid-terms-privacy-change-agree-guide .popup-content {
+    width: 490px;
+}
+.popup-body .popup-tid-terms-privacy-change-agree-guide .terms-content {
+    height: 170px;
+}
+/* 추가: 20160530 */
+#ux-container.tid-terms-privacy-change-guide .content {
+    width: 486px;
+    padding-top: 40px;
+    margin: 0 auto;
+}
+.tid-terms-privacy-change-guide .header .title {
+    background-image: url(../images/ti-popup-tid-terms-privacy-change-guide.png);
+}
+.tid-terms-privacy-change-guide .terms-hold {
+    overflow: hidden;
+}
+.tid-terms-privacy-change-guide .terms-hold + .terms-hold {
+    margin-top: 20px;
+}
+.tid-terms-privacy-change-guide .terms-content {
+    height:170px;
+}
+.tid-terms-privacy-change-guide .terms-detail-changed {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ed1f46;
+    border-bottom: 1px solid #ed1f46;
+    float: right;
+    padding: 10px 0 4px;
+}
+.tid-terms-privacy-change-guide .section.section-terms .field .terms-comment {
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: -1px;
+    color: #2d2a2b;
+    margin-left: 20px;
+    padding-bottom: 8px;
+}
+.tid-terms-privacy-change-guide .section.section-terms .field .terms-comment .symbol {
+    margin: 0 4px 0 -11px;
+}
+.tid-terms-privacy-change-guide .section.section-terms .field .terms-description {
+    font-size: 14px;
+}
+#ux-container.tid-terms-privacy-change-agree-guide .content {
+    width: 440px;
+    margin: 0 auto;
+}
+.tid-terms-privacy-change-agree-guide .header .title {
+    background-image: url(../images/ti-popup-privacy-agree-guide.png);
+}
+.tid-terms-privacy-change-agree-guide .holds-terms {
+    padding-bottom: 20px;
+}
+/* 추가: 20160609 */
+#ux-container.page-t-id-transfer-notice .content {
+    width: 490px;
+    margin-top: 30px;
+}
+.page-t-id-transfer-notice .content .section.section-control {
+    margin-top: 0;
+}
+.page-t-id-transfer-notice .section {
+    padding: 0 50px;
+    margin: 0;
+}
+.page-t-id-transfer-notice .content .section.section-service {
+    background: url(../images/bg-t-id-page-transfer-notice.png) no-repeat center bottom;
+    padding-bottom: 504px;
+}
+.page-t-id-transfer-notice .content .section.section-service .service-name-customer {
+    font-size: 36px;
+    /*font-weight: 700;*/ /* 삭제: 20160610 */
+    padding-bottom: 30px;
+}
+.page-t-id-transfer-notice .content .section.section-service .service-comment {
+    font-size: 18px;
+    line-height: 26px; /* 수정: 20160610 */
+}
+</style>
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<script>
+$(document).ready(function(){
+//   $("#loginForm").submit(function(){
+	$('#loginBtn').on('click', function(){
+	    
+	    if($("#id").val() == ""){
+			alert("ID를 입력하세요");
+			$("#id").focus();
+			return;
+	    }
+	    
+	    if($("#password").val() == ""){
+			alert("비밀번호를 입력하세요");
+			$("#password").focus();
+			return;
+	    }
+	    
+		$.ajax({
+			type: "get",
+			data : $("#form").serialize(),
+			dataType: "json",
+			url: "/bff/loginProc",
+			success: function(result) {
+			    if(result.returnCode == "success"){
+			    	alert("로그인 되었습니다.");
+				    location.href = "/main?segment="+result.segment;
+			    }else{
+			    	if(result.errorCode == "is login"){
+			    		alert("로그인 상태입니다.");
+					    location.href = "/main";
+			    	}else if(result.errorCode == "no session"){
+			    		alert("no session.");
+					    location.href = "/";
+			    	}
+			    }
+			},
+			error:function(result){
+			    // 서킷브레이커에의해 에러 처리해야하나?
+			    console.log("result Error: ", result);
+			}
+		});
+	});
+	
+});
+
+</script>
+</head>
+
+<!--파일명 : P-1-1-1-0-POPUP.html -->
+<body class="popup-body">
+ <div class="popup-page-login">
+  <!-- <button type="button" class="btn btn-popup-close">Close</button>  -->
+  <div class="popup-header">
+   <!-- @@ 2016.02.23 웹접근성 START -->
+   <!-- logo 추가 -->
+   <a href="javascript:void(0);" class="header-logo">
+    <img class="header-logo-item" src="http://auth-stg.skt-id.co.kr/resources/design/mob/images/vi-header-logo-tworld.png" alt="T world 로고">
+   </a>
+   <!-- @@ 2016.02.23 웹접근성 END -->
+  </div>
+  <div class="popup-scrollable">
+   <div class="popup-content">
+    
+	<form name="form" id="form">
+     <div class="section section-login">
+      <label class="field">
+       <span class="section-label">아이디</span>
+       <!-- @@ 2016.02.23 웹접근성 START -->
+       <!-- title 추가 -->
+       <input type="text" id="id" name="id" class="tbox has-btn-clear" placeholder="T아이디(이메일) 또는 T world 아이디" value="" maxlength="50" title="아이디 입력">
+	   <input type="hidden" id="password" name="password" value="1111">
+	  </label>
+     </div>
+     <div class="section">
+      <div class="field">
+       <!--button id="loginBtn" class="btn btn-red btn-wide">로그인</button-->
+		<span><input type="button" name="loginBtn" id="loginBtn" value="로그인" class="btn btn-red btn-wide"/></span>
+      </div>
+     </div>
+	</form>
+
+   </div>
+  </div>
+  <!-- @@ 2016.02.23 웹접근성 START -->
+  <!-- 추가: footer -->
+  
+<!-- @@ 2016.03.09 웹접근성 START -->
+<div class="footer">
+ <div class="footer-section">
+  <p class="footer-direction">T아이디는 SK텔레콤의 통합 계정입니다.</p>
+  <a href="https://www.skt-id.co.kr/serviceInfo/serviceInfo.do" class="guide-nav" id="guide-nav" target="_blank"><strong><em>T아이디 안내</em></strong></a>
+ </div>
+ <p class="footer-copyright" role="img" aria-label="COPYRIGHT &copy; SK TELECOM CO., LTD. ALL RIGHTS RESERVED.">COPYRIGHT &copy; SK TELECOM CO., LTD. ALL RIGHTS RESERVED.</p>
+</div>
+<!--<script type="text/javascript">
+$(function(){
+ $('#guide-nav').on('click', function() {
+  window.opener.document.location.href = "https://www.skt-id.co.kr/serviceInfo/serviceInfo.do";
+  self.close();
+ });
+});
+</script>-->
+<!-- @@ 2016.03.09 웹접근성 END -->
+  <!-- @@ 2016.02.23 웹접근성 END -->
+ </div>
+ <div id="ux-supplement"></div>
+</body>
+</html>

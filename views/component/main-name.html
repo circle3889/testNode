@@ -1,0 +1,53 @@
+<template id="main-name-tmpl-A1">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		.module_a{padding:10px 0}
+		.module_ind_a{padding:10px;border-radius:5px;background-color:#fff;box-shadow:0 3px 10px rgba(0,0,0,0.28)}
+		.module_ind_a{position:relative;padding:15px 10px;line-height:24px;margin-bottom:5px}
+		.module_ind_a .cell{display:inline-block;padding-left:23px;background:url(../img/ico_phone.png) no-repeat 0 0;background-size:16px 24px}
+		.module_ind_a .ico_red{display:inline-block;margin:0 5px;height:20px;padding:0 7px;background-color:#e9012d;color:#fff;line-height:20px}
+		.module_ind_a .btn_line{display:inline-block;margin:0 5px;position:relative;top:6px;width:11px;height:7px;background:url(../img/arr_down_gray.png) no-repeat 0 0;background-size:100%;text-indent:-999em}
+		.module_ind_a .user{position:absolute;top:14px;right:10px;font-size:16px;color:#333;font-weight:bold;text-decoration:underline}
+	</style>
+	<section class="module_a module_ind_a">
+		<span class="cell">010-22**-00**</span>
+		<span class="ico_red">대표</span>
+		<button type="button" class="btn_line">회선 선택</button>
+		<span class="user">김*은 님</span>		
+	</section>
+</template>
+
+<template id="main-name-tmpl-B">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style>
+		.module_b{padding:13px 0;font-size:16px;color:#333;border-top:1px dashed #d7d7d7}
+		/**.module_b:first-child{border:0;padding-top:0}*/
+		.module_ind_b{border:0;padding-top:0}
+		.module_ind_b .user{display:block;margin-bottom:13px;padding-bottom:5px;border-bottom:1px solid #e6e6e6;color:#333}
+		.module_ind_b .cell{display:inline-block;padding-left:23px;background:url(../img/ico_phone.png) no-repeat 0 0;background-size:16px 24px;line-height:24px}
+		.module_ind_b .btn_line{display:inline-block;margin:0 5px;position:relative;top:6px;width:11px;height:7px;background:url(../img/arr_down_gray.png) no-repeat 0 0;background-size:100%;text-indent:-999em}
+	</style>
+	<section class="module_b module_ind_b">
+		<span class="user">공*철 님</span>		
+		<span class="cell">010-33**-11**</span>
+		<button type="button" class="btn_line">회선 선택</button>			
+	</section>
+</template>
+
+<script>
+class mainName extends HTMLElement
+{	
+	constructor()
+	{
+		super();
+		
+		var self = this;
+		var html = document.querySelector('#main-name-tmpl').innerHTML;
+		var root = self.attachShadow({mode:'open'});
+		
+		root.innerHTML = html;
+	}
+}
+
+customElements.define('main-name', mainName);
+</script>

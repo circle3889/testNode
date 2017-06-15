@@ -1,0 +1,88 @@
+<template id="main-noti-tmpl">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        #module_wrap.module_wrap_c{border-radius:0;box-shadow:none;color:#434159;background-color:initial;padding:0}
+    	#module_wrap.font_scale1{font-size:16px}
+	    #module_wrap.font_scale2{font-size:17px}
+	    #module_wrap.font_scale3{font-size:18px}
+	    #module_wrap.font_scale4{font-size:19px}
+	    #module_wrap.font_scale5{font-size:20px}
+        .module_info_c .section_info{overflow:hidden;margin-top:2px;padding:17px 14px;background-color:#fff;}
+	    .module_info_c .section_info .t{float:left;font-weight:bold}
+	    .module_info_c .section_info .t span{display:block;font-size:0.8em}
+	    .module_info_c .section_info .d{padding-left:80px;text-align:right}
+	    .module_info_c .section_info .d span{display:block;font-size:0.66em}
+	    .module_info_c .section_info.type_b .t{float:none}
+	    .module_info_c .section_info.type_b .t span{display:inline-block;padding-left:10px}
+	    .module_info_c .section_info.type_b .d{padding:10px 0 0 0;text-align:left;font-size:0.66em}
+    </style>
+
+    <section class="module_info_c">
+		<div class="section_info">
+			<div class="t"><span>2017.04.</span>청구요금</div>
+			<div class="d">140,030원<span>청구기간:2017.08.01~2017.08.01</span></div>				
+		</div>
+		<div class="section_info">
+			<div class="t"><span>나의</span>가입정보</div>
+	    	<div class="d">모바일②<br>인터넷/집전화/iptv①</div>
+		</div>
+		<div class="section_info">
+			<div class="t"><span>VIP</span>멤버십</div>
+			<div class="d">100,000 점<span>최근사용내영 : 2017.06.01</span></div>
+		</div>
+		<div class="section_info">
+			<div class="t"><span>2017.04.14</span>알림</div>
+			<div class="d">요금제 변경<span>Band데이터 6.5G 요금제로 변경되었습니다.</span></div>				
+		</div>
+		<div class="section_info">
+			<div class="t"><span>2017.04.14</span>알림</div>
+			<div class="d">선택약정할인 신청가능<span>약정만료 후 플러스할인 6개월 추가 유지 시<br>6개월간 추가 할인이 제공됩니다.</span></div>				
+		</div>
+		<div class="section_info">
+			<div class="t"><span>2017.04.14</span>알림</div>
+			<div class="d">약정 만료<span>약정이 만료되었습니다.</span></div>				
+		</div>
+		<div class="section_info type_b">
+			<div class="t">상황별 대처법<span>이럴땐 이렇게 하세요</span></div>
+			<div class="d">
+				<ul>
+		    		<li><a href="#">안심하고 마음껏 데이터를 쓸 수 있는 방법</a></li>
+					<li><a href="#">데이터 걱정없이 TV 실컷 보기</a></li>
+					<li><a href="#">휴대폰 분실했다면 가정 먼저 분실 신고하세요</a></li>
+				</ul>
+			</div>		
+		</div>
+	</section>
+</template>
+
+<script>
+class mainNoti extends HTMLElement
+{		
+	constructor()
+	{
+		super();
+		
+		// this.value = '';
+		// this.data = null;
+		//var self = this;
+
+		var root = this.attachShadow({mode:'open'});
+		var html = document.querySelector('#main-noti-tmpl').innerHTML;
+		
+		root.innerHTML = html;
+
+		document.getElementById('main-freebill').setUserNm('송*호');
+		document.getElementById('main-freebill').setSvcNum('010-64**-33**');
+		
+		document.getElementById("module_wrap").classList.add('module_wrap_c');
+		document.getElementById("module_wrap").classList.add('font_scale3');
+
+		document.getElementById('btn_enlarge').style.display = "block";
+		document.getElementById('btn_contract').style.display = "block";
+		
+	}
+	
+}
+
+customElements.define('main-noti', mainNoti);
+</script>
